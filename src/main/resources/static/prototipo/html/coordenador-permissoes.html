@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Macedo Cursos</title>
+<link rel="stylesheet" type="text/css" href="../css/estilo-sistema.css">
+</head>
+<body>
+	<header>
+		<div id="divLogotipoSistema">
+			<span id="spanAuxiliarDeAlinhamentoVertical"></span>
+			<a href="*">
+				<img src="../../images/simbolo_escola.jpg" id="imgLogotipoSistema">
+			</a>
+		</div>
+		<h1>Olá, nome do usuário</h1>
+		
+	</header> <br/><br/> <br/><br/>
+	<!-- Fim do cabeçalho -->
+	
+	<input id="botaoOpcao" type="button" value="Home" onclick="location.href= 'coordenador-home.html'" />
+
+	<h1>Solicitações de matriculas</h1>
+	
+	<div id="mensagemSucesso">
+		<span>Exemplo mensagem de sucesso</span> 
+	</div> <br/> <br/> 
+	
+	<table>
+		<tr>
+			<th>ID</th>
+			<th>Aluno</th>
+			<th>Email</th>
+			<th>Ver aluno</th>
+			<th>Permitir</th>
+			<th>Recusar</th>
+		</tr>
+		<tr>
+			<td>1</td>
+			<td>José Silva Gomes</td>
+			<td>jose@gmail.com</td>
+			<td><input type="button" value="Ver aluno" onclick="location.href='coordenador-aluno.html'"/></td>
+			<td><input type="button" id="btnPermitir" value="Permitir" /></td>
+			<td><input type="button" id="btnRecusar"  value="Recusar" /></td>
+		</tr>
+		<tr>
+			<td>2</td>
+			<td>André Morais</td>
+			<td>andre@gmail.com</td>
+			<td><input type="button" value="Ver aluno" onclick="location.href='coordenador-aluno.html'" ></td>
+			<td><input type="button" id="btnPermitir" value="Permitir" /></td>
+			<td><input type="button" id="btnRecusar" value="Recusar" /></td>
+		</tr>
+		<tr>
+			<td>3</td>
+			<td>Felipe Alves</td>
+			<td>felipe@gmail.com</td>
+			<td><input type="button" value="Ver aluno" onclick="location.href='coordenador-aluno.html'"></td>
+			<td><input type="button" id="btnPermitir" value="Permitir" /></td>
+			<td><input type="button" id="btnRecusar" value="Recusar" /></td>
+		</tr>
+		<tr>
+			<td>1</td>
+			<td>Juliana Gomes</td>
+			<td>juliana@gmail.com</td>
+			<td><input type="button" value="Ver aluno" onclick="location.href='coordenador-aluno.html'"></td>
+			<td><input type="button" id="btnPermitir" value="Permitir" /></td>
+			<td><input type="button" id="btnRecusar" value="Recusar" /></td>
+		</tr>
+	
+	</table>
+</body>
+</html>

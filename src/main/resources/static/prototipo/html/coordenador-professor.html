@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Macedo Cursos</title>
+<link rel="stylesheet" type="text/css" href="../css/estilo-sistema.css">
+</head>
+<body>
+	<header>
+		<div id="divLogotipoSistema">
+			<span id="spanAuxiliarDeAlinhamentoVertical"></span>
+			<a href="*">
+				<img src="../../images/simbolo_escola.jpg" id="imgLogotipoSistema">
+			</a>
+		</div>
+		<h1>Olá, nome do usuário</h1>
+		
+	</header> <br/><br/> <br/><br/>
+	<!-- Fim do cabeçalho -->
+	
+	<input id="botaoOpcao" type="button" value="Home" onclick="location.href= 'coordenador-home.html'" />
+	<input id="botaoOpcao" type="button" value="Professores" onclick="location.href= 'coordenador-professores.html'" /> <br/>
+	
+	<div id="divInformativo">
+		
+		<label class="labelInformativo" for="idProfessor">Id: </label> <br/>
+		<input class="inputInformativo" type="text" id="idProfessor" readonly="readonly" value="3"> <br/> <br/>
+		
+		
+		<label class="labelInformativo" for="nomeProfessor">Nome: </label> <br/>
+		<input class="inputInformativo" type="text" id="nomeProfessor" readonly="readonly" value="Matheus Costa"> <br/> <br/> 
+		
+		
+		<label class="labelInformativo" for="email">Email: </label> <br/>
+		<input class="inputInformativo" type="text" id="email" readonly="readonly" value="matheus@gmail.com"> <br/> <br/>
+		
+	</div> <br/> <br/>
+	
+	<div id="divCentralizado">
+		<input type="button" id="btnCentralizado" value="Excluir Professor"> <br/> <br/>
+	</div>
+	
+
+	<div id="divFiltro">
+		<span id="tituloFiltro">Buscar curso lecionado por:</span> <br/> <br/>
+		<form id="formPesquisa">
+			<label for="idCurso" id="labelPesquisa">Id:</label> <br/>
+			<input  type="text" id="idCurso" placeholder=" Id do curso que deseja pesquisar..." />  <br/> <br/>
+			<label for="nomeCurso" id="labelPesquisa">Curso:</label> <br/>
+			<input  type="text" id="nomeCurso" placeholder=" Nome do curso que deseja pesquisar..." />  <br/> <br/>
+			<label for="dataInicio" id="labelPesquisa">Data Inicio:</label> <br/>
+			<input  type="date" id="dataInicio"/>  <br/> <br/>
+			<label for="dataFinal" id="labelPesquisa">Data Final:</label> 
+			<input type="date" id="dataFinal"/> <br/> <br/>
+			<label id="labelPesquisa" for="situacao">Situação:</label>
+				<select id="situacao" class="select">
+					<option>Concluído</option>
+					<option>Em andamento</option>
+					<option>Não iniciado</option>
+				</select> <br/> <br/>
+			
+			<label id="labelPesquisa" for="filtroDeBusca">Todos: </label> 
+			<input  type="checkbox" id="filtroDeBusca" />  <br/> <br/>
+			<input id="botaoPesquisa" type="submit" value="Buscar">
+		</form>
+	</div> <br/> <br/>
+	
+	<table>
+		<tr>
+			<th>Id</th>
+			<th>Professor</th>
+			<th>Curso</th>
+			<th>Data Inicio</th>
+			<th>Data Final</th>
+			<th>Situação</th>
+			<th>Ver curso</th>
+		</tr>
+		<tr>
+			<td>1</td>
+			<td>José Silva Gomes</td>
+			<td>Inglês</td>
+			<td>14/04/2020</td>
+			<td>18/09/2020</td>
+			<td>Concluído</td>
+			<td><input type="button" value="Ver curso" onclick="location.href='coordenador-curso.html'" /></td>
+		</tr>
+		<tr>
+			<td>1</td>
+			<td>José Silva Gomes</td>
+			<td>Informática</td>
+			<td>23/04/2020</td>
+			<td>10/12/2020</td>
+			<td>Em andamento</td>
+			<td><input type="button" value="Ver curso" onclick="location.href='coordenador-curso.html'" /></td>
+		</tr>
+		<tr>
+			<td>1</td>
+			<td>José Silva Gomes</td>
+			<td>Espanhol</td>
+			<td>20/11/2020</td>
+			<td>18/01/2021</td>
+			<td>Não iniciado</td>
+			<td><input type="button" value="Ver curso" onclick="location.href='coordenador-curso.html'" /></td>
+		</tr>
+	</table>
+
+</body>
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Macedo Cursos</title>
+<link rel="stylesheet" type="text/css" href="../css/estilo-sistema.css">
+</head>
+<body>
+	<header>
+		<div id="divLogotipoSistema">
+			<span id="spanAuxiliarDeAlinhamentoVertical"></span>
+			<a href="*">
+				<img src="../../images/simbolo_escola.jpg" id="imgLogotipoSistema">
+			</a>
+		</div>
+		<h1>Olá, nome do usuário</h1>
+		
+	</header> <br/><br/> <br/><br/>
+	<!-- Fim do cabeçalho -->
+		
+	<input id="botaoOpcao" type="button" value="Home" onclick="location.href= 'coordenador-home.html'" /> <br/>
+	
+	<div id="divFiltro">
+		<span id="tituloFiltro">Buscar professor por:</span> <br/> <br/>
+		<form id="formPesquisa">
+			<label for="idAluno" id="labelPesquisa">Id:</label> <br/>
+			<input  type="text" id="idAluno" placeholder=" Id do professor a ser buscado..." />  <br/> <br/>
+			
+			<label for="nomeAluno" id="labelPesquisa">Nome:</label> 
+			<input type="text" id="nomeAluno" placeholder=" Nome do professor a ser buscado..." /> <br/> <br/>
+			
+			<label for="nomeCurso" id="labelPesquisa">Curso:</label> 
+			<input type="text" id="nomeCurso" placeholder=" Nome do curso dos professores..." /> <br/> <br/>
+			
+			<label id="labelPesquisa" for="filtroDeBusca">Todos: </label> 
+			<input  type="checkbox" id="filtroDeBusca" />  <br/> <br/>
+			
+			<input id="botaoPesquisa" type="submit" value="Buscar">
+		</form>
+	</div> <br/> <br/>
+	
+		<div id="divCentralizado">
+		<input type="button" id="btnCentralizado" value="novo professor"> <br/>
+		<input type="button" id="btnCentralizado" value="gerar chave"> <br/>
+	</div>
+	
+	
+		<div>
+			<fieldset>
+				<div id="mensagemErro">
+					<span>Exemplo mensagem de erro</span> 
+				</div> <br/>
+			
+				<label for="email">E-mail: </label><br/>
+				<input type="text" id="email" placeholder=" Informe o e-mail do professor..." class="long-field" required="required" /> <br/> <br/>
+				
+				<input id="botaoCadastrar" value="gerar Chave" /> <br/> <br/>
+			
+				<label for="Chave">Chave: </label><br/>
+				<input type="text" id="chave" placeholder="0103" readonly="readonly" class="long-field" /> <br/> <br/>
+				
+			</fieldset>
+		</div> <br/> <br/>
+	
+	<div id="mensagemSucesso">
+		<span>Exemplo mensagem de sucesso</span> 
+	</div> <br/> <br/> 
+	
+	<div>
+		<form method="post" action="" >
+			<fieldset>
+				
+				<div id="mensagemErro">
+					<span>Exemplo mensagem de erro</span> 
+				</div> <br/>
+			
+				<label for="nome">Nome: </label><br/>
+				<input type="text" id="nome" placeholder=" Informe o nome do novo professor..." required="required" /> <br/> <br/>
+			
+				<div id="mensagemErro">
+				<span>Exemplo mensagem de erro</span> 
+				</div> <br/> 
+				
+				<label for="email">E-mail: </label><br/>
+				<input type="email" id="email" placeholder=" Informe o e-mail do novo professor..." required="required" /> <br/> <br/>
+				
+				<input type="submit" value="Cadastrar" />
+			</fieldset>
+		   </form>
+		</div> <br/> <br/>
+	
+	<table>
+		<tr>
+			<th>ID</th>
+			<th>Professor</th>
+			<th>Email</th>
+			<th>Ver Professor</th>
+		</tr>
+		<tr>
+			<td>1</td>
+			<td>José Silva Gomes</td>
+			<td>jose@gmail.com</td>
+			<td><input type="button" value="Ver professor" onclick="location.href='coordenador-professor.html'" /></td>
+		</tr>
+		<tr>
+			<td>2</td>
+			<td>André Morais</td>
+			<td>andre@gmail.com</td>
+			<td><input type="button"  value="Ver professor" onclick="location.href='coordenador-professor.html'" ></td>
+		</tr>
+		<tr>
+			<td>3</td>
+			<td>Felipe Alves</td>
+			<td>felipe@gmail.com</td>
+			<td><input type="button"  value="Ver professor" onclick="location.href='coordenador-professor.html'" /></td>
+		</tr>
+		<tr>
+			<td>1</td>
+			<td>Juliana Gomes</td>
+			<td>juliana@gmail.com</td>
+			<td><input type="button"  value="Ver professor" onclick="location.href='coordenador-professor.html'" /></td>
+		</tr>
+	
+	</table>
+
+</body>
+</html>

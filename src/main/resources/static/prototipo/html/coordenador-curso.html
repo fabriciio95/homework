@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Macedo Cursos</title>
+<link rel="stylesheet" type="text/css" href="../css/estilo-sistema.css">
+</head>
+<body>
+	<header>
+		<div id="divLogotipoSistema">
+			<span id="spanAuxiliarDeAlinhamentoVertical"></span>
+			<a href="*">
+				<img src="../../images/simbolo_escola.jpg" id="imgLogotipoSistema">
+			</a>
+		</div>
+		<h1>Olá, nome do usuário</h1>
+		
+	</header> <br/><br/> <br/><br/>
+	<!-- Fim do cabeçalho -->
+	
+	<input id="botaoOpcao" type="button" value="Home" onclick="location.href= 'coordenador-home.html'" /> 
+	<input id="botaoOpcao" type="button" value="Professor" onclick="location.href= 'coordenador-professor.html'" /> <br/>
+	
+	<div id="divInformativo">
+		<label  class="labelInformativo" for="idCurso">Id: </label> <br/>
+		<input class="inputInformativo" type="text" readonly="readonly" id="idCurso" value="2">  <br/> <br/> 
+		
+		<label class="labelInformativo" for="materia">Matéria: </label> <br/>
+		<input class="inputInformativo" type="text" id="materia" readonly="readonly" value="Inglês"> <br/> <br/> 
+		
+		<label  class="labelInformativo" for="nomeProfessor">Professor: </label> <br/>
+		<input class="inputInformativo" type="text" readonly="readonly" id="nomeProfessor" value="Antônio Mendes Silvério">  <br/> <br/> 
+		
+		<label  class="labelInformativo" for="qtdAlunos">Qtd Alunos: </label> <br/>
+		<input class="inputInformativo" type="text" readonly="readonly" id="qtdAlunos" value="22">  <br/> <br/> 
+		
+		<label  class="labelInformativo" for="situacao">Situação: </label> <br/>
+		<input class="inputInformativo" type="text" readonly="readonly" id="situacao" value="Em andamento">  <br/> <br/> 
+		
+		<label  class="labelInformativo" for="dataInicio">Data de início: </label> <br/>
+		<input class="inputInformativo" type="text" readonly="readonly" id="dataInicio" value="18/05/2020">  <br/> <br/> 
+		
+		<label  class="labelInformativo" for="dataConclusao">Data de conclusão: </label> <br/>
+		<input class="inputInformativo" type="text" readonly="readonly" id="dataConclusao" value="14/12/2020">
+		
+	</div> <br/> <br/>
+		
+		<div id="divCentralizado">
+			<input type="button" id="btnCentralizado" value="Ver mural de recados" onclick="location.href='coordenador-curso-mural.html'"> <br/>
+			<input type="button" id="btnCentralizado" value="Encerrar curso"> <br/>
+			<input type="button" id="btnCentralizado" value="Editar curso"> <br/> <br/>
+		</div>
+		
+		<div id="mensagemSucesso">
+		<span>Exemplo mensagem de sucesso</span> 
+	</div> <br/> <br/> 
+	
+		<div>
+		<form>
+			<fieldset>
+				<label class="labelInformativo" for="materia">Matéria: </label> <br/>
+				<input class="inputInformativo" type="text" id="materia" /> <br/> <br/> 
+				
+				<label  class="labelInformativo" for="descricao">Descrição: </label> <br/>
+				<textarea class="textAreaInformativo" id="descricao" rows="5" cols="50" ></textarea> <br/> <br/> 
+				
+				<label  class="labelInformativo" for="dataInicial">Data Inicial: </label>  <br/>
+				<input class="inputInformativo" type="date" id="dataInicial" />  <br/> <br/> 
+				
+				<div id="mensagemErro">
+					<span>Exemplo mensagem de erro</span> 
+				</div> <br/> <br/>
+				
+				<label  class="labelInformativo" for="dataFinal">Data Conclusão: </label>  <br/>
+				<input class="inputInformativo" type="date" id="dataFinal" />  <br/> <br/> 
+				
+				<label  class="labelInformativo" for="nomeProfessor">Vagas: </label> <br/>
+				<input class="inputInformativo" type="text" placeholder="Informe o número máximo de vagas para esse curso..." id="vagas"> <br/> <br/> 
+				
+				<label  class="labelInformativo" for="nomeProfessor">Id do Professor: </label> <br/>
+				<input class="inputInformativo" type="text" placeholder="Digite o id do novo professor desse curso..." id="idProfessor" /> <br/> <br/> 
+		
+				<input type="hidden">
+				<input type="submit" value="Atualizar">
+			</fieldset>
+		</form>	
+	</div> <br/> <br/>
+		
+		<div id="divFiltro">
+		<span id="tituloFiltro">Buscar aluno por:</span> <br/> <br/>
+		<form id="formPesquisa">
+			<label for="idAluno" id="labelPesquisa">Id:</label> <br/>
+			<input  type="text" id="idAluno"/>  <br/> <br/>
+			
+			<label for="nomeAluno" id="labelPesquisa">Nome:</label> 
+			<input type="text" id="nomeAluno"/> <br/> <br/>
+			
+			<label id="labelPesquisa" for="situacao">Situação:</label>
+				<select id="situacao" class="select">
+					<option>Aprovado</option>
+					<option>Reprovado</option>
+					<option selected="selected">Recuperação</option>
+				</select> <br/> <br/>
+			
+			<label id="labelPesquisa" for="filtroDeBusca">Todos: </label> 
+			<input  type="checkbox" id="filtroDeBusca" />  <br/> <br/>
+			
+			<input id="botaoPesquisa" type="submit" value="Buscar">
+		</form>
+	</div> <br/> <br/>
+	
+	<table>
+		<tr>
+			<th>ID</th>
+			<th>Aluno</th>
+			<th>Nota 1</th>
+			<th>Nota 2</th>
+			<th>Nota 3</th>
+			<th>Nota 4</th>
+			<th>MF</th>
+			<th>Situação</th>
+			<th>Desmatricular</th>
+		</tr>
+		<tr>
+			<td>1</td>
+			<td>José Silva Gomes</td>
+			<td>6.7</td>
+			<td>9.8</td>
+			<td>10</td>
+			<td>7</td>
+			<td>6.7</td>
+			<td>Recuperação</td>
+			<td><input type="button" value="Desmatricular"/></td>
+		</tr>
+		<tr>
+			<td>2</td>
+			<td>André Morais</td>
+			<td>7.7</td>
+			<td>4.8</td>
+			<td>9</td>
+			<td>7</td>
+			<td>8.7</td>
+			<td>Aprovado</td>
+			<td><input type="button" value="Desmatricular"></td>
+		</tr>
+		<tr>
+			<td>3</td>
+			<td>Felipe Alves</td>
+			<td>4.7</td>
+			<td>5.0</td>
+			<td>3.7</td>
+			<td>3</td>
+			<td>5.0</td>
+			<td>Reprovado</td>
+			<td><input type="button" value="Desmatricular"></td>
+		</tr>
+		<tr>
+			<td>1</td>
+			<td>Juliana Gomes</td>
+			<td>10</td>
+			<td>10</td>
+			<td>10</td>
+			<td>7</td>
+			<td>9.2</td>
+			<td>Aprovado</td>
+			<td><input type="button" value="Desmatricular"></td>
+		</tr>
+	
+	</table>
+	
+
+</body>
+</html>

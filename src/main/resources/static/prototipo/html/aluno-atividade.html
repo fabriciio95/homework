@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Macedo Cursos</title>
+<link rel="stylesheet" type="text/css" href="../css/estilo-sistema.css">
+</head>
+<body>
+	<header>
+		<div id="divLogotipoSistema">
+			<span id="spanAuxiliarDeAlinhamentoVertical"></span>
+			<a href="*">
+				<img src="../../images/simbolo_escola.jpg" id="imgLogotipoSistema" />
+			</a>
+		</div>
+		<h1>Olá, nome do usuário</h1>
+		
+	</header> <br/><br/> <br/><br/>
+	<!-- Fim do cabeçalho -->
+	
+	<input id="botaoOpcao" type="button" value="Home" onclick="location.href= 'aluno-home.html'" /> <br/> <br/>
+	
+	<div id="divInformativo">
+		
+		<label class="labelInformativo" for="materia">Matéria: </label> <br/>
+		<input class="inputInformativo" type="text" id="materia" readonly="readonly" value="Inglês"> <br/> <br/> 
+		
+		<label  class="labelInformativo" for="nomeProfessor">Professor: </label> <br/>
+		<input class="inputInformativo" type="text" readonly="readonly" id="nomeProfessor" value="Antônio Mendes Silvério">
+		
+	</div> <br/> <br/>
+	
+	<div>
+		<fieldset>
+			<label class="labelInformativo" for="materia">Matéria: </label> <br/>
+			<input class="inputInformativo" type="text" id="materia" value="Inglês"> <br/> <br/> 
+			
+			<label  class="labelInformativo" for="descricao">Descrição da atividade: </label> <br/>
+			<textarea class="textAreaInformativo" readonly="readonly" id="descricao" rows="5" cols="50" /></textarea> <br/> <br/> 
+			
+			<label  class="labelInformativo" for="dataFinal">Data Final: </label> <br/>
+			<input class="inputInformativo" type="text" readonly="readonly" id="dataFinal" value="15/11">  <br/> <br/> 
+			
+			<form>
+				<input type="hidden">
+				<input type="submit" id="baixarAtividade" value="Baixar Atividade"/> <br/> <br/>
+			</form>
+				
+			<form>
+				<input type="hidden">
+				
+				<label for="arquivoAtividade">Entregar Atividade: </label> <br/> 
+				<input type="file" id="arquivoAtividade"/> <br/> <br/>
+				
+				<label for="consideracaoAtividade">Comentários: </label> <br/> <br/>
+				<textarea class="textAreaInformativo" placeholder="Adicione algum comentário se desejar..." id="consideracaoAtividade" rows="5" cols="50" /></textarea> <br/> <br/>
+				
+				<input type="submit" value="Entregar atividade">
+			</form>
+		</fieldset>
+	</div> <br/> <br/>
+	
+	<h1> SÓ DE EXEMPLO ATIVIDADES ENTREGUES</h1>
+	<div>
+		<fieldset>
+			<label class="labelInformativo" for="materia">Matéria: </label> <br/>
+			<input class="inputInformativo" type="text" id="materia" value="Inglês"> <br/> <br/> 
+			
+			<label  class="labelInformativo" for="descricao">Descrição da atividade: </label> <br/>
+			<textarea class="textAreaInformativo" readonly="readonly" id="descricao" rows="5" cols="50" /></textarea> <br/> <br/> 
+			
+			<label  class="labelInformativo" for="dataFinal">Data Final: </label> <br/>
+			<input class="inputInformativo" type="text" readonly="readonly" id="dataFinal" value="15/11" />  <br/> <br/> 
+			
+			<label  class="labelInformativo" for="dataEntrega">Data Entrega: </label> <br/>
+			<input class="inputInformativo" type="text" readonly="readonly" id="dataEntrega" value="10/11" />  <br/> <br/>
+			
+			<label  class="labelInformativo" for="nota">Nota: </label> <br/>
+			<input class="inputInformativo" type="text" readonly="readonly" id="nota" value="7.8" />  <br/> <br/>
+			
+			<form>
+				<input type="hidden">
+				<input type="submit" value="Baixar correção">
+			</form>
+		</fieldset>
+	</div> <br/> <br/>
+</body>
+</html>

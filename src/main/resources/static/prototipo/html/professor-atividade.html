@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Macedo Cursos</title>
+<link rel="stylesheet" type="text/css" href="../css/estilo-sistema.css">
+</head>
+<body>
+	<header>
+		<div id="divLogotipoSistema">
+			<span id="spanAuxiliarDeAlinhamentoVertical"></span>
+			<a href="*">
+				<img src="../../images/simbolo_escola.jpg" id="imgLogotipoSistema" />
+			</a>
+		</div>
+		<h1>Olá professor nome do usuário</h1>
+		
+	</header> <br/><br/> <br/><br/>
+	<!-- Fim do cabeçalho -->
+	
+	<input id="botaoOpcao" type="button" value="Home" onclick="location.href= 'professor-home.html'" /> <br/> <br/>
+	
+	<div id="divInformativo">
+		
+		<label class="labelInformativo" for="materia">Matéria: </label> <br/>
+		<input class="inputInformativo" type="text" id="materia" readonly="readonly" value="Inglês"> <br/> <br/> 
+	
+	</div> <br/> <br/>
+	
+	<div>
+		<form>
+			<fieldset>
+				<label class="labelInformativo" for="materia">Matéria: </label> <br/>
+				<input class="inputInformativo" type="text" id="materia" value="Inglês" readonly="readonly" /> <br/> <br/> 
+				
+				<label  class="labelInformativo" for="descricao">Descrição da atividade: </label> <br/>
+				<textarea class="textAreaInformativo" id="descricao" rows="5" cols="50" >Esta atividade consiste em fazer uma redação de no mínimo 15 linhas sendo o tema livre.</textarea> <br/> <br/> 
+				
+				<label  class="labelInformativo" for="dataFinal">Data Final: </label>  <br/>
+				<input class="inputInformativo" type="date" id="dataFinal" value="2020-11-18">  <br/> <br/> 
+				
+				<label  class="labelInformativo" for="permissaoAtraso">Permitir entrega após data final: </label> 
+				<input  type="checkbox" id="permissaoAtraso" />  <br/> <br/>
+				
+				<label  class="labelInformativo" for="atividade">Anexar atividade: </label> <br/>
+				<input class="inputInformativo" type="file" id="atividade" />  <br/> <br/>
+				
+				<input type="hidden">
+				<input type="submit" value="Atualizar atividade">
+			</fieldset>
+		</form>	
+	</div> <br/> <br/>
+	
+	<h1> ATIVIDADES JÁ ENTREGUES</h1> <br/>
+		<div id="mensagemSucesso">
+			<span>Exemplo mensagem de sucesso</span> 
+		</div> <br/> <br/> 
+	<div>
+		<fieldset>
+			<form>
+				<label class="labelInformativo" for="materia">Matéria: </label> <br/>
+				<input class="inputInformativo" type="text" id="materia" value="Inglês"> <br/> <br/> 
+				
+				<label class="labelInformativo" for="idAluno">Código do aluno: </label> <br/>
+				<input class="inputInformativo" type="text" readonly="readonly" id="idAluno" value="2" /> <br/> <br/> 
+			
+				<label class="labelInformativo" for="aluno">Aluno: </label> <br/>
+				<input class="inputInformativo" type="text" readonly="readonly" id="aluno" value="Douglas Pereira" /> <br/> <br/> 
+				
+				<label  class="labelInformativo" for="comentario">Comentário do aluno: </label> <br/>
+				<textarea class="textAreaInformativo" readonly="readonly" id="comentario" rows="5" cols="50"  placeholder="Nenhum comentário adicionado..." /></textarea> <br/> <br/> 
+				
+				<label  class="labelInformativo" for="dataFinal">Data Final: </label> <br/>
+				<input class="inputInformativo" type="text" readonly="readonly" id="dataFinal" value="15/11" />  <br/> <br/> 
+				
+				<label  class="labelInformativo" for="dataEntrega">Data Entrega: </label> <br/>
+				<input class="inputInformativo" type="text" readonly="readonly" id="dataEntrega" value="10/11" />  <br/> <br/>			
+				
+				<input type="submit" value="Baixar atividade" onclick="location.href='#'"> <br/> <br/>
+				
+				<label  class="labelInformativo" for="nota">Nota: </label> <br/>
+				<input class="inputInformativo" type="text" id="nota"  />  <br/> <br/>
+				
+				<label  class="labelInformativo" for="correcao">Correção: </label> <br/>
+				<input class="inputInformativo" type="file" id="correcao" />  <br/> <br/>
+				
+				<input type="submit" value="Finalizar correção">
+			</form>
+		</fieldset>
+	</div> <br/> <br/>
+</body>
+</html>

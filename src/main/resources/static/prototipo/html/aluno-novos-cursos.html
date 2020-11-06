@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Macedo Cursos</title>
+<link rel="stylesheet" type="text/css" href="../css/estilo-sistema.css">
+</head>
+<body>
+	<header>
+		<div id="divLogotipoSistema">
+			<span id="spanAuxiliarDeAlinhamentoVertical"></span>
+			<a href="*">
+				<img src="../../images/simbolo_escola.jpg" id="imgLogotipoSistema">
+			</a>
+		</div>
+		<h1>Olá, nome do usuário</h1>
+		
+	</header> <br/><br/> <br/><br/>
+	
+	<input id="botaoOpcao" type="button" value="Home" onclick="location.href= 'aluno-home.html'" /> <br/> <br/>
+	<!-- Fim do cabeçalho -->
+	
+	<h1>Cursos disponiveis</h1>
+	
+	
+	<div id="divInformativo">
+		
+		<label class="labelInformativo" for="materia">Matéria: </label> <br/>
+		<input class="inputInformativo" type="text" id="materia" readonly="readonly" value="Inglês"> <br/> <br/> 
+		
+		<label  class="labelInformativo" for="nomeProfessor">Professor: </label> <br/>
+		<input class="inputInformativo" type="text" readonly="readonly" id="nomeProfessor" value="Antônio Mendes Silvério"> <br/> <br/> 
+		
+		
+		<label  class="labelInformativo" for="descricaoCurso">Descrição: </label> <br/>
+		<textarea class="textAreaInformativo" readonly="readonly" id="descricaoCurso" rows="5" cols="50" >Aprenda inglês de forma efetiva, com um método inovador!</textarea> <br/> <br/>  
+	
+		<label  class="labelInformativo" for="nomeProfessor">Vagas Restantes: </label> <br/>
+		<input class="inputInformativo" type="text" readonly="readonly" id="nomeProfessor" value="3"> <br/> <br/> 
+		
+		<label  class="labelInformativo" for="dataInicial">Data inicial: </label> <br/>
+		<input class="inputInformativo" type="text" readonly="readonly" id="dataFinal" value="19/10/2020"> <br/> <br/> 
+		
+		<label  class="labelInformativo" for="dataFinal">Data de conclusão: </label> <br/>
+		<input class="inputInformativo" type="text" readonly="readonly" id="dataFinal" value="31/11/2020"> <br/> <br/> 
+		
+		<form>
+			<input type="hidden">
+			<input id="botaoSubmitPreto" type="submit" value="Solicitar chave de matricula por email" /> <br/> <br/>
+		</form>
+	
+		<label  class="labelInformativo" for="chaveMatricula">Chave: </label> <br/>
+		<input class="inputInformativo" type="text" id="chaveMatricula" placeholder="Digite sua chave de matricula desse curso..." required="required" /> <br/> <br/> 
+	
+		<form>
+			<input type="hidden">
+			<input id="botaoSubmitPreto" type="submit" value="Matricular" onclick="location.href= 'aluno-curso.html'">
+		</form>
+		
+	</div> <br/> <br/>
+</body>
+</html>

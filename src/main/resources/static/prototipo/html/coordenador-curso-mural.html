@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Macedo Cursos</title>
+<link rel="stylesheet" type="text/css" href="../css/estilo-sistema.css">
+</head>
+<body>
+	<header>
+		<div id="divLogotipoSistema">
+			<span id="spanAuxiliarDeAlinhamentoVertical"></span>
+			<a href="*">
+				<img src="../../images/simbolo_escola.jpg" id="imgLogotipoSistema">
+			</a>
+		</div>
+		<h1>Olá, nome do usuário</h1>
+		
+	</header> <br/><br/> <br/><br/>
+	<!-- Fim do cabeçalho -->
+	
+	<input id="botaoOpcao" type="button" value="Home" onclick="location.href= 'coordenador-home.html'" />
+	<input id="botaoOpcao" type="button" value="Curso" onclick="location.href='coordenador-curso.html'"> <br/> <br/>
+	
+	<div id="divInformativo">
+		
+		<label class="labelInformativo" for="materia">Matéria: </label> <br/>
+		<input class="inputInformativo" type="text" id="materia" readonly="readonly" value="Inglês"> <br/> <br/> 
+		
+		<label  class="labelInformativo" for="nomeProfessor">Professor: </label> <br/>
+		<input class="inputInformativo" type="text" readonly="readonly" id="nomeProfessor" value="Antônio Mendes Silvério">
+		
+	</div> <br/> <br/>
+	
+	<h1 id="titleRecado">Mural de recados</h1>
+	
+	<div>
+		<form>
+			<fieldset id="fieldsetRecado">
+				
+				<label  class="labelInformativo" for="recado">Recado: </label> <br/>
+				<textarea class="textAreaInformativo" id="recado" rows="5" cols="50" placeholder=" Se preferir adicione aqui um novo recado no mural para os alunos..."></textarea> <br/> <br/> 
+				
+				<input type="hidden">
+				<input type="submit" value="Adicionar recado">
+			</fieldset>
+		</form>	
+	</div> <br/> <br/>
+	
+	
+	<div id="divFiltro">
+		
+		<div id="divPost">
+			<input id="inputPostDel" type="text" readonly="readonly" value="Antônio Mendes Silvério">
+			<input type="button" id="btnExcluir" value="Excluir">
+			<textarea id="post" rows="5" cols="50">Nova atividade adicionada para entrega no dia 17/11</textarea>
+			<input id="dataPost" type="text" readonly="readonly" value="04/11/2020">
+		</div> <br/>
+		
+		<div id="divPost">
+			<input id="inputPostDel" type="text" readonly="readonly" value="Antônio Mendes Silvério">
+			<input type="button" id="btnExcluir" value="Excluir">
+			<textarea id="post" rows="5" cols="50">Nova atividade adicionada para entrega no dia 17/11</textarea>
+			<input id="dataPost" type="text" readonly="readonly" value="04/11/2020">
+		</div> <br/>
+		
+		<div id="divPost">
+			<input id="inputPostDel" type="text" readonly="readonly" value="Antônio Mendes Silvério">
+			<input type="button" id="btnExcluir" value="Excluir">
+			<textarea id="post" rows="5" cols="50">Nova atividade adicionada para entrega no dia 17/11</textarea>
+			<input id="dataPost" type="text" readonly="readonly" value="04/11/2020">
+		</div> <br/>
+	</div> <br/> <br/>
+
+</body>
+</html>

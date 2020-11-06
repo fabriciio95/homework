@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Macedo Cursos</title>
+<link rel="stylesheet" type="text/css" href="../css/estilo-sistema.css">
+</head>
+<body>
+	<header>
+		<div id="divLogotipoSistema">
+			<span id="spanAuxiliarDeAlinhamentoVertical"></span>
+			<a href="*">
+				<img src="../../images/simbolo_escola.jpg" id="imgLogotipoSistema">
+			</a>
+		</div>
+		<h1>Olá, nome do usuário</h1>
+		
+	</header> <br/><br/> <br/><br/>
+	<!-- Fim do cabeçalho -->
+	
+	<input id="botaoOpcao" type="button" value="Home" onclick="location.href= 'professor-home.html'" /> 
+	<input id="botaoOpcao" type="button" value="mural de recados" onclick="location.href='professor-recados.html'"> <br/> 
+	<input id="botaoOpcao" type="button" value="voltar" onclick="location.href='professor-curso.html'"> <br/> <br/>
+	
+	<div id="divInformativo">
+		
+		<label class="labelInformativo" for="materia">Matéria: </label> <br/>
+		<input class="inputInformativo" type="text" id="materia" readonly="readonly" value="Inglês"> <br/> <br/> 
+		
+	</div> <br/> <br/>
+	
+	<div id="divFiltro">
+		<span id="tituloFiltro">Buscar aluno por:</span> <br/> <br/>
+		<form id="formPesquisa">
+			<label for="idAluno" id="labelPesquisa">Id:</label> <br/>
+			<input  type="text" id="idAluno"/>  <br/> <br/>
+			
+			<label for="nomeAluno" id="labelPesquisa">Nome:</label> 
+			<input type="text" id="nomeAluno"/> <br/> <br/>
+			
+			<label id="labelPesquisa" for="situacao">Situação:</label>
+				<select id="situacao" class="select">
+					<option>Aprovado</option>
+					<option>Reprovado</option>
+					<option selected="selected">Recuperação</option>
+				</select> <br/> <br/>
+			
+			<label id="labelPesquisa" for="filtroDeBusca">Todos: </label> 
+			<input  type="checkbox" id="filtroDeBusca" />  <br/> <br/>
+			
+			<input id="botaoPesquisa" type="submit" value="Buscar">
+		</form>
+	</div> <br/> <br/>
+	
+	<div id="mensagemSucesso">
+		<span>Exemplo mensagem de sucesso</span> 
+	</div> <br/> <br/> 
+	<div>
+		<form method="post" action="" id="form-cadastro">
+			<fieldset>
+			
+				<div id="mensagemErro">
+				<span>Exemplo mensagem de erro</span> 
+				</div> <br/>
+				<input type="hidden" name="idAluno">
+				<label for="nome">Aluno: </label><br/>
+				<input type="text" id="nome" readonly="readonly" value="José Silva Gomes" /> <br/> <br/>
+				
+				<label for="email">Nota 1: </label><br/>
+				<input type="email" id="nota1" value="6.7" /> <br/> <br/>
+				
+				<div id="mensagemErro">
+				<span>Exemplo mensagem de erro</span> 
+				</div> <br/>
+				<label for="email">Nota 2: </label><br/>
+				<input type="email" id="nota2" value="9.8"  /> <br/> <br/>
+				
+				<label for="email">Nota 3: </label><br/>
+				<input type="email" id="nota3" value="10" /> <br/> <br/>
+				
+				<label for="email">Nota 4: </label><br/>
+				<input type="email" id="nota4" value="7" /> <br/> <br/>
+				
+				<label for="email">Média Final: </label><br/>
+				<input type="email" id="mediaFinal" value="6.7" /> <br/> <br/>
+				
+				<label for="situacao">Situação:</label>
+				<select id="situacao" class="select">
+					<option>Aprovado</option>
+					<option>Reprovado</option>
+					<option selected="selected">Recuperação</option>
+				</select> <br/> <br/>
+				
+				<input type="submit" value="Atualizar" />
+			</fieldset>
+		   </form>
+		</div> <br/> <br/>
+	
+	<table>
+		<tr>
+			<th>ID</th>
+			<th>Aluno</th>
+			<th>Nota 1</th>
+			<th>Nota 2</th>
+			<th>Nota 3</th>
+			<th>Nota 4</th>
+			<th>MF</th>
+			<th>Situação</th>
+			<th>Editar</th>
+		</tr>
+		<tr>
+			<td>1</td>
+			<td>José Silva Gomes</td>
+			<td>6.7</td>
+			<td>9.8</td>
+			<td>10</td>
+			<td>7</td>
+			<td>6.7</td>
+			<td>Recuperação</td>
+			<td><input type="button" value="Editar"/></td>
+		</tr>
+		<tr>
+			<td>2</td>
+			<td>André Morais</td>
+			<td>7.7</td>
+			<td>4.8</td>
+			<td>9</td>
+			<td>7</td>
+			<td>8.7</td>
+			<td>Aprovado</td>
+			<td><input type="button" value="Editar"></td>
+		</tr>
+		<tr>
+			<td>3</td>
+			<td>Felipe Alves</td>
+			<td>4.7</td>
+			<td>5.0</td>
+			<td>3.7</td>
+			<td>3</td>
+			<td>5.0</td>
+			<td>Reprovado</td>
+			<td><input type="button" value="Editar"></td>
+		</tr>
+		<tr>
+			<td>1</td>
+			<td>Juliana Gomes</td>
+			<td>10</td>
+			<td>10</td>
+			<td>10</td>
+			<td>7</td>
+			<td>9.2</td>
+			<td>Aprovado</td>
+			<td><input type="button" value="Editar"></td>
+		</tr>
+	
+	</table>
+
+</body>
+</html>

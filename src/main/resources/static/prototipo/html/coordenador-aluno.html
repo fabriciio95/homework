@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Macedo Cursos</title>
+<link rel="stylesheet" type="text/css" href="../css/estilo-sistema.css">
+</head>
+<body>
+	<header>
+		<div id="divLogotipoSistema">
+			<span id="spanAuxiliarDeAlinhamentoVertical"></span>
+			<a href="*">
+				<img src="../../images/simbolo_escola.jpg" id="imgLogotipoSistema">
+			</a>
+		</div>
+		<h1>Olá, nome do usuário</h1>
+		
+	</header> <br/><br/> <br/><br/>
+	<!-- Fim do cabeçalho -->
+	
+	<input id="botaoOpcao" type="button" value="Home" onclick="location.href= 'coordenador-home.html'" />
+	<input id="botaoOpcao" type="button" value="Alunos" onclick="location.href= 'coordenador-alunos.html'" /> <br/>
+	
+	<div id="divInformativo">
+		
+		<label class="labelInformativo" for="idAluno">Id: </label> <br/>
+		<input class="inputInformativo" type="text" id="idAluno" readonly="readonly" value="3"> <br/> <br/>
+		
+		
+		<label class="labelInformativo" for="nomeAluno">Nome: </label> <br/>
+		<input class="inputInformativo" type="text" id="nomeAluno" readonly="readonly" value="Matheus Costa"> <br/> <br/> 
+		
+		
+		<label class="labelInformativo" for="email">Email: </label> <br/>
+		<input class="inputInformativo" type="text" id="email" readonly="readonly" value="matheus@gmail.com"> <br/> <br/>
+		
+	</div> <br/> <br/>
+	
+	<div id="divCentralizado">
+		<input type="button" id="btnCentralizado" value="Excluir aluno"> <br/>
+	</div>
+	
+	<h1>Cursos matriculados em andamento</h1> 
+	
+	<table id="tb-alunos">
+		<tr>
+			<th>Id</th>
+			<th>Aluno</th>
+			<th>Curso</th>
+			<th>Nota 1</th>
+			<th>Nota 2</th>
+			<th>Nota 3</th>
+			<th>Nota 4</th>
+			<th>MF</th>
+			<th>Situação</th>
+			<th>Desmatricular</th>
+		</tr>
+		<tr>	
+			<td>1</td>
+			<td>José Silva Gomes</td>
+			<td>Inglês</td>
+			<td>4</td>
+			<td>7</td>
+			<td>7</td>
+			<td>6.7</td>
+			<td>6.9</td>
+			<td>Recuperação</td>
+			<td><input type="button" value="Desmatricular"/></td>
+		</tr>
+		<tr>		
+			<td>1</td>
+			<td>José Silva Gomes</td>
+			<td>Informática</td>
+			<td>9</td>
+			<td>8</td>
+			<td>7</td>
+			<td>7</td>
+			<td>8</td>
+			<td>Aprovado</td>
+			<td><input type="button" value="Desmatricular"/></td>
+		</tr>
+		<tr>
+			<td>1</td>
+			<td>José Silva Gomes</td>
+			<td>Espanhol</td>
+			<td>4</td>
+			<td>3</td>
+			<td>5</td>
+			<td>6.</td>
+			<td>5.5</td>
+			<td>Reprovado</td>
+			<td><input type="button" value="Desmatricular"/></td>
+		</tr>
+	</table> <br/> <br/>
+	
+	
+	<div id="divFiltro">
+		<span id="tituloFiltro">Buscar curso concluído por:</span> <br/> <br/>
+		<form id="formPesquisa">
+			<label for="idCurso" id="labelPesquisa">Id:</label> <br/>
+			<input  type="text" id="idCurso"/>  <br/> <br/>
+			<label for="nomeCurso" id="labelPesquisa">Curso:</label> <br/>
+			<input  type="text" id="nomeCurso"/>  <br/> <br/>
+			<label for="dataInicio" id="labelPesquisa">Data Inicio:</label> <br/>
+			<input  type="date" id="dataInicio"/>  <br/> <br/>
+			<label for="dataFinal" id="labelPesquisa">Data Final:</label> 
+			<input type="date" id="dataFinal"/> <br/> <br/>
+			<input id="botaoPesquisa" type="submit" value="Buscar">
+		</form>
+	</div> <br/> <br/>
+	
+	<h1>Cursos Concluídos</h1>
+	
+	<table id="tb-alunos">
+		<tr>
+			<th>Id</th>
+			<th>Aluno</th>
+			<th>Curso</th>
+			<th>Data Conclusão</th>
+			<th>Certificado</th>
+		</tr>
+		<tr>
+			<td>1</td>
+			<td>José Silva Gomes</td>
+			<td>Inglês</td>
+			<td>14/04/2020</td>
+			<td><input type="button" value="Baixar Certificado" /></td>
+		</tr>
+		<tr>
+			<td>1</td>
+			<td>José Silva Gomes</td>
+			<td>Informática</td>
+			<td>20/06/2020</td>
+			<td><input type="button" value="Baixar Certificado" /></td>
+		</tr>
+		<tr>
+			<td>1</td>
+			<td>José Silva Gomes</td>
+			<td>Espanhol</td>
+			<td>14/02/2019</td>
+			<td><input type="button" value="Baixar Certificado" /></td>
+		</tr>
+	</table>
+
+</body>
+</html>
