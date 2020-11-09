@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>Macedo Cursos</title>
+<link rel="stylesheet" type="text/css" th:href="@{/css/estilo-sistema.css}" />
+<script type="text/javascript" th:src="@{/javascript/script.js}"></script>
+</head>
+<body>
+	<header>
+		<div id="divLogotipoSistema">
+			<span id="spanAuxiliarDeAlinhamentoVertical"></span>
+			<a th:href="${link} == null ? @{/} : ${link}">
+				<img th:src="@{/images/simbolo_escola.jpg}" id="imgLogotipoSistema"/>
+			</a>
+		</div>
+	</header> <br/><br/>
+	<!-- Fim do cabeçalho -->
+	
+	<!-- conteúdo -->
+	<div layout:fragment="content"></div>
+
+</body>
+</html>

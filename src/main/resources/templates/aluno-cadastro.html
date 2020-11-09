@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}">
+	
+<body>
+	<div layout:fragment="content">
+		<h1>Cadastrar Aluno</h1>
+		
+		 <div id="mensagemErro" th:if="${msgErro != null}">
+			<span th:text="${msgErro}"></span> 
+		</div> 
+		
+		 <div id="mensagemSucesso" th:if="${msgSucesso != null}">
+			<span th:text="${msgSucesso}"></span> 
+		</div> 
+		
+		<div th:if="${msgErro != null|| msgSucesso != null}">
+			<br/>
+		</div>
+		
+		<div>
+			<form method="post" th:action="@{/aluno/save}" th:object="${aluno}" id="form-cadastro">
+				<fieldset>
+					<div id="mensagemErro" th:if="${#fields.hasErrors('nome')}" >
+						<span th:errors="*{nome}"></span> 
+						<br/> 
+					</div> 
+					<label for="nome">Nome: </label><br/>
+					<input type="text" id="nome" placeholder=" Informe seu nome" required="required" th:field="*{nome}" /> <br/><br/>
+					
+					<div id="mensagemErro" th:if="${#fields.hasErrors('nome')}">
+						<span th:errors="*{email}"></span>
+						<br/>  
+					</div> 
+					
+					<label for="email">E-mail: </label><br/>
+					<input type="email" id="email" placeholder=" Informe um e-mail..." required="required" th:field="*{email}" /> <br/> <br/>
+					
+					<div id="mensagemErro" th:if="${#fields.hasErrors('nome')}">
+						<span th:errors="*{senha}"></span> 
+						<br/> 
+					</div>
+				
+					<label for="senha">Senha: </label><br/>
+					<input type="password" id="senha" placeholder=" Informe uma senha..." required="required" /> <br/> <br/>
+					
+					<div id="mensagemErroValidacaoJS" style="display: none;">
+						<span>Senhas diferentes!</span> 
+						<br/> 
+					</div>
+					
+					<label for="senhaRepetida">Confirme sua senha: </label><br/>
+					<input type="password" id="senhaRepetida" placeholder=" Confirme sua senha..." th:field="*{senha}"  required="required" onchange="isSenhaIguais();"/> <br/> <br/>
+					
+					<input type="submit" value="Cadastrar" />
+				</fieldset>
+			   </form>
+			</div> <br/> <br/>
+		
+			<input type="button" value="Login" th:onclick="'location.href=\'' + @{/} + '\';'" />
+	</div>
+	</body>
+</html>

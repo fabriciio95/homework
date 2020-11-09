@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}">
+<body>
+	
+	<div layout:fragment="content">
+		<h1>Login</h1>
+		
+		 <div id="mensagemErro" th:if="${msgErro != null}">
+			<span th:text="${msgErro}"></span> 
+		</div> 
+		
+		 <div id="mensagemSucesso" th:if="${msgSucesso != null}">
+			<span th:text="${msgSucesso}"></span> 
+		</div> 
+		
+		<div th:if="${msgErro != null|| msgSucesso != null}">
+			<br/>
+		</div>
+		
+		<div>
+			<form method="post" action="">
+				<fieldset>
+					
+					<label for="email">Email: </label><br/>
+					<input type="email" id="email" placeholder=" Digite seu e-mail..." required="required"/> <br/> <br/>
+				
+					<label for="senha">Senha: </label><br/>
+					<input type="password" id="senha" placeholder=" Digite sua senha..." required="required"/> <br/> <br/>
+					
+					<input type="submit" value="Entrar"> <br/> <br/>
+					
+					<input id="botaoCadastrar" type="button" value="Cadastre-se" th:onclick="'location.href=\'' +@{/aluno/cadastro} + '\';'" style="margin-bottom: 0;" />
+				</fieldset>
+			</form>
+		</div> <br/> <br/>
+	
+	</div>
+	
+</body>
+</html>
