@@ -28,7 +28,7 @@
 					<label for="nome">Nome: </label><br/>
 					<input type="text" id="nome" placeholder=" Informe seu nome" required="required" th:field="*{nome}" /> <br/><br/>
 					
-					<div id="mensagemErro" th:if="${#fields.hasErrors('nome')}">
+					<div id="mensagemErro" th:if="${#fields.hasErrors('email')}">
 						<span th:errors="*{email}"></span>
 						<br/>  
 					</div> 
@@ -36,7 +36,7 @@
 					<label for="email">E-mail: </label><br/>
 					<input type="email" id="email" placeholder=" Informe um e-mail..." required="required" th:field="*{email}" /> <br/> <br/>
 					
-					<div id="mensagemErro" th:if="${#fields.hasErrors('nome')}">
+					<div id="mensagemErro" th:if="${#fields.hasErrors('senha')}">
 						<span th:errors="*{senha}"></span> 
 						<br/> 
 					</div>

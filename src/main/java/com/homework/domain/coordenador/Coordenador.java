@@ -1,10 +1,10 @@
-package com.homework.domain.aluno;
+package com.homework.domain.coordenador;
 
 import javax.persistence.Entity;
 
 import com.homework.domain.usuario.Usuario;
 
 @Entity
-public class Aluno extends Usuario{
+public class Coordenador extends Usuario {
 
 }
