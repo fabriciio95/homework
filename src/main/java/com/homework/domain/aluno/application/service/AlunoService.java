@@ -26,6 +26,13 @@ public class AlunoService {
 		if(!isValidEmail(aluno)) {
 			throw new ValidationException("E-mail já cadastrado!");
 		} 
+		
+		if(aluno.getId() == null) {
+			aluno.criptografarSenha();
+		} else {
+			String senha = alunoRepository.findById(aluno.getId()).get().getSenha();
+			aluno.setSenha(senha);
+		}
 		return alunoRepository.save(aluno);
 	}
 	

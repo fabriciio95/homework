@@ -4,7 +4,8 @@
 	
 <body>
 	<div layout:fragment="content">
-		<h1>Cadastrar Aluno</h1>
+		<h1 th:if="${aluno.id == null}">Cadastrar Aluno</h1>
+		<h1 th:if="${aluno.id != null}">Atualizar Aluno</h1>
 		
 		 <div id="mensagemErro" th:if="${msgErro != null}">
 			<span th:text="${msgErro}"></span> 
@@ -19,8 +20,9 @@
 		</div>
 		
 		<div>
-			<form method="post" th:action="@{/aluno/save}" th:object="${aluno}" id="form-cadastro">
+			<form method="post" th:action="${aluno.id == null} ? @{/public/aluno/cadastrar} : @{/aluno/save}" th:object="${aluno}" id="form-cadastro">
 				<fieldset>
+					<input type="hidden" name="id" th:value="${aluno.id}">
 					<div id="mensagemErro" th:if="${#fields.hasErrors('nome')}" >
 						<span th:errors="*{nome}"></span> 
 						<br/> 
@@ -36,28 +38,31 @@
 					<label for="email">E-mail: </label><br/>
 					<input type="email" id="email" placeholder=" Informe um e-mail..." required="required" th:field="*{email}" /> <br/> <br/>
 					
-					<div id="mensagemErro" th:if="${#fields.hasErrors('senha')}">
-						<span th:errors="*{senha}"></span> 
-						<br/> 
-					</div>
-				
-					<label for="senha">Senha: </label><br/>
-					<input type="password" id="senha" placeholder=" Informe uma senha..." required="required" /> <br/> <br/>
+					<div th:if="${aluno.id == null}">
+						<div id="mensagemErro" th:if="${#fields.hasErrors('senha')}">
+							<span th:errors="*{senha}"></span> 
+							<br/> 
+						</div>
+						<label for="senha">Senha: </label><br/>
+						<input type="password" id="senha" placeholder=" Informe uma senha..." th:required="${aluno.id == null} ? 'required' : ''" /> <br/> <br/>
+						
+						<div id="mensagemErroValidacaoJS" style="display: none;">
+							<span>Senhas diferentes!</span> 
+							<br/> 
+						</div>
+						
+						<label for="senhaRepetida">Confirme sua senha: </label><br/>
+						<input type="password" id="senhaRepetida" placeholder=" Confirme sua senha..." th:field="*{senha}"  th:required="${aluno.id == null} ? 'required' : ''" onchange="isSenhaIguais();"/> <br/> <br/>
+					</div>	
 					
-					<div id="mensagemErroValidacaoJS" style="display: none;">
-						<span>Senhas diferentes!</span> 
-						<br/> 
-					</div>
+					<input type="hidden" name="senha" value="*" th:if="${aluno.id != null}">
 					
-					<label for="senhaRepetida">Confirme sua senha: </label><br/>
-					<input type="password" id="senhaRepetida" placeholder=" Confirme sua senha..." th:field="*{senha}"  required="required" onchange="isSenhaIguais();"/> <br/> <br/>
-					
-					<input type="submit" value="Cadastrar" />
+					<input type="submit" th:value="${aluno.id == null} ? 'Cadastrar' : 'Atualizar'" />
 				</fieldset>
 			   </form>
 			</div> <br/> <br/>
 		
-			<input type="button" value="Login" th:onclick="'location.href=\'' + @{/} + '\';'" />
+			<input type="button" value="Voltar" th:onclick="'location.href=\'' + @{/aluno/home} + '\';'" />
 	</div>
 	</body>
 </html>

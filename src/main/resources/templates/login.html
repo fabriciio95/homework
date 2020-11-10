@@ -23,14 +23,14 @@
 				<fieldset>
 					
 					<label for="email">Email: </label><br/>
-					<input type="email" id="email" placeholder=" Digite seu e-mail..." required="required"/> <br/> <br/>
+					<input type="email" id="username" name="username" placeholder=" Digite seu e-mail..." required="required"/> <br/> <br/>
 				
 					<label for="senha">Senha: </label><br/>
-					<input type="password" id="senha" placeholder=" Digite sua senha..." required="required"/> <br/> <br/>
+					<input type="password" id="password" name="password" placeholder=" Digite sua senha..." required="required"/> <br/> <br/>
 					
-					<input type="submit" value="Entrar"> <br/> <br/>
+					<input type="submit" value="Entrar" /> <br/> <br/>
 					
-					<input id="botaoCadastrar" type="button" value="Cadastre-se" th:onclick="'location.href=\'' +@{/aluno/cadastro} + '\';'" style="margin-bottom: 0;" />
+					<input id="botaoCadastrar" type="button" value="Cadastre-se" th:onclick="'location.href=\'' +@{/public/aluno/cadastro} + '\';'" style="margin-bottom: 0;" />
 				</fieldset>
 			</form>
 		</div> <br/> <br/>

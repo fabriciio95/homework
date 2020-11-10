@@ -14,35 +14,27 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.homework.domain.aluno.Aluno;
 import com.homework.domain.aluno.application.service.AlunoService;
 import com.homework.domain.aluno.application.service.ValidationException;
-import com.homework.utils.SecurityUtils;
 
 @Controller
-@RequestMapping("/aluno")
-public class AlunoController {
+@RequestMapping("/public")
+public class PublicController {
 	
 	@Autowired
 	private AlunoService alunoService;
-	
 
-	@GetMapping("/home")
-	public String home() {
-		return "aluno-home";
-	}
-	
-	@GetMapping("/atualizar")
-	public String atualizar(Model model) {
-		Aluno aluno = SecurityUtils.getAlunoLogado();
-		model.addAttribute("aluno", aluno);
+	@GetMapping("/aluno/cadastro")
+	public String cadastroAluno(Model model) {
+		model.addAttribute("aluno", new Aluno());
 		return "aluno-cadastro";
 	}
 	
-	@PostMapping("/save")
-	public String atualizar(@ModelAttribute("aluno") @Valid Aluno aluno, Errors errors, Model model) {
+	@PostMapping("/aluno/cadastrar")
+	public String cadastrarAluno(@ModelAttribute("aluno") @Valid Aluno aluno, Errors errors, Model model) {
 		try {
 			if(!errors.hasErrors()) {
 				alunoService.save(aluno);
-				SecurityUtils.getLoggedUser().atualizarLoggedUser(aluno);
-				model.addAttribute("msgSucesso", "Aluno atualizado com sucesso!");
+				model.addAttribute("msgSucesso", "Aluno cadastrado com sucesso!");
+				return "login";
 			}
 		} catch (ValidationException e) {
 			errors.rejectValue("email", null, e.getMessage());

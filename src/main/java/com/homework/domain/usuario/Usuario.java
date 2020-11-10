@@ -8,6 +8,9 @@ import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -36,5 +39,10 @@ public class Usuario {
 	@Size(max = 100,  message = "Senha muito grande")
 	@Column(name = "senha", nullable = false, length = 100)
 	private String senha;
+	
+	public void criptografarSenha() {
+		PasswordEncoder enconder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+		setSenha(enconder.encode(senha));
+	}
 
 }

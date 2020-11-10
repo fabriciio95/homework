@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}">
+	
+<body>
+	<div layout:fragment="content">
+		<div>
+			<input type="button"  id="botaoOpcao" value="Meus dados" th:onclick="'location.href=\'' + @{/aluno/atualizar} + '\';'"/> 
+			<input type="button"  id="botaoOpcao" value="Novos Cursos" onclick="location.href='aluno-novos-cursos.html'" /> <br/>
+			<input type="button"  id="botaoOpcao" value="Meus Cursos"  onclick="location.href='aluno-meus-cursos.html'" />
+			<input type="button"  id="botaoOpcao" value="Minhas notas" onclick="location.href= 'aluno-notas.html'" /> <br/>
+			<input type="button"  id="botaoOpcao" value="Certificados" onclick="location.href= 'aluno-certificados.html'" />
+			<input type="button"  id="botaoOpcao" value="Sair" th:onclick="'location.href=\'' + @{/logout} +'\';'" /> 
+		</div>
+		
+		<div>
+			<span id="opcaoTitulo">Cursos matriculados</span> <br/> <br/>  <br/> <br/>
+			<input type="button"  value="Informática" onclick="location.href='aluno-curso.html'" /> <br/>
+			<input type="button"  value="Inglês" onclick="location.href='aluno-curso.html'" /> <br/> 
+			<input type="button"  value="Espanhol" onclick="location.href='aluno-curso.html'" /> <br/>
+			
+		</div> <br/><br/>
+		
+		<div>
+			<span id="opcaoTitulo">Atividades pendentes</span> <br/> <br/>  <br/> <br/>
+			<input type="button" value="Nome atividade" onclick="location.href='aluno-atividade.html'"/> <br/> 
+			<input type="button" value="Nome atividade" onclick="location.href='aluno-atividade.html'"/> <br/> 
+			<input type="button" value="Nome atividade" onclick="location.href='aluno-atividade.html'"/> <br/> 
+		</div> <br/><br/>
+	</div>
+</body>
+</html>
