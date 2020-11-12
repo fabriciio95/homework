@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}" th:with="link=@{/coordenador/home}">
+	
+<body>
+	<div layout:fragment="content">
+		<input id="botaoOpcao" type="button" value="Home" th:onclick="'location.href=\'' + @{/coordenador/home} + '\';'" />
+	
+		<h1>Solicitações de matriculas</h1>
+		
+		<div id="mensagemSucesso" th:if="${msgSucesso != null}">
+			<span th:text="${msgSucesso}"></span> 
+		</div>  
+		
+		<div id="mensagemErro" th:if="${msgErro != null}">
+			<span th:text="${msgErro}"></span> 
+		</div> 
+		
+		<div th:if="${msgSucesso != null || msgErro != null}">
+		 	<br/><br/>
+		</div>
+		
+		<div id="divComunicado" th:if="${matriculas.size() == 0}">
+			<span th:text="${msgPermissoesMatricula}"></span>
+		</div> 
+		
+		<table  th:if="${matriculas.size() > 0}">
+			<tr>
+				<th>ID</th>
+				<th>Aluno</th>
+				<th>Curso</th>
+				<th>Data Inicio</th>
+				<th>Ver aluno</th>
+				<th>Ver Curso</th>
+				<th>Permitir</th>
+				<th>Recusar</th>
+			</tr>
+			<tr th:each="matricula : ${matriculas}">
+				<td><span th:text="${matricula.id.aluno.id}"></span></td>
+				<td><span th:text="${matricula.id.aluno.nome}"></span></td>
+				<td><span th:text="${matricula.id.curso.nome}"></span></td>
+				<td><span th:text="${#temporals.format(matricula.id.curso.dataInicial, 'dd/MM/yyyy')}"></span></td>
+				<td><input type="button" value="Ver aluno" th:onclick="'location.href=\'' + @{coordenador/aluno} + '\';'"/></td>
+				<td><input type="button" value="Ver curso" th:onclick="'location.href=\'' + @{coordenador/curso} + '\';'"/></td>
+				<td><input type="button" id="btnPermitir" value="Permitir" th:onclick="'location.href=\'' + @{/coordenador/permissoes/permitir} + '?curso=' + ${matricula.id.curso.id} + '&aluno=' + ${matricula.id.aluno.id} + '\';'"/></td>
+				<td><input type="button" id="btnRecusar"  value="Recusar" th:onclick="'location.href=\'' + @{/coordenador/permissoes/proibir} + '?curso=' + ${matricula.id.curso.id} + '&aluno=' + ${matricula.id.aluno.id} + '\';' "/></td>
+			</tr>
+		</table>
+	</div>	
+</body>
+</html>

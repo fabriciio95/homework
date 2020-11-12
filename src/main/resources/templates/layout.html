@@ -15,6 +15,9 @@
 				<img th:src="@{/images/simbolo_escola.jpg}" id="imgLogotipoSistema"/>
 			</a>
 		</div>
+		<div id="usuarioLogado" th:if="${#authentication.principal != 'anonymousUser' && pageLogin == null}">
+			<span th:text="'Olá, seja bem vindo ' + ${#authentication.principal.usuario.nome}"></span>
+		</div>
 	</header> <br/><br/>
 	<!-- Fim do cabeçalho -->
 	

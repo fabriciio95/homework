@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}" th:with="link=@{/aluno/home}">
+<body>
+	<div layout:fragment="content">
+		<input id="botaoOpcao" type="button" value="Home" th:onclick="'location.href=\'' + @{/aluno/home} + '\';'" /> <br/> <br/>
+		
+		<div id="mensagemSucesso" th:if="${msgSucesso != null}">
+			<span th:text="${msgSucesso}"></span> 
+		</div>  
+		
+		<div id="mensagemErro" th:if="${msgErro != null}">
+			<span th:text="${msgErro}"></span> 
+		</div> 
+		
+		<div id="divComunicado" th:if="${msgPermissaoMatricula != null}">
+			<span th:text="${msgPermissaoMatricula}"></span>
+		</div> <br/><br/>
+		
+		<div id="divFiltro">
+		<span id="tituloFiltro">Buscar curso por:</span> <br/> <br/>
+		<form id="formPesquisa" th:action=@{/aluno/curso/buscar} th:object="${cursoFilter}">
+			
+			<label for="nomeCurso" id="labelPesquisa">Nome:</label> 
+			<input type="text" id="nomeCurso" th:field="*{nome}"/> <br/> <br/>
+			
+			<label for="nomeProfessor" id="labelPesquisa">Professor:</label> 
+			<input type="text" id="nomeProfessor" th:field="*{nomeProfessor}"/> <br/> <br/>
+			
+			<label id="labelPesquisa" for="categoria">Categoria:</label>
+				<select id="area" th:field="*{categoria}" class="select">
+					<option selected="selected" value="NENHUMA">Nenhuma</option>
+					<option value="OUTROS">Outros</option>
+					<option value="INFORMATICA" >Informática</option>
+					<option value="IDIOMAS">Idiomas</option>
+					<option value="MATEMATICA">Matemática</option>
+					<option value="PORTUGUES">Português</option>
+				</select> <br/> <br/>
+			
+			<input id="botaoPesquisa" type="submit" value="Buscar">
+		</form>
+	</div> <br/> <br/>
+		
+		<h1 th:if="${cursos != null && cursos.size() > 0}">Cursos disponiveis</h1>
+		<h1 th:if="${cursos != null && cursos.size() == 0}">Nenhum curso encontrado</h1>
+		
+		<div id="divInformativo" th:each="curso : ${cursos}">
+			
+			<label class="labelInformativo" for="materia">Matéria: </label> <br/>
+			<input class="inputInformativo" type="text" id="materia" readonly="readonly" th:value="${curso.nome}"> <br/> <br/> 
+			
+			<label  class="labelInformativo" for="nomeProfessor">Professor: </label> <br/>
+			<input class="inputInformativo" type="text" readonly="readonly" id="nomeProfessor" th:value="${curso.professor.nome}"> <br/> <br/> 
+			
+			
+			<label  class="labelInformativo" for="descricaoCurso">Descrição: </label> <br/>
+			<textarea class="textAreaInformativo" readonly="readonly" id="descricaoCurso" rows="5" cols="50" th:text="${curso.descricao}"></textarea> <br/> <br/>  
+		
+			<label  class="labelInformativo" for="nomeProfessor">Vagas Restantes: </label> <br/>
+			<input class="inputInformativo" type="text" readonly="readonly" id="nomeProfessor" th:value="${curso.vagas}" /> <br/> <br/> 
+			
+			<label  class="labelInformativo" for="dataInicial">Data inicial: </label> <br/>
+			<input class="inputInformativo" type="text" readonly="readonly" id="dataFinal" th:value="${#temporals.format(curso.dataInicial, 'dd/MM/yyyy')}" /> <br/> <br/> 
+			
+			<label  class="labelInformativo" for="dataFinal">Data de conclusão: </label> <br/>
+			<input class="inputInformativo" type="text" readonly="readonly" id="dataFinal" th:value="${#temporals.format(curso.dataConclusao, 'dd/MM/yyyy')}"> <br/> <br/> 
+			
+			<form th:action="@{/aluno/matricula/permissao}">
+				<input type="hidden" name="idCurso" th:value="${curso.id}">
+				<input id="botaoSubmitPreto" type="submit" value="Solicitar chave de matricula por email" /> <br/> <br/>
+			</form>
+			<form method="post" th:action="@{/aluno/matricula/confirmar}">
+				<label  class="labelInformativo" for="chaveMatricula">Chave: </label> <br/>
+				<input class="inputInformativo" type="text" id="chaveMatricula" name="chave" placeholder="Digite sua chave de matricula desse curso..." required="required" /> <br/> <br/> 
+				<input type="hidden" name="idCurso" th:value="${curso.id}" />
+				<input id="botaoSubmitPreto" type="submit" value="Matricular" />
+			</form>
+		</div> <br/> <br/>
+ </div>
+</body>
+</html>

@@ -1,1 +1,0 @@
-INSERT INTO aluno (nome, email, senha) VALUES('t1', 't@gmail.com', 't1');

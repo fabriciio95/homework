@@ -28,10 +28,17 @@ img#imgLogotipoSistema
 	vertical-align: middle;
 }
 
-header
+header, #usuarioLogado
 {
 	height: 70px;
 	background-color: black;
+}
+
+div#usuarioLogado
+{
+	color: #ffbf00;
+	font-weight: bolder;
+	height: 30px;
 }
 
 div#mensagemErro, div#mensagemErroValidacaoJS
@@ -247,6 +254,7 @@ div#divInformativo
 	width: 470px;
 	margin-right: auto;
 	margin-left: auto;
+	margin-bottom: 30px;
 	padding: 10px;
 	text-align: left;
 }
@@ -514,4 +522,17 @@ h1#title-erro
 img#imageError
 {
 	height: 300px;
+}
+
+div#divComunicado
+{
+	background-color: black;
+	color: #ffbf00;
+	width: 400px;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 15px;
+	font-family: cursive;
+	font-weight: bolder;
+	border-radius: 10px;
 }

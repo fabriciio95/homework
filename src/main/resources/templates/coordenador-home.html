@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}" th:with="link=@{/coordenador/home}">
+	
+<body>
+	<div layout:fragment="content">
+	
+		<div>
+			<input type="button"  id="botaoOpcao" value="Meus dados" onclick="location.href='funcionario-atualizacao.html'"/> 
+			<input type="button"  id="botaoOpcao" value="Cursos" onclick="location.href= 'coordenador-cursos.html'" /> <br/>
+			<input type="button"  id="botaoOpcao" value="Alunos" onclick="location.href='coordenador-alunos.html'"/> 
+			<input type="button"  id="botaoOpcao" value="Professores" onclick="location.href='coordenador-professores.html'"/> <br/>
+			<input type="button"  id="botaoOpcao" value="Permissões" th:onclick="'location.href=\'' + @{/coordenador/permissoes} + '\';'" />
+			<input type="button"  id="botaoOpcao" value="Comunicados" onclick="location.href= 'coordenador-comunicados.html'" /> <br/>
+			<input type="button"  id="botaoOpcao" value="Sair" th:onclick="'location.href=\'' +@{/logout} + '\';'" />
+		</div>
+		
+		<div>
+			<span id="opcaoTitulo">Cursos em andamento</span> <br/> <br/>  <br/> <br/>
+			<input type="button"  value="Informática" onclick="location.href='coordenador-curso.html'" /> <br/>
+			<input type="button"  value="Inglês"  onclick="location.href='coordenador-curso.html'"/> <br/> 
+			<input type="button"  value="Espanhol" onclick="location.href='coordenador-curso.html'" /> <br/>
+			
+		</div> <br/><br/>
+	</div>
+</body>
+</html>

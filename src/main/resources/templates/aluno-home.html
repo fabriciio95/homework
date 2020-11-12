@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-	  xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}">
+	  xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}" th:with="link=@{/aluno/home}">
 	
 <body>
 	<div layout:fragment="content">
+	
 		<div>
 			<input type="button"  id="botaoOpcao" value="Meus dados" th:onclick="'location.href=\'' + @{/aluno/atualizar} + '\';'"/> 
-			<input type="button"  id="botaoOpcao" value="Novos Cursos" onclick="location.href='aluno-novos-cursos.html'" /> <br/>
+			<input type="button"  id="botaoOpcao" value="Novos Cursos" th:onclick="'location.href=\'' + @{/aluno/curso/novos} + '\';'" /> <br/>
 			<input type="button"  id="botaoOpcao" value="Meus Cursos"  onclick="location.href='aluno-meus-cursos.html'" />
 			<input type="button"  id="botaoOpcao" value="Minhas notas" onclick="location.href= 'aluno-notas.html'" /> <br/>
 			<input type="button"  id="botaoOpcao" value="Certificados" onclick="location.href= 'aluno-certificados.html'" />
