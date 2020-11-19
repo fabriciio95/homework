@@ -6,10 +6,10 @@ import javax.persistence.Entity;
 
 import com.homework.domain.usuario.Usuario;
 
-import lombok.Getter;
+import lombok.EqualsAndHashCode;
 
 @Entity
-@Getter
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
 public class Coordenador extends Usuario implements Serializable{
 	private static final long serialVersionUID = 1L;
 

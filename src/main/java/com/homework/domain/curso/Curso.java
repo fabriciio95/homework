@@ -2,15 +2,19 @@ package com.homework.domain.curso;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -18,6 +22,7 @@ import javax.validation.constraints.Size;
 
 import com.homework.domain.coordenador.Coordenador;
 import com.homework.domain.professor.Professor;
+import com.homework.domain.recado.Recado;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -74,4 +79,8 @@ public class Curso implements Serializable{
 	@ManyToOne
 	@NotNull(message = "Coordenador do curso não informado")
 	private Coordenador coordenador;
+	
+	@OneToMany(mappedBy = "curso", fetch = FetchType.EAGER)
+	private List<Recado> recados = new ArrayList<Recado>();
+	
 }

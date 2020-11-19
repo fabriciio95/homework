@@ -12,3 +12,18 @@ function isSenhaIguais(){
 	}
 
 }
+
+function alterarDisplayDivNovaAtividade(){
+
+	var divNovaAtividade = document.getElementById("divNovaAtividade");
+	var msgSucesso = document.getElementById("mensagemSucesso");
+
+	
+	if(divNovaAtividade.style.display == "none"){
+		divNovaAtividade.style.display = "block";
+		msgSucesso.style.display="none";
+		
+	} else if(divNovaAtividade.style.display == "block"){
+		divNovaAtividade.style.display = "none";
+	}
+}

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}" th:with="link=@{/professor/home}">
+	
+<body>
+	<div layout:fragment="content">
+
+		<div>
+			<input type="button"  id="botaoOpcao" value="Meus dados" onclick="location.href='funcionario-atualizacao.html'"/> 
+			<input type="button"  id="botaoOpcao" value="Sair" th:onclick="'location.href=\'' + @{/logout} + '\';'" />
+		</div>
+		
+		<div>
+			<span id="opcaoTitulo">Meus Cursos</span> <br/> <br/>  <br/> <br/>
+			<div th:each="curso : ${cursos}">
+				<input type="button"  th:value="${curso.nome}" th:onclick="'location.href=\'' + @{/professor/curso} + '?curso=' + ${curso.id} + '\';'" /> <br/>
+			</div>
+		</div>
+		
+		<div th:if="${cursos != null && cursos.size() > 0}">
+			<br/><br/>
+		</div> 
+		
+		<div id="divComunicado" th:if="${cursos != null && cursos.size() == 0}">
+			<span>Professor não está lecionando nenhum curso no momento</span>
+		</div>  <br/> <br/>
+		
+		<div>
+			<span id="opcaoTitulo">Atividades em aberto</span> <br/> <br/>  <br/> <br/>
+			<input type="button" value="Nome atividade" onclick="location.href='professor-atividade.html'"/> <br/> 
+			<input type="button" value="Nome atividade" onclick="location.href='professor-atividade.html'"/> <br/> 
+			<input type="button" value="Nome atividade" onclick="location.href='professor-atividade.html'"/> <br/> 
+		</div> <br/><br/>
+	</div>
+</body>
+</html>

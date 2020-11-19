@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}" th:with="link=@{/aluno/home}">
+<body>
+	<div layout:fragment="content">
+		<br/><input id="botaoOpcao" type="button" value="Home" th:onclick="'location.href=\'' + @{/aluno/home} + '\';'" />  
+		<input id="botaoOpcao" type="button" value="Curso" th:onclick="'location.href=\'' + @{/aluno/cursos/verCurso} + '?curso=' + ${curso.id} + '\';'" /> <br/> <br/>
+		
+		<div id="divInformativo">
+			
+			<label class="labelInformativo" for="materia">Matéria: </label> <br/>
+			<input class="inputInformativo" type="text" id="materia" readonly="readonly" th:value="${curso.nome}"> <br/> <br/> 
+			
+			<label  class="labelInformativo" for="nomeProfessor">Professor: </label> <br/>
+			<input class="inputInformativo" type="text" readonly="readonly" id="nomeProfessor" th:value="${curso.professor.nome}">
+			
+		</div> <br/> <br/>
+		
+		<h1>Mural de recados</h1>
+		
+		<div id="divFiltro">
+			
+			<div id="divPost" th:each="recado : ${recados}">
+				<input id="inputPost" type="text" readonly="readonly" th:value="${recado.autor.nome}">
+				<textarea id="post" rows="5" cols="50" th:text="${recado.corpo}"></textarea>
+				<input id="dataPost" type="text" readonly="readonly" th:value="${#temporals.format(recado.data, 'dd/MM/yyyy HH:mm')}">
+			</div> <br/>	
+		</div> <br/> <br/>
+	</div>
+</body>
+</html>

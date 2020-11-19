@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}" th:with="link=@{/aluno/home}">
+	
+<body>
+	<div layout:fragment="content">
+	
+		<input id="botaoOpcao" type="button" value="Home" th:onclick="'location.href=\'' + @{/aluno/home} + '\';'" /> <br/> <br/>
+		
+		<h1>Cursos matriculados</h1>
+		
+		<div id="divInformativo" th:each="curso : ${cursos}">
+			
+			<label class="labelInformativo" for="materia">Matéria: </label> <br/>
+			<input class="inputInformativo" type="text" id="materia" readonly="readonly" th:value="${curso.nome}"> <br/> <br/> 
+			
+			<label  class="labelInformativo" for="nomeProfessor">Professor: </label> <br/>
+			<input class="inputInformativo" type="text" readonly="readonly" id="nomeProfessor" th:value="${curso.professor.nome}"> <br/> <br/> 
+			
+			<input id="botaoPesquisa" type="button" value="Ver curso" th:onclick="'location.href=\'' + @{/aluno/cursos/verCurso} + '?curso=' + ${curso.id} + '\';'">
+			
+		</div> <br/> <br/>
+	</div>
+</body>
+</html>

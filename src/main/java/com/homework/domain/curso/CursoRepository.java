@@ -36,5 +36,7 @@ public interface CursoRepository extends JpaRepository<Curso, Long> {
 	@Query("SELECT c FROM Curso c WHERE LOWER(c.professor.nome) LIKE LOWER(CONCAT('%',?1,'%')) AND "
 			+ "c.categoriaCurso = ?2  AND c.vagas > 0 AND c.status != 'CONCLUIDO'")
 	List<Curso> findByProfessorECategoria(String nomeProfessor, CategoriaCurso categoriaCurso);
+	
+	List<Curso> findByProfessor_Id(Long idProfessor);
  
 }

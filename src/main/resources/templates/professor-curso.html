@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}" th:with="link=@{/professor/home}">
+	
+<body>
+	<div layout:fragment="content">
+
+		<input id="botaoOpcao" type="button" value="Home" th:onclick="'location.href=\'' + @{/professor/home} + '\';'" /> 
+		<input id="botaoOpcao" type="button" value="Mural de recados" onclick="location.href='professor-recados.html'"> <br/> 
+		<input id="botaoOpcao" type="button" value="alunos" onclick="location.href='professor-alunos.html'"> <br/> <br/>
+		
+		<div id="divInformativo">
+			
+			<label class="labelInformativo" for="materia">Matéria: </label> <br/>
+			<input class="inputInformativo" type="text" id="materia" readonly="readonly" th:value="${curso.nome}"> <br/> <br/> 
+			
+		</div> <br/> <br/>
+		
+		
+		<span id="opcaoTitulo">Atividades</span> <br/> <br/> <br/>	
+		
+		<div id="divCentralizado">
+			<input id="btnCentralizado" type="button" value="nova atividade" onclick="alterarDisplayDivNovaAtividade();"> <br/>
+		</div>
+		
+		<div th:if="${msgSucesso != null}" id="mensagemSucesso">
+			<span th:text="${msgSucesso}"></span> 
+		</div> 
+		
+		<div  th:if="${msgSucesso != null}">
+			<br/> <br/> 
+		</div>
+		
+		<div id="divNovaAtividade" th:style="${hasError} ? 'display: block;' : 'display: none;'">
+			<form method="post" th:action="@{/professor/atividade/nova}" th:object="${atividade}" enctype="multipart/form-data"> 
+				<fieldset>
+					<label class="labelInformativo" for="materia">Matéria: </label> <br/>
+					<input class="inputInformativo" type="text" id="materia" th:value="${curso.nome}" readonly="readonly" /> <br/> <br/> 
+					
+					<div id="mensagemErro" th:if="${#fields.hasErrors('titulo')}" >
+						<span th:errors="*{titulo}"></span> 
+						<br/> 
+					</div> 
+					
+					<label for="titulo">Título: </label>
+					<input type="text" id="titulo" th:field="*{titulo}" placeholder="Adicione um título a atividade"/> <br/> <br/>
+					
+					<div id="mensagemErro" th:if="${#fields.hasErrors('descricao')}" >
+						<span th:errors="*{descricao}"></span> 
+						<br/> 
+					</div> 
+					
+					<label  class="labelInformativo" for="descricao">Descrição da atividade: </label> <br/>
+					<textarea class="textAreaInformativo" id="descricao" th:field="*{descricao}" rows="5" cols="50" ></textarea> <br/> <br/> 
+					
+					<div id="mensagemErro" th:if="${#fields.hasErrors('dataFinal')}" >
+						<span th:errors="*{dataFinal}"></span> 
+						<br/> 
+					</div> 
+					
+					<label  class="labelInformativo" for="dataFinal">Data Final: </label>  <br/>
+					<input class="inputInformativo" type="date" id="dataFinal" required="required" th:field="*{dataFinal}"/>  <br/> <br/> 
+					
+					<label  class="labelInformativo" for="permissaoAtraso">Permitir entrega após data final: </label> 
+					<input  type="checkbox" id="permissaoAtraso" th:field="*{permiteEntregaAtrasada}" />  <br/> <br/>
+					
+					<div id="mensagemErro" th:if="${#fields.hasErrors('atividadeFile')}" >
+						<span th:errors="*{atividadeFile}"></span> 
+						<br/> 
+					</div> 
+					
+					<label  class="labelInformativo" for="atividade">Anexar atividade: </label> <br/>
+					<input class="inputInformativo" type="file" th:field="*{atividadeFile}" id="atividade" />  <br/> <br/>
+					
+					<label  class="labelInformativo" for="recado">Recado: </label> <br/>
+					<textarea class="textAreaInformativo"  name="recado" id="recado" rows="5" cols="50" placeholder=" Se preferir adicione aqui um novo recado no mural para os alunos..."></textarea> <br/> <br/> 
+					
+					<input type="hidden" name="idCurso" th:value="${curso.id}" />
+					
+					<input type="submit" value="Adicionar atividade">
+				</fieldset>
+			</form>	
+			<br/> <br/>
+		</div> 
+		
+		<div id="divFiltro">
+			<span id="tituloFiltro">Buscar atividade por:</span> <br/> <br/>
+			<form id="formPesquisa">
+				<label for="dataInicio" id="labelPesquisa">Data Inicio:</label> <br/>
+				<input  type="date" id="dataInicio"/>  <br/> <br/>
+				<label for="dataFinal" id="labelPesquisa">Data Final:</label> 
+				<input type="date" id="dataFinal"/> <br/> <br/>
+				<input id="botaoPesquisa" type="submit" value="Buscar">
+			</form>
+		</div> <br/> <br/>
+		
+		<div>
+			<input id="inputSelecionado" type="button" value="Em aberto" /> 
+			<input type="button"  value="Concluídas" /> 
+		</div>
+			
+		<div>
+			<fieldset>
+				<label class="labelInformativo" for="materia">Matéria: </label> <br/>
+				<input class="inputInformativo" type="text" id="materia" value="Inglês"> <br/> <br/> 
+				
+				<label  class="labelInformativo" for="descricao">Descrição da atividade: </label> <br/>
+				<textarea class="textAreaInformativo" readonly="readonly" id="descricao" rows="5" cols="50" /></textarea> <br/> <br/> 
+				
+				<label  class="labelInformativo" for="dataFinal">Data Final: </label> <br/>
+				<input class="inputInformativo" type="text" readonly="readonly" id="dataFinal" value="15/11">  <br/> <br/> 
+				
+				<form>
+					<input type="hidden">
+					<input type="submit" value="ver Atividade">
+				</form>
+			</fieldset>
+		</div> <br/> <br/>
+		
+		<h1> SÓ DE EXEMPLO ATIVIDADES CONCLUÍDAS</h1>
+		<div>
+			<fieldset>
+				<label class="labelInformativo" for="materia">Matéria: </label> <br/>
+				<input class="inputInformativo" type="text" id="materia" value="Inglês"> <br/> <br/> 
+				
+				<label  class="labelInformativo" for="descricao">Descrição da atividade: </label> <br/>
+				<textarea class="textAreaInformativo" readonly="readonly" id="descricao" rows="5" cols="50" /></textarea> <br/> <br/> 
+				
+				<label  class="labelInformativo" for="dataFinal">Data Final: </label> <br/>
+				<input class="inputInformativo" type="text" readonly="readonly" id="dataFinal" value="15/11" />  <br/> <br/> 
+				
+				<form>
+					<input type="hidden">
+					<input type="submit" value="Baixar atividade" onclick="location.href='#'"> <br/> <br/>
+				</form>
+				
+			</fieldset>
+		</div> <br/> <br/>
+	</div>
+</body>
+</html>

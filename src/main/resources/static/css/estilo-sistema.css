@@ -536,3 +536,8 @@ div#divComunicado
 	font-weight: bolder;
 	border-radius: 10px;
 }
+
+div#divComMargem
+{
+	margin-bottom: 35px;
+}

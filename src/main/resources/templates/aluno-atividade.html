@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}" th:with="link=@{/aluno/home}">
+<body>
+	<div layout:fragment="content">
+	
+		<br/><input id="botaoOpcao" type="button" value="Home" th:onclick="'location.href=\'' + @{/aluno/home} + '\';'" />  
+		<input id="botaoOpcao" type="button" value="Curso" th:onclick="'location.href=\'' + @{/aluno/cursos/verCurso} + '?curso=' + ${atividade.curso.id} + '\';'" /> <br/> <br/>
+	
+		<div id="divInformativo">
+			
+			<label class="labelInformativo" for="materia">Matéria: </label> <br/>
+			<input class="inputInformativo" type="text" id="materia" readonly="readonly" th:value="${atividade.curso.nome}"> <br/> <br/> 
+			
+			<label  class="labelInformativo" for="nomeProfessor">Professor: </label> <br/>
+			<input class="inputInformativo" type="text" readonly="readonly" id="nomeProfessor" th:value="${atividade.curso.professor.nome}"/>
+			
+		</div> <br/> <br/>
+		
+		 <div id="mensagemErro" th:if="${msgErro != null}">
+			<span th:text="${msgErro}"></span> 
+		</div> 
+		
+		<div th:if="${msgErro != null}">
+			<br/> <br/>
+		</div>
+		
+		<div>
+			<fieldset>
+				<label class="labelInformativo" for="materia">Matéria: </label> <br/>
+				<input class="inputInformativo" type="text" id="materia" th:value="${atividade.curso.nome}" /> <br/> <br/> 
+				
+				<label  class="labelInformativo" for="descricao">Descrição da atividade: </label> <br/>
+				<textarea class="textAreaInformativo" readonly="readonly" id="descricao" rows="5" cols="50" th:text="${atividade.descricao}" /></textarea> <br/> <br/> 
+				
+				<label  class="labelInformativo" for="dataFinal">Data Final: </label> <br/>
+				<input class="inputInformativo" type="text" readonly="readonly" id="dataFinal" th:value="${#temporals.format(atividade.dataFinal, 'dd/MM/yyyy')}" />  <br/> <br/> 
+				
+				<form th:action="@{/aluno/cursos/verCurso/verAtividade/baixar}">
+					<input type="hidden" name="idAtividade" th:value="${atividade.id}">
+					<input type="submit" id="baixarAtividade" value="Baixar Atividade"/> <br/> <br/>
+				</form>
+					
+				<form method="post" th:action="@{/aluno/cursos/verCurso/verAtividade/entregar}" th:object="${entrega}" enctype="multipart/form-data" th:if="${atividade.status.toString() != 'FINALIZADA' || atividade.permiteEntregaAtrasada}">
+					<input type="hidden" name="idAtividade" th:value="${atividade.id}" />
+					
+					<label for="arquivoAtividade">Entregar Atividade: </label> <br/> 
+					<input type="file" th:field="*{arquivoEntrega}" id="arquivoAtividade"/> <br/> <br/>
+					
+					<label for="consideracaoAtividade">Comentários: </label> <br/> <br/>
+					<textarea class="textAreaInformativo" th:field="*{comentario}" placeholder="Adicione algum comentário se desejar..." id="consideracaoAtividade" rows="5" cols="50" /></textarea> <br/> <br/>
+					
+					<input type="submit" value="Entregar atividade">
+				</form>
+			</fieldset>
+		</div> <br/> <br/>
+	</div>
+</body>
+</html>

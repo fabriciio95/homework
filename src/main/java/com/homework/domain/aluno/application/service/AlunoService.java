@@ -1,6 +1,8 @@
 package com.homework.domain.aluno.application.service;
 
+import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,10 +13,11 @@ import com.homework.domain.coordenador.Coordenador;
 import com.homework.domain.coordenador.CoordenadorRepository;
 import com.homework.domain.curso.Curso;
 import com.homework.domain.curso.CursoAluno;
+import com.homework.domain.curso.CursoAluno.StatusMatricula;
 import com.homework.domain.curso.CursoAlunoPK;
 import com.homework.domain.curso.CursoAlunoRepository;
 import com.homework.domain.curso.CursoRepository;
-import com.homework.domain.curso.CursoAluno.StatusMatricula;
+import com.homework.domain.curso.StatusCurso;
 import com.homework.domain.professor.Professor;
 import com.homework.domain.professor.ProfessorRepository;
 import com.homework.utils.SecurityUtils;
@@ -93,5 +96,13 @@ public class AlunoService {
 			}
 		}
 		return null;
+	}
+	
+	public List<Curso> getCursosMatriculados(){
+		Aluno aluno = SecurityUtils.getAlunoLogado();
+		List<CursoAluno> matriculas = cursoAlunoRepository.findById_AlunoAndStatusMatricula(aluno, StatusMatricula.CONFIRMADA);
+		return matriculas.stream().filter(m -> !m.getId().getCurso().getStatus().equals(StatusCurso.CONCLUIDO))
+				.map(m ->   m.getId().getCurso())
+				.collect(Collectors.toList());
 	}
 }
