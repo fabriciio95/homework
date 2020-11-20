@@ -45,7 +45,7 @@
 					<input type="hidden" name="idAtividade" th:value="${atividade.id}" />
 					
 					<label for="arquivoAtividade">Entregar Atividade: </label> <br/> 
-					<input type="file" th:field="*{arquivoEntrega}" id="arquivoAtividade"/> <br/> <br/>
+					<input type="file" th:field="*{arquivoEntrega}" id="arquivoAtividade" required="required"/> <br/> <br/>
 					
 					<label for="consideracaoAtividade">Comentários: </label> <br/> <br/>
 					<textarea class="textAreaInformativo" th:field="*{comentario}" placeholder="Adicione algum comentário se desejar..." id="consideracaoAtividade" rows="5" cols="50" /></textarea> <br/> <br/>

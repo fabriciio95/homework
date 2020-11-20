@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}" th:with="link=@{/aluno/home}">
+<body>
+	<div layout:fragment="content">
+	
+		<input id="botaoOpcao" type="button" value="Home" th:onclick="'location.href=\'' + @{/aluno/home} + '\';'" /> <br/> <br/>
+		<h1 th:if="${atividadesEntregues.size() > 0}">Minhas notas</h1>
+		
+		<div id="divComunicado" th:if="${atividadesEntregues.size() == 0}">
+			<span>Você não está matriculado em nenhum curso no momento!</span>
+		</div> 
+		
+		<table th:if="${atividadesEntregues.size() > 0}">
+			<tr>
+				<th>Aluno</th>
+				<th>Curso</th>
+				<th>Nota 1</th>
+				<th>Nota 2</th>
+				<th>Nota 3</th>
+				<th>Nota 4</th>
+				<th>Nota 5</th>
+				<th>Média</th>
+				<th>Situação</th>
+			</tr>
+			<tr th:each="entrega : ${atividadesEntregues}">
+				<td><span th:text="${entrega.nomeAluno}"></span></td>
+				<td><span th:text="${entrega.nomeCurso}"></span></td>
+				<td><span th:text="${entrega.notas.size() >= 1 ? entrega.notas.get(0) : '-'}"></span></td>
+				<td><span th:text="${entrega.notas.size() >= 2 ? entrega.notas.get(1) : '-'}"></span></td>
+				<td><span th:text="${entrega.notas.size() >= 3 ? entrega.notas.get(2) : '-'}"></span></td>
+				<td><span th:text="${entrega.notas.size() >= 4 ? entrega.notas.get(3) : '-'}"></span></td>
+				<td><span th:text="${entrega.notas.size() >= 5 ? entrega.notas.get(4) : '-'}"></span></td>
+				<td><span th:text="${entrega.media}"></span></td>
+				<td><span th:text="${entrega.situacaoAluno}"></span></td>
+			</tr>
+		</table>
+	</div>
+</body>
+</html>

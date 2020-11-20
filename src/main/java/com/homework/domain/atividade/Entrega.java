@@ -36,14 +36,13 @@ public class Entrega {
 	private transient MultipartFile arquivoEntrega;
 	
 	public void definirNomeArquivoEntrega() {
-		String type = null;
 		if(arquivoEntrega != null) {
-			type = this.arquivoEntrega.getContentType().split("\\/")[1];
-		}
-		if(type == null) {
-			this.nomeArquivo = String.format("%d-%d", id.getAluno().getId(), id.getAtividade().getId());
-		} else {
-			this.nomeArquivo = String.format("%d-%d.%s", id.getAluno().getId(), id.getAtividade().getId(), type);
+			String type = this.arquivoEntrega.getContentType().split("\\/")[1];
+			if(type == null) {
+				this.nomeArquivo = String.format("%d-%d", id.getAluno().getId(), id.getAtividade().getId());
+			} else {
+				this.nomeArquivo = String.format("%d-%d.%s", id.getAluno().getId(), id.getAtividade().getId(), type);
+			}
 		}
 	}
 }

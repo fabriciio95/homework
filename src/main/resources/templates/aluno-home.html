@@ -9,7 +9,7 @@
 			<input type="button"  id="botaoOpcao" value="Meus dados" th:onclick="'location.href=\'' + @{/aluno/atualizar} + '\';'"/> 
 			<input type="button"  id="botaoOpcao" value="Novos Cursos" th:onclick="'location.href=\'' + @{/aluno/cursos/novos} + '\';'" /> <br/>
 			<input type="button"  id="botaoOpcao" value="Meus Cursos"  th:onclick="'location.href=\'' + @{/aluno/cursos} + '\';'" />
-			<input type="button"  id="botaoOpcao" value="Minhas notas" onclick="location.href= 'aluno-notas.html'" /> <br/>
+			<input type="button"  id="botaoOpcao" value="Minhas notas" th:onclick="'location.href=\'' + @{/aluno/cursos/notas} + '\';'" /> <br/>
 			<input type="button"  id="botaoOpcao" value="Certificados" onclick="location.href= 'aluno-certificados.html'" />
 			<input type="button"  id="botaoOpcao" value="Sair" th:onclick="'location.href=\'' + @{/logout} +'\';'" /> 
 		</div>

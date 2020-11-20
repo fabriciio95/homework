@@ -98,8 +98,7 @@ public class AlunoService {
 		return null;
 	}
 	
-	public List<Curso> getCursosMatriculados(){
-		Aluno aluno = SecurityUtils.getAlunoLogado();
+	public List<Curso> getCursosMatriculados(Aluno aluno){
 		List<CursoAluno> matriculas = cursoAlunoRepository.findById_AlunoAndStatusMatricula(aluno, StatusMatricula.CONFIRMADA);
 		return matriculas.stream().filter(m -> !m.getId().getCurso().getStatus().equals(StatusCurso.CONCLUIDO))
 				.map(m ->   m.getId().getCurso())

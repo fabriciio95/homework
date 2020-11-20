@@ -29,6 +29,7 @@ import com.homework.domain.aluno.application.service.EntregaService;
 import com.homework.domain.aluno.application.service.MatriculaNaoEncontradaException;
 import com.homework.domain.aluno.application.service.ValidationException;
 import com.homework.domain.atividade.Atividade;
+import com.homework.domain.atividade.AtividadeEntregaDTO;
 import com.homework.domain.atividade.AtividadeFilter;
 import com.homework.domain.atividade.AtividadeFilter.StatusAtividadeFilter;
 import com.homework.domain.atividade.AtividadeRepository;
@@ -145,7 +146,8 @@ public class AlunoController {
 
 	@GetMapping("/cursos")
 	public String meusCursos(Model model) {
-		List<Curso> cursos = alunoService.getCursosMatriculados();
+		Aluno aluno = SecurityUtils.getAlunoLogado();
+		List<Curso> cursos = alunoService.getCursosMatriculados(aluno);
 		model.addAttribute("cursos", cursos);
 		return "aluno-meus-cursos";
 	}
@@ -274,6 +276,14 @@ public class AlunoController {
 		model.addAttribute("msgSucesso", "Atividade foi entregue com sucesso!");
 		putDependenciesOnPageAlunoCurso(model, atividade.getCurso().getId());
 	   return "aluno-curso";
+	}
+	
+	@GetMapping("/cursos/notas")
+	public String viewNotas(Model model) {
+		Aluno aluno = SecurityUtils.getAlunoLogado();
+		List<AtividadeEntregaDTO> atividades = entregaService.getTodasNotasAluno(aluno);
+		model.addAttribute("atividadesEntregues", atividades);
+		return "aluno-notas";
 	}
 	
 	private void putDependenciesOnPageAlunoCurso(Model model, Long idCurso) {

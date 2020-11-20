@@ -36,4 +36,11 @@ public class CursoAluno {
 	@Enumerated(EnumType.STRING)
 	private StatusMatricula statusMatricula = StatusMatricula.NAO_CONFIRMADA;
 	
+	public enum SituacaoAluno {
+		INDEFINIDO, REPROVADO, APROVADO;
+	}
+	
+	@Enumerated(EnumType.STRING)
+	private SituacaoAluno situacaoAluno = SituacaoAluno.INDEFINIDO;
+	
 }

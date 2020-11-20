@@ -7,7 +7,11 @@
 	
 		<input id="botaoOpcao" type="button" value="Home" th:onclick="'location.href=\'' + @{/aluno/home} + '\';'" /> <br/> <br/>
 		
-		<h1>Cursos matriculados</h1>
+		<h1 th:if="${cursos.size() > 0}">Cursos matriculados</h1>
+		
+		<div id="divComunicado" th:if="${cursos.size() == 0}">
+			<span>Você não está matriculado em nenhum curso no momento!</span>
+		</div> 
 		
 		<div id="divInformativo" th:each="curso : ${cursos}">
 			

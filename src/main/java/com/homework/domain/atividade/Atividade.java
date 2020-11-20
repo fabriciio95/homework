@@ -66,11 +66,14 @@ public class Atividade implements Serializable {
 	private transient MultipartFile atividadeFile;
 	
 	public void definirNomeArquivo() {
-		String type = atividadeFile.getContentType().split("\\/")[1];
-		if(type == null) {
-			this.nomeArquivo = String.format("%04d", id);
-		} else {
-			this.nomeArquivo = String.format("%04d.%s", id, type);
+		if(atividadeFile != null) {	
+			String type = atividadeFile.getContentType().split("\\/")[1];
+			
+			if(type == null) {
+				this.nomeArquivo = String.format("%04d", id);
+			} else {
+				this.nomeArquivo = String.format("%04d.%s", id, type);
+			}
 		}
 	}
 }
