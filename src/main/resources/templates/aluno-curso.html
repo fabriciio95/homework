@@ -18,6 +18,9 @@
 		<h1>Mural de recados</h1>
 		
 		<div id="divFiltro">
+			<div id="divComunicado" th:if="${recados.size() == 0}">
+				<span>Sem recados até o momento!</span>
+			</div> 
 			
 			<div id="divPost" th:each="recado : ${recados}">
 				<input id="inputPost" type="text" readonly="readonly" th:value="${recado.autor.nome}">
@@ -79,7 +82,7 @@
 				<label  class="labelInformativo" for="dataFinal">Data Final: </label> <br/>
 				<input class="inputInformativo" type="text" readonly="readonly" id="dataFinal" th:value="${#temporals.format(atividade.dataFinal, 'dd/MM/yyyy')}" />  <br/> <br/> 
 				
-				<form method="post" th:action="@{/aluno/cursos/verCurso/verAtividade}" th:if="${atividade.status.toString() != 'FINALIZADA' || atividade.permiteEntregaAtrasada}" >
+				<form method="get" th:action="@{/aluno/cursos/verCurso/verAtividade}" th:if="${atividade.status.toString() != 'FINALIZADA' || atividade.permiteEntregaAtrasada}" >
 					<input type="hidden" name="idAtividade" th:value="${atividade.id}">
 					<input type="submit" value="Entregar atividade"/>
 				</form>

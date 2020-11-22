@@ -23,8 +23,6 @@ public class CursoAluno {
 	@EmbeddedId
 	private CursoAlunoPK id;
 	
-	private String nomeArquivoCertificado;
-	
 	private LocalDate dataMatricula;
 	
 	private Boolean permissaoVisualizada = false;

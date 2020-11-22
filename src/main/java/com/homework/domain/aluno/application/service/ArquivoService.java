@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -15,6 +17,16 @@ import com.homework.domain.atividade.Atividade;
 import com.homework.domain.atividade.Entrega;
 import com.homework.utils.IOUtils;
 
+import net.sf.jasperreports.engine.JRExporter;
+import net.sf.jasperreports.engine.JRExporterParameter;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.export.JRPdfExporter;
+import net.sf.jasperreports.engine.util.JRLoader;
+
+@SuppressWarnings("deprecation")
 @Service
 public class ArquivoService {
 
@@ -26,6 +38,9 @@ public class ArquivoService {
 	
 	@Value("${homework.files.correcaoAtividade}")
 	private String arquivoCorrecaoDir;
+	
+	@Value("${homework.files.relatorios}")
+	private String arquivoRelatoriosDir;
 	
 	public void uploadArquivoAtividade(MultipartFile multipartFile, String nomeArquivo) throws ApplicationException {
 		try {
@@ -73,5 +88,25 @@ public class ArquivoService {
 			fileInputStream.close();
 			outputStream.flush();
 		}
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public String gerarRelatorio(List<?> listaBeanDataCollection, HashMap<String, Object> parametrosRelatorio,
+			String nomeRelatorioJasper, String nomeRelatorioSaida) throws Exception {
+		JRBeanCollectionDataSource jrbcds = new JRBeanCollectionDataSource(listaBeanDataCollection);
+		String caminhoArquivoJasper = arquivoRelatoriosDir + File.separator + nomeRelatorioJasper + ".jasper";
+		parametrosRelatorio.put("REPORT_PARAMETERS_IMG", arquivoRelatoriosDir);
+		JasperReport relatorioJasper = (JasperReport) JRLoader.loadObjectFromFile(caminhoArquivoJasper);
+		parametrosRelatorio.put("SUBREPORT_DIR", arquivoRelatoriosDir + File.separator);
+		JasperPrint impressoraJasper = JasperFillManager.fillReport(relatorioJasper, parametrosRelatorio, jrbcds);
+		JRExporter exporter = new JRPdfExporter();
+		String caminhoArquivoRelatorio = arquivoRelatoriosDir + File.separator + nomeRelatorioSaida + ".pdf";
+		File arquivoGerado = new File(caminhoArquivoRelatorio);
+		exporter.setParameter(JRExporterParameter.JASPER_PRINT, impressoraJasper);
+		exporter.setParameter(JRExporterParameter.OUTPUT_FILE, arquivoGerado);
+		exporter.exportReport();
+		//TODO descomentar linha abaixo
+		//arquivoGerado.deleteOnExit();
+		return caminhoArquivoRelatorio;
 	}
 }

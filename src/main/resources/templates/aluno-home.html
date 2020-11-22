@@ -10,23 +10,27 @@
 			<input type="button"  id="botaoOpcao" value="Novos Cursos" th:onclick="'location.href=\'' + @{/aluno/cursos/novos} + '\';'" /> <br/>
 			<input type="button"  id="botaoOpcao" value="Meus Cursos"  th:onclick="'location.href=\'' + @{/aluno/cursos} + '\';'" />
 			<input type="button"  id="botaoOpcao" value="Minhas notas" th:onclick="'location.href=\'' + @{/aluno/cursos/notas} + '\';'" /> <br/>
-			<input type="button"  id="botaoOpcao" value="Certificados" onclick="location.href= 'aluno-certificados.html'" />
+			<input type="button"  id="botaoOpcao" value="Certificados" th:onclick="'location.href=\'' + @{/aluno/cursos/certificados} + '\';'" />
 			<input type="button"  id="botaoOpcao" value="Sair" th:onclick="'location.href=\'' + @{/logout} +'\';'" /> 
 		</div>
 		
-		<div>
-			<span id="opcaoTitulo">Cursos matriculados</span> <br/> <br/>  <br/> <br/>
-			<input type="button"  value="Informática" onclick="location.href='aluno-curso.html'" /> <br/>
-			<input type="button"  value="Inglês" onclick="location.href='aluno-curso.html'" /> <br/> 
-			<input type="button"  value="Espanhol" onclick="location.href='aluno-curso.html'" /> <br/>
-			
+		<span id="opcaoTitulo">Cursos matriculados</span> <br/> <br/>  <br/> <br/>
+		<div th:each="curso : ${cursos}">
+			<input id="btnMaisLargo" type="button"  th:value="${curso.nome}" th:onclick="'location.href=\'' + @{/aluno/cursos/verCurso} + '?curso=' + ${curso.id} + '\';'" /> <br/>
+		</div> 
+		
+		<div id="divComunicado" th:if="${cursos.size() == 0}">
+			<span>Você não está matriculado em nenhum curso no momento!</span>
 		</div> <br/><br/>
 		
-		<div>
+		<div id="divMaisLargo">
 			<span id="opcaoTitulo">Atividades pendentes</span> <br/> <br/>  <br/> <br/>
-			<input type="button" value="Nome atividade" onclick="location.href='aluno-atividade.html'"/> <br/> 
-			<input type="button" value="Nome atividade" onclick="location.href='aluno-atividade.html'"/> <br/> 
-			<input type="button" value="Nome atividade" onclick="location.href='aluno-atividade.html'"/> <br/> 
+			<div th:each="atividade : ${atividadesPendentes}">
+				<input id="btnMaisLargo" type="button" th:value="${atividade.titulo}" th:onclick="'location.href=\'' +@{/aluno/cursos/verCurso/verAtividade} + '?idAtividade=' + ${atividade.id} + '\';'"/> <br/> 
+			</div>
+		</div> 
+		<div id="divComunicado" th:if="${atividadesPendentes.size() == 0}">
+			<span>Você não tem nenhuma atividade pendente no momento!</span>
 		</div> <br/><br/>
 	</div>
 </body>

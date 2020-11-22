@@ -45,6 +45,7 @@ public class Atividade implements Serializable {
 	private LocalDate dataFinal;
 	
 	@NotBlank(message = "Descrição não pode estar em branco")
+	@Size(max = 1000)
 	private String descricao;
 	
 	@NotBlank(message = "Título não pode estar em branco")

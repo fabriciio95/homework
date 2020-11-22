@@ -28,6 +28,7 @@ import com.homework.domain.coordenador.RecadoCoordenadorRepository;
 import com.homework.domain.curso.Curso;
 import com.homework.domain.curso.Curso.CategoriaCurso;
 import com.homework.domain.curso.CursoAluno;
+import com.homework.domain.curso.CursoAluno.SituacaoAluno;
 import com.homework.domain.curso.CursoAluno.StatusMatricula;
 import com.homework.domain.curso.CursoAlunoPK;
 import com.homework.domain.curso.CursoAlunoRepository;
@@ -272,6 +273,19 @@ public class InsertDataForTesting {
 		curso6 = cursoRepository.save(curso6);
 		cursos.add(curso6);
 		
+		Curso curso7 = new Curso();
+		curso7.setNome("Lógica de Programação");
+		curso7.setDataInicial(LocalDate.now().minusMonths(8));
+		curso7.setDataConclusao(LocalDate.now().minusMonths(4));
+		curso7.setStatus(StatusCurso.CONCLUIDO);
+		curso7.setDescricao("Aprenda lógica de programação");
+		curso7.setCategoriaCurso(CategoriaCurso.INFORMATICA);
+		curso7.setVagas(0);
+		curso7.setProfessor(professores.get(1));
+		curso7.setCoordenador(coordenador);
+		curso7 = cursoRepository.save(curso7);
+		cursos.add(curso7);
+		
 		return cursos;
 	}
 	
@@ -281,6 +295,7 @@ public class InsertDataForTesting {
 		cursoAluno.setDataMatricula(LocalDate.now());
 		cursoAluno.setPermissaoVisualizada(false);
 		cursoAluno.setStatusMatricula(StatusMatricula.NAO_CONFIRMADA);
+		cursoAluno.setSituacaoAluno(SituacaoAluno.INDEFINIDO);
 		cursoAlunoRepository.saveAndFlush(cursoAluno);
 		
 		CursoAluno cursoAluno2 = new CursoAluno();
@@ -288,6 +303,7 @@ public class InsertDataForTesting {
 		cursoAluno2.setDataMatricula(LocalDate.now());
 		cursoAluno2.setPermissaoVisualizada(false);
 		cursoAluno2.setStatusMatricula(StatusMatricula.NAO_CONFIRMADA);
+		cursoAluno2.setSituacaoAluno(SituacaoAluno.INDEFINIDO);
 		cursoAlunoRepository.saveAndFlush(cursoAluno2);
 		
 		CursoAluno cursoAluno3 = new CursoAluno();
@@ -295,6 +311,7 @@ public class InsertDataForTesting {
 		cursoAluno3.setDataMatricula(LocalDate.now());
 		cursoAluno3.setPermissaoVisualizada(true);
 		cursoAluno3.setStatusMatricula(StatusMatricula.CONFIRMADA);
+		cursoAluno3.setSituacaoAluno(SituacaoAluno.INDEFINIDO);
 		cursoAlunoRepository.saveAndFlush(cursoAluno3);
 		
 		CursoAluno cursoAluno4 = new CursoAluno();
@@ -302,6 +319,7 @@ public class InsertDataForTesting {
 		cursoAluno4.setDataMatricula(LocalDate.now());
 		cursoAluno4.setPermissaoVisualizada(true);
 		cursoAluno4.setStatusMatricula(StatusMatricula.NAO_CONFIRMADA);
+		cursoAluno4.setSituacaoAluno(SituacaoAluno.INDEFINIDO);
 		cursoAlunoRepository.saveAndFlush(cursoAluno4);
 		
 		CursoAluno cursoAluno5 = new CursoAluno();
@@ -309,6 +327,7 @@ public class InsertDataForTesting {
 		cursoAluno5.setDataMatricula(LocalDate.now());
 		cursoAluno5.setPermissaoVisualizada(true);
 		cursoAluno5.setStatusMatricula(StatusMatricula.NEGADA);
+		cursoAluno5.setSituacaoAluno(SituacaoAluno.INDEFINIDO);
 		cursoAlunoRepository.saveAndFlush(cursoAluno5);
 		
 		CursoAluno cursoAluno6 = new CursoAluno();
@@ -316,7 +335,16 @@ public class InsertDataForTesting {
 		cursoAluno6.setDataMatricula(LocalDate.now());
 		cursoAluno6.setPermissaoVisualizada(true);
 		cursoAluno6.setStatusMatricula(StatusMatricula.CONFIRMADA);
+		cursoAluno6.setSituacaoAluno(SituacaoAluno.INDEFINIDO);
 		cursoAlunoRepository.saveAndFlush(cursoAluno6);
+		
+		CursoAluno cursoAluno7 = new CursoAluno();
+		cursoAluno7.setId(new CursoAlunoPK(cursos.get(6), alunos.get(0)));
+		cursoAluno7.setDataMatricula(LocalDate.now().minusMonths(8).minusWeeks(2));
+		cursoAluno7.setPermissaoVisualizada(true);
+		cursoAluno7.setStatusMatricula(StatusMatricula.CONFIRMADA);
+		cursoAluno7.setSituacaoAluno(SituacaoAluno.APROVADO);
+		cursoAlunoRepository.saveAndFlush(cursoAluno7);
 		
 	}
 	
@@ -395,6 +423,67 @@ public class InsertDataForTesting {
 		atividadeRepository.save(at7);
 		atividades.add(at7);
 		
+		Atividade at8 = new Atividade();
+		at8.setDataFinal(LocalDate.now().minusMonths(8).plusWeeks(1));
+		at8.setDescricao("Fazer um programa que calcula a sequência de Fibonacci");
+		at8.setPermiteEntregaAtrasada(false);
+		at8.setStatus(StatusAtividade.FINALIZADA);
+		at8.setTitulo("Cálculo de Fibonacci");
+		at8.setCurso(cursos.get(6));
+		atividadeRepository.save(at8);
+		atividades.add(at8);
+		
+		Atividade at9 = new Atividade();
+		at9.setDataFinal(LocalDate.now().minusMonths(8).plusWeeks(1));
+		at9.setDescricao("Fazer um programa que imprima a tabuadas informadas pelo usuário");
+		at9.setPermiteEntregaAtrasada(false);
+		at9.setStatus(StatusAtividade.FINALIZADA);
+		at9.setTitulo("Tabuadas");
+		at9.setCurso(cursos.get(6));
+		atividadeRepository.save(at9);
+		atividades.add(at9);
+		
+		Atividade at10 = new Atividade();
+		at10.setDataFinal(LocalDate.now().minusMonths(8).plusWeeks(5));
+		at10.setDescricao("Fazer um programa que calcule o IMC de uma pessoa.");
+		at10.setPermiteEntregaAtrasada(false);
+		at10.setStatus(StatusAtividade.FINALIZADA);
+		at10.setTitulo("IMC");
+		at10.setCurso(cursos.get(6));
+		atividadeRepository.save(at10);
+		atividades.add(at10);
+		
+		Atividade at11 = new Atividade();
+		at11.setDataFinal(LocalDate.now().minusMonths(8).plusWeeks(10));
+		at11.setDescricao("Fazer um programa que imprima todos os números primos até 1000");
+		at11.setPermiteEntregaAtrasada(false);
+		at11.setStatus(StatusAtividade.FINALIZADA);
+		at11.setTitulo("Números Primos");
+		at11.setCurso(cursos.get(6));
+		atividadeRepository.save(at11);
+		atividades.add(at11);
+		
+		Atividade at12 = new Atividade();
+		at12.setDataFinal(LocalDate.now().minusMonths(4));
+		at12.setDescricao("Fazer um programa que imprima os ultimos 20 anos que foram bissextos e os próximos 20 anos que serão bissextos");
+		at12.setPermiteEntregaAtrasada(false);
+		at12.setStatus(StatusAtividade.FINALIZADA);
+		at12.setTitulo("Anos bissextos");
+		at12.setCurso(cursos.get(6));
+		atividadeRepository.save(at12);
+		atividades.add(at12);
+		
+		Atividade at13 = new Atividade();
+		at13.setDataFinal(LocalDate.now().minusMonths(6).minusDays(7));
+		at13.setDescricao("Criar um programa que simule uma loja virtual, em que liste de forma ordenada todos os produtos com seus respectivos valores, sendo que cada produto possui uma categoria e o cliente pode fazer um pedido selecionando diversos produtos e no final ao concluir o sistema cálcula e informa o preço total dos pedidos.");
+		at13.setPermiteEntregaAtrasada(false);
+		at13.setStatus(StatusAtividade.FINALIZADA);
+		at13.setTitulo("Loja Virtual");
+		at13.setCurso(cursos.get(6));
+		atividadeRepository.save(at13);
+		atividades.add(at13);
+		
+		
 		return atividades;
 	}
 	
@@ -411,6 +500,43 @@ public class InsertDataForTesting {
 		e2.setDataEntrega(LocalDate.now().minusDays(33));
 		e2.setNota(9.5);
 		entregaRepository.save(e2);
+		
+		Entrega e3 = new Entrega();
+		e3.setId(new EntregaPK(atividades.get(7), alunos.get(0)));
+		e3.setDataEntrega(LocalDate.now().minusMonths(8).plusWeeks(1).minusDays(1));
+		e3.setNota(10.0);
+		entregaRepository.save(e3);
+		
+		Entrega e4 = new Entrega();
+		e4.setId(new EntregaPK(atividades.get(8), alunos.get(0)));
+		e4.setDataEntrega(LocalDate.now().minusMonths(8).plusWeeks(1).minusDays(1));
+		e4.setNota(8.00);
+		entregaRepository.save(e4);
+		
+		Entrega e5 = new Entrega();
+		e5.setId(new EntregaPK(atividades.get(9), alunos.get(0)));
+		e5.setDataEntrega(LocalDate.now().minusMonths(8).plusWeeks(5).minusDays(3));
+		e5.setNota(5.00);
+		entregaRepository.save(e5);
+		
+		Entrega e6 = new Entrega();
+		e6.setId(new EntregaPK(atividades.get(10), alunos.get(0)));
+		e6.setDataEntrega(LocalDate.now().minusMonths(8).plusWeeks(10).minusDays(2));
+		e6.setNota(7.00);
+		entregaRepository.save(e6);
+		
+		Entrega e7 = new Entrega();
+		e7.setId(new EntregaPK(atividades.get(11), alunos.get(0)));
+		e7.setDataEntrega(LocalDate.now().minusMonths(5).minusDays(1));
+		e7.setNota(5.00);
+		entregaRepository.save(e7);
+		
+		Entrega e8 = new Entrega();
+		e8.setId(new EntregaPK(atividades.get(12), alunos.get(0)));
+		e8.setDataEntrega(LocalDate.now().minusMonths(4).minusDays(8));
+		e8.setNota(6.00);
+		entregaRepository.save(e8);
+	
 	}
 	
 }

@@ -38,5 +38,5 @@ public interface CursoRepository extends JpaRepository<Curso, Long> {
 	List<Curso> findByProfessorECategoria(String nomeProfessor, CategoriaCurso categoriaCurso);
 	
 	List<Curso> findByProfessor_Id(Long idProfessor);
- 
+	
 }

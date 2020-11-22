@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.16.0.final using JasperReports Library version 6.16.0-48579d909b7943b64690c65c71e07e0b80981928  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="certificado" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="658b90a4-6305-4a54-b4a4-fd02a7f3d5b9">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="nomeCurso" class="java.lang.String"/>
+	<field name="nomeAluno" class="java.lang.String"/>
+	<field name="dataMatricula" class="java.lang.String"/>
+	<field name="dataConclusao" class="java.lang.String"/>
+	<field name="nomeProfessor" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="87" y="19" width="380" height="40" uuid="f6ac8fc6-ca59-4c65-9ade-e72348e0e02e"/>
+				<textElement>
+					<font fontName="Serif" size="31"/>
+				</textElement>
+				<text><![CDATA[Certificado de Conclusão]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<detail>
+		<band height="191" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="170" height="30" uuid="afcb036a-77ad-494c-82c2-c2a1620e0fba"/>
+				<textElement textAlignment="Left">
+					<font size="16"/>
+				</textElement>
+				<text><![CDATA[Certifico que o aluno(a) ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="170" y="0" width="188" height="20" uuid="5cbc2b74-ed38-46b0-8626-00f03f2be068">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="15"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nomeAluno}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="358" y="0" width="130" height="30" uuid="8686efaf-2c60-436d-b357-5b5825484c8b"/>
+				<textElement>
+					<font size="16"/>
+				</textElement>
+				<text><![CDATA[concluíu o curso]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="40" width="190" height="25" uuid="dd4501d6-461c-4e2c-a966-49eaf0c4cddc">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="17"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nomeCurso}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="190" y="40" width="200" height="30" uuid="3a3f1653-d072-4119-afa5-cc232e556a76"/>
+				<textElement>
+					<font size="16"/>
+				</textElement>
+				<text><![CDATA[ministrado pelo professor(a)]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="390" y="40" width="180" height="30" uuid="3324704a-3740-483f-aaa5-2c20a4eaae49">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="18"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nomeProfessor}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="80" width="100" height="30" uuid="aafd5611-92cd-47a6-af71-7c28a7c39c5a"/>
+				<textElement>
+					<font size="16"/>
+				</textElement>
+				<text><![CDATA[no período de]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="104" y="81" width="75" height="20" uuid="ebeb05da-cde9-449a-bbe0-ced7a1794f0e">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dataMatricula}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="183" y="80" width="15" height="30" uuid="6ef5931a-510a-4459-b232-9942fb2aef45"/>
+				<textElement>
+					<font size="16"/>
+				</textElement>
+				<text><![CDATA[a]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="200" y="83" width="70" height="21" uuid="e831c0cd-ab75-4df4-86ec-74374d6a42d3">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="13"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dataConclusao}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="271" y="80" width="15" height="30" uuid="0d6ceb7e-0fbf-4697-ada1-adba24bad3cf">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font size="16"/>
+				</textElement>
+				<text><![CDATA[.]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>

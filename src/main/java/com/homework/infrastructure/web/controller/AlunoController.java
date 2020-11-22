@@ -37,8 +37,12 @@ import com.homework.domain.atividade.Entrega;
 import com.homework.domain.atividade.EntregaPK;
 import com.homework.domain.atividade.EntregaRepository;
 import com.homework.domain.curso.Curso;
+import com.homework.domain.curso.CursoAluno;
+import com.homework.domain.curso.CursoAlunoPK;
+import com.homework.domain.curso.CursoAlunoRepository;
 import com.homework.domain.curso.CursoFilter;
 import com.homework.domain.curso.CursoRepository;
+import com.homework.domain.curso.CursoAluno.SituacaoAluno;
 import com.homework.domain.recado.Recado;
 import com.homework.utils.SecurityUtils;
 
@@ -69,9 +73,18 @@ public class AlunoController {
 	
 	@Autowired
 	private EntregaRepository entregaRepository;
+	
+	@Autowired
+	private CursoAlunoRepository matriculaRepository;
+	
 
 	@GetMapping("/home")
-	public String home() {
+	public String home(Model model) {
+		Aluno aluno = SecurityUtils.getAlunoLogado();
+		List<Curso> cursos = alunoService.getCursosMatriculados(aluno);
+		model.addAttribute("cursos", cursos);
+		List<Atividade> atividadesPendentes = alunoService.getTodasAtividadesPendentesAlunoLogado();
+		model.addAttribute("atividadesPendentes", atividadesPendentes);
 		return "aluno-home";
 	}
 
@@ -187,7 +200,7 @@ public class AlunoController {
 		return "aluno-curso";
 	}
 
-	@PostMapping("/cursos/verCurso/verAtividade")
+	@GetMapping("/cursos/verCurso/verAtividade")
 	public String viewAtividade(@RequestParam("idAtividade") Long idAtividade, Model model) {
 		Atividade atividade = atividadeRepository.findById(idAtividade).orElseThrow(NoSuchElementException::new);
 		Aluno aluno = SecurityUtils.getAlunoLogado();
@@ -285,6 +298,36 @@ public class AlunoController {
 		model.addAttribute("atividadesEntregues", atividades);
 		return "aluno-notas";
 	}
+	
+	@GetMapping("/cursos/certificados")
+	public String viewCertificados(Model model) {
+		Aluno aluno = SecurityUtils.getAlunoLogado();
+		List<CursoAluno> cursosConcluidos = alunoService.getCursosConcluidos(aluno);
+		model.addAttribute("cursos", cursosConcluidos);
+		return "aluno-certificados";
+	}
+	
+	@GetMapping("/cursos/certificados/baixar")
+	public String baixarCertificado(@RequestParam("curso") Long idCurso, HttpServletResponse response, Model model) {
+		Aluno aluno = SecurityUtils.getAlunoLogado();
+		Curso curso = cursoRepository.findById(idCurso).orElseThrow(NoSuchElementException::new);
+		CursoAluno matricula = matriculaRepository.findById(new CursoAlunoPK(curso, aluno)).orElse(null);
+		try { 
+			if(matricula != null && matricula.getSituacaoAluno().equals(SituacaoAluno.APROVADO)) {
+				alunoService.baixarCertificado(response, matricula);
+			} else {
+				throw new IllegalStateException("Matricula não encontrada ou você não foi aprovado nesse curso");
+			}
+		} catch(Exception e) {
+			List<CursoAluno> cursosConcluidos = alunoService.getCursosConcluidos(aluno);
+			model.addAttribute("cursos", cursosConcluidos);
+			model.addAttribute("msgErro", "Houve um erro ao fazer download do certificado: " + e.getMessage());
+			return "aluno-certificados";
+		}
+		return null;
+	}
+	
+	
 	
 	private void putDependenciesOnPageAlunoCurso(Model model, Long idCurso) {
 		Curso curso = cursoRepository.findById(idCurso).orElse(null);

@@ -541,3 +541,8 @@ div#divComMargem
 {
 	margin-bottom: 35px;
 }
+
+input[type=button]#btnMaisLargo
+{
+	width: 28%;
+}

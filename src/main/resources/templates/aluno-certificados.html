@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}" th:with="link=@{/aluno/home}">
+<body>
+	<div layout:fragment="content">
+	
+		<input id="botaoOpcao" type="button" value="Home" th:onclick="'location.href=\'' + @{/aluno/home} + '\';'" /> <br/> <br/>
+	
+		<h1 th:if="${cursos.size() > 0}">Cursos Concluídos</h1>
+		
+		<div id="divComunicado" th:if="${cursos.size() == 0}">
+			<span>Você não concluiu nenhum curso até o momento!</span>
+		</div> 
+		
+		 <div id="mensagemErro" th:if="${msgErro != null}">
+			<span th:text="${msgErro}"></span> 
+		</div> 
+		
+		<div th:if="${msgErro != null}">
+			<br/>
+		</div>
+
+		<table th:if="${cursos.size() > 0}">
+			<tr>
+				<th>Aluno</th>
+				<th>Curso</th>
+				<th>Data Conclusão</th>
+				<th>Certificado</th>
+			</tr>
+			<tr th:each="curso : ${cursos}">
+				<td><span th:text="${curso.id.aluno.nome}"></span></td>
+				<td><span th:text="${curso.id.curso.nome}"></span></td>
+				<td><span th:text="${#temporals.format(curso.id.curso.dataConclusao, 'dd/MM/yyyy')}"></span></td>
+				<td><input type="button" value="Baixar Certificado" th:onclick="'location.href=\'' + @{/aluno/cursos/certificados/baixar} + '?curso=' + ${curso.id.curso.id} + '\';'" /></td>
+			</tr>
+		</table>
+	</div>
+</body>
+</html>
