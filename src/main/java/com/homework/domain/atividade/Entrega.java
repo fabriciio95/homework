@@ -25,23 +25,38 @@ public class Entrega {
 	
 	private LocalDate dataEntrega;
 	
-	private String nomeArquivo;
+	private String nomeArquivoEntrega;
 	
 	private String comentario;
 	
 	private Double nota;
 	
+	private boolean corrigido = false;
+	
 	private String nomeArquivoCorrecao;
 	
 	private transient MultipartFile arquivoEntrega;
+	
+	private transient MultipartFile arquivoCorrecao;
 	
 	public void definirNomeArquivoEntrega() {
 		if(arquivoEntrega != null) {
 			String type = this.arquivoEntrega.getContentType().split("\\/")[1];
 			if(type == null) {
-				this.nomeArquivo = String.format("%d-%d", id.getAluno().getId(), id.getAtividade().getId());
+				this.nomeArquivoEntrega = String.format("%d-%d", id.getAluno().getId(), id.getAtividade().getId());
 			} else {
-				this.nomeArquivo = String.format("%d-%d.%s", id.getAluno().getId(), id.getAtividade().getId(), type);
+				this.nomeArquivoEntrega = String.format("%d-%d.%s", id.getAluno().getId(), id.getAtividade().getId(), type);
+			}
+		}
+	}
+	
+	public void definirNomeArquivoCorrecao() {
+		if(arquivoCorrecao != null) {
+			String type = this.arquivoCorrecao.getContentType().split("\\/")[1];
+			if(type == null) {
+				this.nomeArquivoCorrecao = String.format("%d-%d", id.getAluno().getId(), id.getAtividade().getId());
+			} else {
+				this.nomeArquivoCorrecao = String.format("%d-%d.%s", id.getAluno().getId(), id.getAtividade().getId(), type);
 			}
 		}
 	}

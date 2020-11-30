@@ -491,8 +491,9 @@ public class InsertDataForTesting {
 		Entrega e1 = new Entrega();
 		e1.setId(new EntregaPK(atividades.get(2), alunos.get(0)));
 		e1.setDataEntrega(LocalDate.now().minusDays(25));
-		e1.setNota(7.5);
 		e1.setComentario("Professor tive dúvidas em alguns pontos.");
+		e1.setNomeArquivoEntrega("1-3.pdf");
+		e1.setNota(0.0);
 		entregaRepository.save(e1);
 		
 		Entrega e2 = new Entrega();
@@ -536,6 +537,12 @@ public class InsertDataForTesting {
 		e8.setDataEntrega(LocalDate.now().minusMonths(4).minusDays(8));
 		e8.setNota(6.00);
 		entregaRepository.save(e8);
+		
+		Entrega e9 = new Entrega();
+		e9.setId(new EntregaPK(atividades.get(2), alunos.get(1)));
+		e9.setDataEntrega(LocalDate.now().minusDays(24));
+		e9.setNota(0.0);
+		entregaRepository.save(e9);
 	
 	}
 	

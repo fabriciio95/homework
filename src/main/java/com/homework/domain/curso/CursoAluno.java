@@ -41,4 +41,6 @@ public class CursoAluno {
 	@Enumerated(EnumType.STRING)
 	private SituacaoAluno situacaoAluno = SituacaoAluno.INDEFINIDO;
 	
+	private Double media;
+	
 }

@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -25,6 +24,7 @@ import com.homework.domain.aluno.application.service.ArquivoException;
 import com.homework.domain.aluno.application.service.ArquivoService;
 import com.homework.domain.aluno.application.service.AtividadeService;
 import com.homework.domain.aluno.application.service.CursoService;
+import com.homework.domain.aluno.application.service.EntregaAtrasadaException;
 import com.homework.domain.aluno.application.service.EntregaService;
 import com.homework.domain.aluno.application.service.MatriculaNaoEncontradaException;
 import com.homework.domain.aluno.application.service.ValidationException;
@@ -38,12 +38,11 @@ import com.homework.domain.atividade.EntregaPK;
 import com.homework.domain.atividade.EntregaRepository;
 import com.homework.domain.curso.Curso;
 import com.homework.domain.curso.CursoAluno;
+import com.homework.domain.curso.CursoAluno.SituacaoAluno;
 import com.homework.domain.curso.CursoAlunoPK;
 import com.homework.domain.curso.CursoAlunoRepository;
 import com.homework.domain.curso.CursoFilter;
 import com.homework.domain.curso.CursoRepository;
-import com.homework.domain.curso.CursoAluno.SituacaoAluno;
-import com.homework.domain.recado.Recado;
 import com.homework.utils.SecurityUtils;
 
 @Controller
@@ -175,7 +174,7 @@ public class AlunoController {
 	public String viewCursoRecados(@RequestParam("curso") Long idCurso, Model model) {
 		Curso curso = cursoRepository.findById(idCurso).orElse(null);
 		model.addAttribute("curso", curso);
-		getRecadosAndPutOnModel(curso, model, false);
+		ControllerHelper.getRecadosAndPutOnModel(curso, model, false);
 		return "aluno-recados";
 	}
 
@@ -187,7 +186,7 @@ public class AlunoController {
 		filter.setIdCurso(idCurso);
 		Curso curso = cursoRepository.findById(filter.getIdCurso()).orElse(null);
 		if (!filter.getStatusAtividade().equals(StatusAtividadeFilter.ENTREGUE)) {
-			atividades = atividadeService.getAtividadesFiltradas(filter);
+			atividades = atividadeService.getAtividadesFiltradasAluno(filter);
 			nameAtributeModel = "atividades";
 		} else if (filter.getStatusAtividade().equals(StatusAtividadeFilter.ENTREGUE)) {
 			atividades = entregaService.getAtividadesEntreguesFiltradas(filter, curso);
@@ -196,7 +195,7 @@ public class AlunoController {
 		model.addAttribute(nameAtributeModel, atividades);
 		model.addAttribute("curso", curso);
 		model.addAttribute("firstTime", false);
-		getRecadosAndPutOnModel(curso, model, true);
+		ControllerHelper.getRecadosAndPutOnModel(curso, model, true);
 		return "aluno-curso";
 	}
 
@@ -224,7 +223,7 @@ public class AlunoController {
 			try {
 			model.addAttribute("atividade", atividade);
 			model.addAttribute("entrega", new Entrega());
-			if (atividade.getNomeArquivo() == null) {
+			if (atividade.getNomeArquivo() == null || atividade.getNomeArquivo().isBlank()) {
 				model.addAttribute("msgErro", "Essa atividade não possui nenhum arquivo para ser baixado!");
 				if(isPageCurso != null && isPageCurso) {
 					putDependenciesOnPageAlunoCurso(model, atividade.getCurso().getId());
@@ -258,7 +257,7 @@ public class AlunoController {
 				model.addAttribute("atividade", atividade);
 				model.addAttribute("entrega", new Entrega());
 				putDependenciesOnPageAlunoCurso(model, atividade.getCurso().getId());
-				if (entrega.getNomeArquivoCorrecao() == null) {
+				if (entrega.getNomeArquivoCorrecao() == null || entrega.getNomeArquivoCorrecao().isBlank()) {
 					model.addAttribute("msgErro", "Essa atividade não possui nenhum arquivo de correção para ser baixado!");
 					return "aluno-curso";
 				}
@@ -281,7 +280,7 @@ public class AlunoController {
 		Atividade atividade = atividadeRepository.findById(idAtividade).orElseThrow(NoSuchElementException::new);
 		try {
 			entregaService.entregarAtividade(idAtividade, entrega);
-		} catch(ArquivoException e) {
+		} catch(ArquivoException | EntregaAtrasadaException e) {
 			model.addAttribute("msgErro", "Houve um erro ao entregar atividade: " + e.getMessage());
 			model.addAttribute("atividade", atividade);
 			return "aluno-atividade";
@@ -332,25 +331,12 @@ public class AlunoController {
 	private void putDependenciesOnPageAlunoCurso(Model model, Long idCurso) {
 		Curso curso = cursoRepository.findById(idCurso).orElse(null);
 		model.addAttribute("curso", curso);
-		getRecadosAndPutOnModel(curso, model, true);
+		ControllerHelper.getRecadosAndPutOnModel(curso, model, true);
 		model.addAttribute("atividadeFilter", new AtividadeFilter());
 		List<Atividade> atividades = atividadeRepository.findByCurso_Id(curso.getId());
 		List<Atividade> atividadesPendentes = atividadeService.filtrarAtividadesPendentes(atividades);
 		model.addAttribute("titleAtividadesPendentes", "Atividades Pendentes");
 		model.addAttribute("firstTime", true);
 		model.addAttribute("atividades", atividadesPendentes);
-	}
-
-	private List<Recado> getRecadosAndPutOnModel(Curso curso, Model model, boolean isWithLimit) {
-		List<Recado> recados;
-		if (isWithLimit) {
-			recados = curso.getRecados().stream().sorted((r1, r2) -> -r1.getData().compareTo(r2.getData())).limit(3)
-					.collect(Collectors.toList());
-		} else {
-			recados = curso.getRecados().stream().sorted((r1, r2) -> -r1.getData().compareTo(r2.getData()))
-					.collect(Collectors.toList());
-		}
-		model.addAttribute("recados", recados);
-		return recados;
 	}
 }

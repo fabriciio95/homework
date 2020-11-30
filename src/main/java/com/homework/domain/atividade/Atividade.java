@@ -32,7 +32,15 @@ public class Atividade implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	public enum StatusAtividade {
-		EM_ABERTO, FINALIZADA;
+		EM_ABERTO("EM ABERTO"),
+		FINALIZADA("FINALIZADA");
+		
+		@Getter
+		private String descricao;
+		
+		private StatusAtividade(String descricao) {
+			this.descricao = descricao;
+		}
 	}
 
 	@Id
@@ -49,6 +57,7 @@ public class Atividade implements Serializable {
 	private String descricao;
 	
 	@NotBlank(message = "Título não pode estar em branco")
+	@Size(max = 36, message = "O título deve ter no máximo 36 caracteres")
 	private String titulo;
 	
 	@NotNull

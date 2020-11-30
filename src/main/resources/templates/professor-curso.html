@@ -6,8 +6,8 @@
 	<div layout:fragment="content">
 
 		<input id="botaoOpcao" type="button" value="Home" th:onclick="'location.href=\'' + @{/professor/home} + '\';'" /> 
-		<input id="botaoOpcao" type="button" value="Mural de recados" onclick="location.href='professor-recados.html'"> <br/> 
-		<input id="botaoOpcao" type="button" value="alunos" onclick="location.href='professor-alunos.html'"> <br/> <br/>
+		<input id="botaoOpcao" type="button" value="Mural de recados" th:onclick="'location.href=\'' + @{/professor/curso/recados} + '?curso=' + ${curso.id} + '\';'"> <br/> 
+		<input id="botaoOpcao" type="button" value="alunos" th:onclick="'location.href=\'' + @{/professor/curso/alunos} + '?curso=' + ${curso.id} + '\';'"> <br/> <br/>
 		
 		<div id="divInformativo">
 			
@@ -32,7 +32,7 @@
 		</div>
 		
 		<div id="divNovaAtividade" th:style="${hasError} ? 'display: block;' : 'display: none;'">
-			<form method="post" th:action="@{/professor/atividade/nova}" th:object="${atividade}" enctype="multipart/form-data"> 
+			<form method="post" th:action="@{/professor/curso/atividades/nova}" th:object="${atividade}" enctype="multipart/form-data"> 
 				<fieldset>
 					<label class="labelInformativo" for="materia">Matéria: </label> <br/>
 					<input class="inputInformativo" type="text" id="materia" th:value="${curso.nome}" readonly="readonly" /> <br/> <br/> 
@@ -85,55 +85,109 @@
 		
 		<div id="divFiltro">
 			<span id="tituloFiltro">Buscar atividade por:</span> <br/> <br/>
-			<form id="formPesquisa">
+			<form id="formPesquisa" th:object="${atividadeFilter}" method="post" th:action="@{/professor/curso/atividades/buscarAtividades}"> 
+				<input type="hidden" th:value="${curso.id}" name="idCurso" />
 				<label for="dataInicio" id="labelPesquisa">Data Inicio:</label> <br/>
-				<input  type="date" id="dataInicio"/>  <br/> <br/>
+				<input  type="date" th:field="*{dataInicio}" id="dataInicio"/>  <br/> <br/>
 				<label for="dataFinal" id="labelPesquisa">Data Final:</label> 
-				<input type="date" id="dataFinal"/> <br/> <br/>
+				<input type="date" th:field="*{dataFinal}" id="dataFinal"/> <br/> <br/>
+				<label id="labelPesquisa" for="categoria">Situação:</label>
+				<select id="area" th:field="*{statusAtividade}" class="select">
+					<option selected="selected" value="FINALIZADA" >Finalizada</option>
+					<option value="EM_ABERTO">EM ABERTO</option>
+					<option value="TODAS">TODAS</option>
+					<option value="CORRECOES_PENDENTES">COM CORREÇÕES PENDENTES</option>
+				</select> <br/> <br/>
+				
+				<label for="nome" id="labelPesquisa">Título:</label> <br/>
+				<input  type="text" th:field="*{tituloAtividade}" id="nome" placeholder=" Ao fazer pesquisa por título, os outros critérios são ignorados..."/>  <br/> <br/>
+				
 				<input id="botaoPesquisa" type="submit" value="Buscar">
 			</form>
 		</div> <br/> <br/>
 		
-		<div>
-			<input id="inputSelecionado" type="button" value="Em aberto" /> 
-			<input type="button"  value="Concluídas" /> 
-		</div>
+		<h1 th:if="${atividades != null && atividades.size() == 0}">Nenhuma atividade encontrada!</h1>
 			
-		<div>
+		<div th:each="atividade : ${atividades}" id="divComMargem">
 			<fieldset>
 				<label class="labelInformativo" for="materia">Matéria: </label> <br/>
-				<input class="inputInformativo" type="text" id="materia" value="Inglês"> <br/> <br/> 
+				<input class="inputInformativo" type="text" id="materia" th:value="${atividade.curso.nome}"> <br/> <br/> 
+				
+				<label class="labelInformativo" for="materia">Título: </label> <br/>
+				<input class="inputInformativo" type="text" id="materia" th:value="${atividade.titulo}"> <br/> <br/> 
 				
 				<label  class="labelInformativo" for="descricao">Descrição da atividade: </label> <br/>
-				<textarea class="textAreaInformativo" readonly="readonly" id="descricao" rows="5" cols="50" /></textarea> <br/> <br/> 
+				<textarea class="textAreaInformativo" readonly="readonly" id="descricao" th:text="${atividade.descricao}" rows="5" cols="50" /></textarea> <br/> <br/> 
 				
 				<label  class="labelInformativo" for="dataFinal">Data Final: </label> <br/>
-				<input class="inputInformativo" type="text" readonly="readonly" id="dataFinal" value="15/11">  <br/> <br/> 
+				<input class="inputInformativo" type="text" readonly="readonly" id="dataFinal" th:value="${#temporals.format(atividade.dataFinal, 'dd/MM/yyyy')}">  <br/> <br/> 
 				
-				<form>
-					<input type="hidden">
+				<label  class="labelInformativo" for="situacao">Situação: </label> <br/>
+				<input class="inputInformativo" type="text" readonly="readonly" id="situacao" th:value="${atividade.status.getDescricao()}">  <br/> <br/>
+				
+				<form th:action="@{/professor/curso/atividades/verAtividade}">
+					<input type="hidden" th:value="${atividade.id}" name="idAtividade" />
 					<input type="submit" value="ver Atividade">
 				</form>
 			</fieldset>
 		</div> <br/> <br/>
 		
-		<h1> SÓ DE EXEMPLO ATIVIDADES CONCLUÍDAS</h1>
-		<div>
+		<h1 th:if="${correcoesPendentes != null && correcoesPendentes.size() > 0}">Correções pendentes</h1>
+		
+		<div th:if="${msgSucessoCorrecao != null}" id="mensagemSucesso">
+			<span th:text="${msgSucessoCorrecao}"></span> 
+		</div> 
+		
+		<div th:if="${msgErro != null}" id="mensagemErro">
+			<span th:text="${msgErro}"></span> 
+		</div> 
+		
+		<div  th:if="${msgSucessoCorrecao != null || msgErro != null}">
+			<br/> <br/> 
+		</div>
+		
+		<div id="divComMargem" th:if="${correcoesPendentes != null && correcoesPendentes.size() > 0}" th:each="entrega : ${correcoesPendentes}">
 			<fieldset>
-				<label class="labelInformativo" for="materia">Matéria: </label> <br/>
-				<input class="inputInformativo" type="text" id="materia" value="Inglês"> <br/> <br/> 
+					<label class="labelInformativo" for="materia">Matéria: </label> <br/>
+					<input class="inputInformativo" type="text" id="materia" th:value="${entrega.id.atividade.curso.nome}"> <br/> <br/> 
+					
+					<label class="labelInformativo" for="materia">Atividade: </label> <br/>
+					<input class="inputInformativo" type="text" id="materia" th:value="${entrega.id.atividade.titulo}"> <br/> <br/> 
+					
+					<label class="labelInformativo" for="idAluno">Código do aluno: </label> <br/>
+					<input class="inputInformativo" type="text" readonly="readonly" id="idAluno" th:value="${entrega.id.aluno.id}" /> <br/> <br/> 
 				
-				<label  class="labelInformativo" for="descricao">Descrição da atividade: </label> <br/>
-				<textarea class="textAreaInformativo" readonly="readonly" id="descricao" rows="5" cols="50" /></textarea> <br/> <br/> 
-				
-				<label  class="labelInformativo" for="dataFinal">Data Final: </label> <br/>
-				<input class="inputInformativo" type="text" readonly="readonly" id="dataFinal" value="15/11" />  <br/> <br/> 
-				
-				<form>
-					<input type="hidden">
-					<input type="submit" value="Baixar atividade" onclick="location.href='#'"> <br/> <br/>
+					<label class="labelInformativo" for="aluno">Aluno: </label> <br/>
+					<input class="inputInformativo" type="text" readonly="readonly" id="aluno" th:value="${entrega.id.aluno.nome}" /> <br/> <br/> 
+					
+					<label  class="labelInformativo" for="comentario">Comentário do aluno: </label> <br/>
+					<textarea class="textAreaInformativo" th:text="${entrega.comentario}" readonly="readonly" id="comentario" rows="5" cols="50"  placeholder="Nenhum comentário adicionado..." /></textarea> <br/> <br/> 
+					
+					<label  class="labelInformativo" for="dataFinal">Data Final: </label> <br/>
+					<input class="inputInformativo" type="text" th:value="${#temporals.format(entrega.id.atividade.dataFinal, 'dd/MM/yyyy')}" readonly="readonly" id="dataFinal" value="15/11" />  <br/> <br/> 
+					
+					<label  class="labelInformativo" for="dataEntrega">Data Entrega: </label> <br/>
+					<input class="inputInformativo" type="text" th:value="${#temporals.format(entrega.dataEntrega, 'dd/MM/yyyy')}" readonly="readonly" id="dataEntrega" value="10/11" />  <br/> <br/>			
+					
+					<form th:action="@{/professor/curso/atividades/verAtividade/baixarAtividadeAluno}">
+						<input type="hidden" name="idAluno" th:value="${entrega.id.aluno.id}"/>
+						<input type="hidden" name="idAtividade" th:value="${entrega.id.atividade.id}" />
+						<input type="submit" value="Baixar atividade" /> <br/> <br/>
+					</form>
+					
+					<form method="post" th:action="@{/professor/curso/atividades/verAtividade/corrigir}" enctype="multipart/form-data">
+						<input type="hidden" name="idAluno" th:value="${entrega.id.aluno.id}"/>
+						<input type="hidden" name="idAtividade" th:value="${entrega.id.atividade.id}" />
+						<input type="hidden" name="pageCurso" value="true" />
+					
+						<label  class="labelInformativo" for="nota">Nota: </label> <br/>
+						<input class="inputInformativo" name="nota" type="text" id="nota"  />  <br/> <br/>
+					
+						<label  class="labelInformativo" for="correcao">Correção: </label> <br/>
+						<input class="inputInformativo" name="arquivoCorrecao" type="file" id="correcao" />  <br/> <br/>
+					
+					<input type="submit" value="Finalizar correção">
 				</form>
-				
 			</fieldset>
 		</div> <br/> <br/>
 	</div>

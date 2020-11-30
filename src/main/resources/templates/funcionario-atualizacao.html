@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}" th:with="link=@{/professor/home}">
+	
+<body>
+	<div layout:fragment="content">
+
+		<input id="botaoOpcao" type="button" value="Home" th:onclick="'location.href=\'' + @{/professor/home} + '\';'" /> 
+		
+		<h1>Atualizar</h1>
+		
+		 <div id="mensagemErro" th:if="${msgErro != null}">
+			<span th:text="${msgErro}"></span> 
+		</div> 
+			
+		<div id="mensagemSucesso" th:if="${msgSucesso != null}">
+			<span th:text="${msgSucesso}"></span> 
+		</div> 
+		
+		<div  th:if="${msgSucesso != null || msgErro != null}">
+			<br/>
+		</div>
+		
+		<div>
+			<form method="post" th:object="${funcionario}" th:action="${isProfessor} ? @{/professor/save} : @{/coordenador/save}" id="form-cadastro">
+				<fieldset>
+					<input type="hidden" name="id" th:value="${funcionario.id}">
+					<div id="mensagemErro" th:if="${#fields.hasErrors('nome')}" >
+						<span th:errors="*{nome}"></span> 
+						<br/> 
+					</div> 
+					<label for="nome">Nome: </label><br/>
+					<input type="text" th:field="*{nome}" id="nome" placeholder=" Nome..." required="required" /> <br/> <br/>
+					
+					<div id="mensagemErro" th:if="${#fields.hasErrors('email')}">
+						<span th:errors="*{email}"></span>
+						<br/>  
+					</div>
+						
+					<label for="email">E-mail: </label><br/>
+					<input type="email" th:field="*{email}" id="email" placeholder=" Informe seu novo e-mail..." required="required" /> <br/> <br/>
+					
+					<input type="hidden" th:field="*{senha}" value="*"/>
+					
+					<input type="submit" value="Atualizar" />
+				</fieldset>
+			   </form>
+			</div> <br/> <br/>
+	  </div>
+	</body>
+</html>

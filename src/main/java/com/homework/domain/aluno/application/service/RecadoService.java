@@ -46,5 +46,6 @@ public class RecadoService {
 			recadoCoordenadorRepository.save((RecadoCoordenador) recado);
 		}
 		
+		curso.getRecados().add(recado);
 	}
 }

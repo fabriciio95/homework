@@ -42,18 +42,25 @@ public class ArquivoService {
 	@Value("${homework.files.relatorios}")
 	private String arquivoRelatoriosDir;
 	
-	public void uploadArquivoAtividade(MultipartFile multipartFile, String nomeArquivo) throws ApplicationException {
-		try {
-			IOUtils.copy(multipartFile.getInputStream(), nomeArquivo, arquivoAtividadeDir);
-		} catch(Exception e) {
-			throw new ApplicationException(e);
-		}
+	
+	public enum Dir {
+		ATIVIDADE, ENTREGA, CORRECAO, RELATORIOS;
 	}
 	
-	public void uploadEntrega(MultipartFile multipartFile, String nomeArquivo) throws ApplicationException {
+	public void uploadArquivo(MultipartFile multipartFile, String nomeArquivo, Dir diretorio) throws ApplicationException {
 		try {
-			IOUtils.copy(multipartFile.getInputStream(), nomeArquivo, arquivoEntregaDir);
-		} catch (Exception e) {
+			String dir;
+			if(diretorio.equals(Dir.ATIVIDADE)) {
+				dir = arquivoAtividadeDir;
+			} else if(diretorio.equals(Dir.ENTREGA)) {
+				dir = arquivoEntregaDir;
+			} else if(diretorio.equals(Dir.CORRECAO)) {
+				dir = arquivoCorrecaoDir;
+			} else {
+				dir = arquivoRelatoriosDir;
+			}
+			IOUtils.copy(multipartFile.getInputStream(), nomeArquivo, dir);
+		} catch(Exception e) {
 			throw new ApplicationException(e);
 		}
 	}
@@ -66,7 +73,13 @@ public class ArquivoService {
 	
 	public void downloadArquivoCorrecao(HttpServletResponse response, Entrega entrega) throws IOException {
 		File file = new File(arquivoCorrecaoDir + "//" + entrega.getNomeArquivoCorrecao());
-		String nomeDoArquivo = String.format("%sCorrecao.%s", entrega.getId().getAtividade().getTitulo().replace(" ", ""), entrega.getId().getAtividade().getNomeArquivo().split("\\.")[1]);
+		String nomeDoArquivo = String.format("%sCorrecao.%s", entrega.getId().getAtividade().getTitulo().replace(" ", ""), entrega.getNomeArquivoCorrecao().split("\\.")[1]);
+		downloadArquivo(response, file, nomeDoArquivo);
+	}
+	
+	public void downloadArquivoEntrega(HttpServletResponse response, Entrega entrega) throws IOException {
+		File file = new File(arquivoEntregaDir + "//" + entrega.getNomeArquivoEntrega());
+		String nomeDoArquivo = String.format("%s.%s", entrega.getId().getAluno().getNome(), entrega.getNomeArquivoEntrega().split("\\.")[1]);
 		downloadArquivo(response, file, nomeDoArquivo);
 	}
 	
@@ -105,8 +118,24 @@ public class ArquivoService {
 		exporter.setParameter(JRExporterParameter.JASPER_PRINT, impressoraJasper);
 		exporter.setParameter(JRExporterParameter.OUTPUT_FILE, arquivoGerado);
 		exporter.exportReport();
-		//TODO descomentar linha abaixo
-		//arquivoGerado.deleteOnExit();
+		arquivoGerado.deleteOnExit();
 		return caminhoArquivoRelatorio;
+	}
+	
+	public void excluirArquivo(String nomeArquivo, Dir dir) {
+		String diretorio = ""; 
+		if(dir.equals(Dir.ATIVIDADE)) {
+			diretorio = arquivoAtividadeDir;
+		} else if(dir.equals(Dir.CORRECAO)) {
+			diretorio = arquivoCorrecaoDir;
+		} else if(dir.equals(Dir.ENTREGA)) {
+			diretorio = arquivoEntregaDir;
+		} else if(dir.equals(Dir.RELATORIOS)) {
+			diretorio = arquivoRelatoriosDir;
+		}
+		File file = new File(diretorio + "//" + nomeArquivo);
+		if(file.exists()) {
+			file.delete();
+		}
 	}
 }

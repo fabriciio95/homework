@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}" th:with="link=@{/professor/home}">
+	
+<body>
+	<div layout:fragment="content">
+
+		<input id="botaoOpcao" type="button" value="Home" th:onclick="'location.href=\'' + @{/professor/home} + '\';'" /> 
+		<input id="botaoOpcao" type="button" value="Curso" th:onclick="'location.href=\'' + @{/professor/curso} + '?curso=' + ${curso.id} + '\';'" /> <br/> <br/>
+	
+		<div id="divInformativo">
+			
+			<label class="labelInformativo" for="materia">Matéria: </label> <br/>
+			<input class="inputInformativo" type="text" id="materia" readonly="readonly" th:value="${curso.nome}"> <br/> <br/> 
+		
+		</div> <br/> <br/>
+		
+		<h1 id="titleRecado">Mural de recados</h1>
+		
+		<div>
+			<form method="post" th:action="@{/professor/curso/recados/adicionar}">
+				<fieldset id="fieldsetRecado">
+					
+					<label  class="labelInformativo" for="recado">Recado: </label> <br/>
+					<textarea class="textAreaInformativo" id="recado" required="required" name="corpo" rows="5" cols="50" placeholder=" Se preferir adicione aqui um novo recado no mural para os alunos..."></textarea> <br/> <br/> 
+					
+					<input type="hidden" name="idCurso" th:value="${curso.id}">
+					<input type="submit" value="Adicionar recado">
+				</fieldset>
+			</form>	
+		</div> <br/> <br/>
+		
+		
+		<div id="divFiltro">
+			<div id="divComunicado" th:if="${recados.size() == 0}">
+				<span>Sem recados até o momento!</span>
+			</div> 
+			<div id="divPost" th:each="recado : ${recados}">
+				<input th:id="${recado.autor instanceof T(com.homework.domain.professor.Professor)} ? 'inputPostDel' : 'inputPost'" type="text" readonly="readonly" th:value="${recado.autor.nome}">
+				<input th:if="${recado.autor instanceof T(com.homework.domain.professor.Professor)}" type="button" id="btnExcluir" value="Excluir" th:onclick="'location.href=\'' + @{/professor/curso/recados/excluir} + '?recado=' + ${recado.id} + '\';'" />
+				<textarea id="post" rows="5" cols="50" th:text="${recado.corpo}"></textarea>
+				<input id="dataPost" type="text" readonly="readonly" th:value="${#temporals.format(recado.data, 'dd/MM/yyyy HH:mm')}">
+				<br/> <br/> 
+			</div> 
+			
+		</div> <br/> <br/>
+	</div>
+</body>
+</html>

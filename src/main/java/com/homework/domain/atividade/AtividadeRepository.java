@@ -19,4 +19,17 @@ public interface AtividadeRepository extends JpaRepository<Atividade, Long> {
 	List<Atividade> findByDatas(Long idCurso, LocalDate dataInicio, LocalDate dataFinal);
 	
 	List<Atividade> findByCurso_Id(Long idCurso);
+	
+	@Query("SELECT a FROM Atividade a WHERE a.curso.id = ?1 AND a.status = ?2")
+	List<Atividade> findByCursoEStatus(Long idCurso, StatusAtividade status);
+	
+	@Query("SELECT a FROM Atividade a WHERE LOWER(a.titulo) LIKE LOWER(CONCAT('%', ?1, '%')) AND a.curso.id = ?2")
+	List<Atividade> getAtividadesPorTitulo(String titulo, Long idCurso);
+	
+	@Query("SELECT DISTINCT(a) FROM Entrega e INNER JOIN e.id.atividade a WHERE e.corrigido = false AND e.id.atividade.curso.id = ?1")
+	List<Atividade> getAtividadesComCorrecoesPendentes(Long idCurso);
+	
+	@Query("SELECT DISTINCT(a) FROM Entrega e INNER JOIN e.id.atividade a WHERE e.corrigido = false AND e.id.atividade.curso.id = ?1"
+			+ " AND a.dataFinal BETWEEN ?2 AND ?3")
+	List<Atividade> getAtividadesComCorrecoesPendentes(Long idCurso, LocalDate dataInicio, LocalDate dataFinal);
 }

@@ -57,7 +57,7 @@
 					
 					<input type="hidden" name="senha" value="*" th:if="${aluno.id != null}">
 					
-					<input type="submit" th:value="${aluno.id == null} ? 'Cadastrar' : 'Atualizar'" />
+					<input type="submit" onclick="isSenhaIguais();" th:value="${aluno.id == null} ? 'Cadastrar' : 'Atualizar'"  />
 				</fieldset>
 			   </form>
 			</div> <br/> <br/>

@@ -6,14 +6,14 @@
 	<div layout:fragment="content">
 
 		<div>
-			<input type="button"  id="botaoOpcao" value="Meus dados" onclick="location.href='funcionario-atualizacao.html'"/> 
+			<input type="button"  id="botaoOpcao" value="Meus dados" th:onclick="'location.href=\'' + @{/professor/atualizar} + '\';'"/> 
 			<input type="button"  id="botaoOpcao" value="Sair" th:onclick="'location.href=\'' + @{/logout} + '\';'" />
 		</div>
 		
-		<div>
+		<div id="divMaisLargo">
 			<span id="opcaoTitulo">Meus Cursos</span> <br/> <br/>  <br/> <br/>
 			<div th:each="curso : ${cursos}">
-				<input type="button"  th:value="${curso.nome}" th:onclick="'location.href=\'' + @{/professor/curso} + '?curso=' + ${curso.id} + '\';'" /> <br/>
+				<input id="btnMaisLargo" type="button"  th:value="${curso.nome}" th:onclick="'location.href=\'' + @{/professor/curso} + '?curso=' + ${curso.id} + '\';'" /> <br/>
 			</div>
 		</div>
 		
@@ -25,12 +25,20 @@
 			<span>Professor não está lecionando nenhum curso no momento</span>
 		</div>  <br/> <br/>
 		
-		<div>
+		<div id="divMaisLargo">
 			<span id="opcaoTitulo">Atividades em aberto</span> <br/> <br/>  <br/> <br/>
-			<input type="button" value="Nome atividade" onclick="location.href='professor-atividade.html'"/> <br/> 
-			<input type="button" value="Nome atividade" onclick="location.href='professor-atividade.html'"/> <br/> 
-			<input type="button" value="Nome atividade" onclick="location.href='professor-atividade.html'"/> <br/> 
-		</div> <br/><br/>
+			<div th:each="atividade : ${atividadesEmAberto}">
+				<input id="btnMaisLargo" type="button" th:value="${atividade.titulo}" th:onclick="'location.href=\'' + @{/professor/curso/atividades/verAtividade} + '?idAtividade=' + ${atividade.id} + '\';'"/> <br/> 
+			</div>
+		</div>
+		<div th:if="${atividadesEmAberto != null && atividadesEmAberto.size() > 0}">
+			<br/><br/>
+		</div> 
+		
+		<div id="divComunicado" th:if="${atividadesEmAberto != null && atividadesEmAberto.size() == 0}">
+			<span>Nenhuma atividade em aberto até o momento</span>
+		</div>  <br/> <br/>
+		
 	</div>
 </body>
 </html>

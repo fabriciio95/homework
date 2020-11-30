@@ -37,6 +37,7 @@ public interface CursoRepository extends JpaRepository<Curso, Long> {
 			+ "c.categoriaCurso = ?2  AND c.vagas > 0 AND c.status != 'CONCLUIDO'")
 	List<Curso> findByProfessorECategoria(String nomeProfessor, CategoriaCurso categoriaCurso);
 	
-	List<Curso> findByProfessor_Id(Long idProfessor);
+	@Query("SELECT c FROM Curso c WHERE c.professor.id = ?1 AND c.status != 'CONCLUIDO'")
+	List<Curso> findCursosEmAndamentoDoProfessor(Long idProfessor);
 	
 }

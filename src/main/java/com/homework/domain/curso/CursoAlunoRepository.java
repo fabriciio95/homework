@@ -16,6 +16,11 @@ public interface CursoAlunoRepository extends JpaRepository<CursoAluno, CursoAlu
 	
 	List<CursoAluno> findById_AlunoAndStatusMatricula(Aluno aluno, StatusMatricula statusMatricula);
 	
+	List<CursoAluno> findByStatusMatriculaAndId_Curso(StatusMatricula statusMatricula, Curso curso);
+	
+	@Query("SELECT c FROM CursoAluno c WHERE c.statusMatricula = ?1 AND c.id.curso = ?2 AND LOWER(c.id.aluno.nome) LIKE LOWER(CONCAT('%', ?3, '%'))")
+	List<CursoAluno> findByNomeAlunoAproximado(StatusMatricula statusMatricula, Curso curso, String nomeAluno);
+	
 	@Query("SELECT c FROM CursoAluno c WHERE c.id.aluno.id = ?1 AND c.id.curso.status = 'CONCLUIDO' AND c.situacaoAluno = 'APROVADO'")
 	List<CursoAluno> findCursosConcluidosPeloAluno(Long idAluno);
 }

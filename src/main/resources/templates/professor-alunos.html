@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}" th:with="link=@{/professor/home}">
+	
+<body>
+	<div layout:fragment="content">
+
+		<input id="botaoOpcao" type="button" value="Home" th:onclick="'location.href=\'' + @{/professor/home} + '\';'" /> 
+		<input id="botaoOpcao" type="button" value="Mural de recados" th:onclick="'location.href=\'' + @{/professor/curso/recados} + '?curso=' + ${curso.id} + '\';'"> <br/>
+		<input id="botaoOpcao" type="button" value="Curso" th:onclick="'location.href=\'' + @{/professor/curso} + '?curso=' + ${curso.id} + '\';'" /> <br/> <br/>
+	
+		<div id="divInformativo">
+			
+			<label class="labelInformativo" for="materia">Matéria: </label> <br/>
+			<input class="inputInformativo" type="text" id="materia" readonly="readonly" th:value="${curso.nome}"> <br/> <br/> 
+		
+		</div> 
+		
+		 <div id="mensagemErro" th:if="${msgErro != null}">
+			<span th:text="${msgErro}"></span> 
+		</div> 
+		
+		 <div id="mensagemSucesso" th:if="${msgSucesso != null}">
+			<span th:text="${msgSucesso}"></span> 
+		</div> 
+		
+		<div th:if="${msgErro != null|| msgSucesso != null}">
+			<br/>
+		</div>
+		
+		<div id="divCentralizado">
+			<input id="btnCentralizado" type="button" value="fechar notas" th:onclick="'location.href=\'' + @{/professor/curso/fecharNotas} + '?curso=' + ${curso.id} + '\';'"> <br/>
+		</div>
+	
+		<div id="divFiltro">
+			<span id="tituloFiltro">Buscar aluno por:</span> <br/> <br/>
+			<form id="formPesquisa" method="post" th:object="${entregaFilter}" th:action="@{/professor/curso/alunos/buscarAluno}">  
+				<input type="hidden" th:value="${curso.id}" name="idCurso" />
+				
+				<label for="idAluno" id="labelPesquisa">Id:</label> <br/>
+				<input  type="text" th:field="*{idAluno}" id="idAluno" placeholder=" Apenas números..." />  <br/> <br/>
+				
+				<label for="nomeAluno" id="labelPesquisa">Nome:</label> 
+				<input type="text" th:field="*{nomeAluno}" id="nomeAluno"/> <br/> <br/>
+				
+				<label id="labelPesquisa" for="situacao">Situação:</label>
+					<select id="situacao" th:field="*{situacaoAluno}" class="select">
+						<option  th:value="TODAS">Todas</option>
+						<option th:value="APROVADO">Aprovado</option>
+						<option th:value="REPROVADO">Reprovado</option>
+						<option th:value="INDEFINIDO">Indefinido</option>
+					</select> <br/> <br/>
+				
+				<label id="labelPesquisa" for="filtroDeBusca">Todos Alunos: </label> 
+				<input  type="checkbox" th:field="*{todos}" id="filtroDeBusca" />  <br/> <br/>
+				
+				<input id="botaoPesquisa" type="submit" value="Buscar">
+			</form>
+		</div> <br/> <br/>
+
+		
+		<h1 th:if="${editMode != null && editMode}">Atualizar</h1>
+		
+		<div>
+			<form method="post" th:action="@{/professor/curso/alunos/editar/atualizar}" th:object="${alunoNotas}" th:if="${editMode != null && editMode}">
+				<fieldset>
+					<input type="hidden" name="idAluno" th:field="*{idAluno}" />
+					<input type="hidden" name="idCurso" th:field="*{idCurso}" />
+					
+					<label for="nome">Aluno: </label><br/>
+					<input type="text" id="nome" readonly="readonly" th:field="*{nomeAluno}" /> <br/> <br/>
+					
+					<div th:each="nota, itemStat : *{entregasNotas}">
+						<label th:text="Nota + ' - ' + ${nota.id.atividade.titulo} + ': '"></label><br/>
+						<input type="text" th:name="|entregasNotas[${itemStat.index}].nota|" th:value="${nota.nota}" /> <br/> <br/>
+						<input type="hidden" th:name="|entregasNotas[${itemStat.index}].id.aluno.id|"   th:value="${nota.id.aluno.id}" />
+						<input type="hidden" th:name="|entregasNotas[${itemStat.index}].id.atividade.id|"  th:value="${nota.id.atividade.id}" /> 
+					</div>
+					
+					<label for="email">Média Final: </label><br/>
+					<input type="text" th:field="*{media}" id="mediaFinal" /> <br/> <br/>
+					
+					<label for="situacao">Situação:</label>
+					<select id="situacao" th:field="*{situacaoAluno}" class="select">
+						<option th:selected="${alunoNotas.situacaoAluno.toString() == 'INDEFINIDO'} ? 'selected' : ''" value="INDEFINIDO">Indefinido</option>
+						<option th:selected="${alunoNotas.situacaoAluno.toString() == 'REPROVADO'} ? 'selected' : ''" value="REPROVADO">Reprovado</option>
+						<option th:selected="${alunoNotas.situacaoAluno.toString() == 'APROVADO'} ? 'selected' : ''" value="APROVADO">Aprovado</option>
+					</select> <br/> <br/>
+					
+					<input type="submit" value="Atualizar" />
+				</fieldset>
+			   </form>
+			</div> 
+			
+			<div id="divComunicado" th:if="${atividadesEntregues != null && atividadesEntregues.size() == 0}">
+				<span>Nenhum aluno encontrado</span>
+			</div> <br/> <br/>
+			
+			 <div id="mensagemErro" th:if="${msgErroAtualizar != null}">
+				<span th:text="${msgErroAtualizar}"></span> 
+			</div> 
+		
+		 	<div id="mensagemSucesso" th:if="${msgSucessoAtualizar != null}">
+				<span th:text="${msgSucessoAtualizar}"></span> 
+			</div> 
+		
+			<div th:if="${msgErroAtualizar != null|| msgSucessoAtualizar != null}">
+				<br/>
+			</div>
+			
+			<h1 th:if="${atividadesEntregues != null && atividadesEntregues.size() > 0}">Alunos</h1>
+		
+		<table th:if="${atividadesEntregues != null && atividadesEntregues.size() > 0}">
+			<tr>
+				<th>ID</th>
+				<th>Aluno</th>
+				<th>Nota 1</th>
+				<th>Nota 2</th>
+				<th>Nota 3</th>
+				<th>Nota 4</th>
+				<th>Nota 5</th>
+				<th>Média</th>
+				<th>Situação</th>
+				<th>Editar</th>
+			</tr>
+			<tr th:each="entrega : ${atividadesEntregues}">
+				<td><span th:text="${entrega.idAluno}"></span></td>
+				<td><span th:text="${entrega.nomeAluno}"></span></td>
+				<td><span th:text="${entrega.notas.size() >= 1 ? entrega.notas.get(0) : '-'}"></span></td>
+				<td><span th:text="${entrega.notas.size() >= 2 ? entrega.notas.get(1) : '-'}"></span></td>
+				<td><span th:text="${entrega.notas.size() >= 3 ? entrega.notas.get(2) : '-'}"></span></td>
+				<td><span th:text="${entrega.notas.size() >= 4 ? entrega.notas.get(3) : '-'}"></span></td>
+				<td><span th:text="${entrega.notas.size() >= 5 ? entrega.notas.get(4) : '-'}"></span></td>
+				<td><span th:text="${entrega.media}"></span></td>
+				<td><span th:text="${entrega.situacaoAluno}"></span></td>
+				<td><input type="button" value="Editar" th:onclick="'location.href=\'' + @{/professor/curso/alunos/editar} + '?aluno=' + ${entrega.idAluno} + '&curso=' + ${curso.id} + '\';'" /></td>
+			</tr>
+		</table>
+	</div>
+</body>
+</html>

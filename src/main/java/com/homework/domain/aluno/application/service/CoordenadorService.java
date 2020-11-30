@@ -55,6 +55,8 @@ public class CoordenadorService {
 	
 	public void proibirMatricula(Long idCurso, Long idAluno) {
 		Curso curso = cursoRepository.findById(idCurso).orElseThrow(NoSuchElementException::new);
+		curso.setVagas(curso.getVagas() + 1);
+		cursoRepository.save(curso);
 		Aluno aluno = alunoRepository.findById(idAluno).orElseThrow(NoSuchElementException::new);
 		CursoAluno matricula = matriculaRepository.findById(new CursoAlunoPK(curso, aluno)).orElseThrow(NoSuchElementException::new);
 		matriculaRepository.delete(matricula);

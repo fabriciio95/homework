@@ -12,7 +12,7 @@ import lombok.Setter;
 public class AtividadeFilter {
 	
 	public enum StatusAtividadeFilter {
-		EM_ABERTO, ENTREGUE, FINALIZADA;
+		EM_ABERTO, ENTREGUE, FINALIZADA, TODAS, CORRECOES_PENDENTES;
 	}
 	
 	private Long idCurso;
@@ -24,5 +24,7 @@ public class AtividadeFilter {
 	private LocalDate dataFinal;
 	
 	private StatusAtividadeFilter statusAtividade;
+	
+	private String tituloAtividade;
 	
 }

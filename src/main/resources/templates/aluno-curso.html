@@ -76,6 +76,9 @@
 				<label class="labelInformativo" for="materia">Matéria: </label> <br/>
 				<input class="inputInformativo" type="text" id="materia" th:value="${atividade.curso.nome}"> <br/> <br/> 
 				
+				<label class="labelInformativo" for="materia">Título: </label> <br/>
+				<input class="inputInformativo" type="text" id="materia" th:value="${atividade.titulo}"> <br/> <br/> 
+				
 				<label  class="labelInformativo" for="descricao">Descrição da atividade: </label> <br/>
 				<textarea class="textAreaInformativo" readonly="readonly" id="descricao" rows="5" cols="50"  th:text="${atividade.descricao}"/></textarea> <br/> <br/> 
 				
@@ -99,6 +102,9 @@
 				<label class="labelInformativo" for="materia">Matéria: </label> <br/>
 				<input class="inputInformativo" type="text" id="materia" th:value="${atividade.id.atividade.curso.nome}"> <br/> <br/> 
 				
+				<label class="labelInformativo" for="materia">Título: </label> <br/>
+				<input class="inputInformativo" type="text" id="materia" th:value="${atividade.id.atividade.titulo}"> <br/> <br/> 
+				
 				<label  class="labelInformativo" for="descricao">Descrição da atividade: </label> <br/>
 				<textarea class="textAreaInformativo" readonly="readonly" id="descricao" rows="5" cols="50" th:text="${atividade.id.atividade.descricao}" /></textarea> <br/> <br/> 
 				
@@ -109,7 +115,7 @@
 				<input class="inputInformativo" type="text" readonly="readonly" id="dataEntrega" th:value="${#temporals.format(atividade.dataEntrega, 'dd/MM/yyyy')}" />  <br/> <br/>
 				
 				<label  class="labelInformativo" for="nota">Nota: </label> <br/>
-				<input class="inputInformativo" type="text" readonly="readonly" id="nota" th:value="${atividade.nota == null ? 'Atividade ainda não foi corrigida!' : atividade.nota}" />  <br/> <br/>
+				<input class="inputInformativo" type="text" readonly="readonly" id="nota" th:value="${!atividade.corrigido ? 'Atividade ainda não foi corrigida!' : atividade.nota}" />  <br/> <br/>
 				
 				<form th:action="@{/aluno/cursos/verCurso/verAtividade/baixarCorrecao}" th:if="${atividade.nota != null}">
 					<input type="hidden" name="idAtividade" th:value="${atividade.id.atividade.id}">
