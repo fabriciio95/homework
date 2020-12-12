@@ -4,23 +4,28 @@
 	
 <body>
 	<div layout:fragment="content">
+		
+		<div id="mensagemSucesso" th:if="${msgSucesso != null}">
+			<span th:text="${msgSucesso}"></span> 
+		</div> 
+	
+		<div th:if="${msgSucesso != null}">
+			<br/>
+		</div>
 	
 		<div>
-			<input type="button"  id="botaoOpcao" value="Meus dados" onclick="location.href='funcionario-atualizacao.html'"/> 
-			<input type="button"  id="botaoOpcao" value="Cursos" onclick="location.href= 'coordenador-cursos.html'" /> <br/>
-			<input type="button"  id="botaoOpcao" value="Alunos" onclick="location.href='coordenador-alunos.html'"/> 
-			<input type="button"  id="botaoOpcao" value="Professores" onclick="location.href='coordenador-professores.html'"/> <br/>
+			<input type="button"  id="botaoOpcao" value="Meus dados" th:onclick="'location.href=\'' + @{/coordenador/atualizar} + '\';'"/> 
+			<input type="button"  id="botaoOpcao" value="Cursos" th:onclick="'location.href=\'' + @{/coordenador/cursos} + '\';'" /> <br/>
+			<input type="button"  id="botaoOpcao" value="Alunos"th:onclick="'location.href=\'' + @{/coordenador/alunos} + '\';'"/> 
+			<input type="button"  id="botaoOpcao" value="Professores" th:onclick="'location.href=\'' + @{/coordenador/professores} + '\';'"/> <br/>
 			<input type="button"  id="botaoOpcao" value="Permissões" th:onclick="'location.href=\'' + @{/coordenador/permissoes} + '\';'" />
-			<input type="button"  id="botaoOpcao" value="Comunicados" onclick="location.href= 'coordenador-comunicados.html'" /> <br/>
+			<input type="button"  id="botaoOpcao" value="Comunicados" th:onclick="'location.href=\'' + @{/coordenador/comunicados} + '\';'" /> <br/>
 			<input type="button"  id="botaoOpcao" value="Sair" th:onclick="'location.href=\'' +@{/logout} + '\';'" />
 		</div>
 		
-		<div>
-			<span id="opcaoTitulo">Cursos em andamento</span> <br/> <br/>  <br/> <br/>
-			<input type="button"  value="Informática" onclick="location.href='coordenador-curso.html'" /> <br/>
-			<input type="button"  value="Inglês"  onclick="location.href='coordenador-curso.html'"/> <br/> 
-			<input type="button"  value="Espanhol" onclick="location.href='coordenador-curso.html'" /> <br/>
-			
+		<span id="opcaoTitulo">Cursos em andamento</span> <br/> <br/>  <br/> <br/>
+		<div th:each="curso : ${cursosEmAndamento}">
+			<input type="button"  th:value="${curso.nome}" th:onclick="'location.href=\'' + @{/coordenador/curso} + '?id=' + ${curso.id} + '\';'" /> <br/>			
 		</div> <br/><br/>
 	</div>
 </body>

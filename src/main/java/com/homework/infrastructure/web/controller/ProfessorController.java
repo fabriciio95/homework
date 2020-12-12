@@ -157,8 +157,6 @@ public class ProfessorController {
 		List<Atividade> atividades = atividadeService.getAtividadesFiltradasProfessor(atividadeFilter);
 		model.addAttribute("atividades", atividades);
 		putCursoEAtividadeOnModel(model, idCurso);
-		//TODO fazer com que seja possível fazer uma busca pelo título da atividade, sem ser obrigatório fazer a busca por datas quando buscado por nome
-		//TODO fazer com que seja possível fazer uma busca apenas em atividades que não foram corrigidas, e também assim que abrir a página professor-curso já exibir as atividades não corrigidas assim como mostra as atividades pendentes do aluno
 		return "professor-curso";
 	}
 	
@@ -317,7 +315,6 @@ public class ProfessorController {
 		putCursoOnModel(alunoNotas.getIdCurso(), model);
 		model.addAttribute("entregaFilter", new EntregaFilterDTO());
 		model.addAttribute("atividadesEntregues", atualizarListaAtividadesEntregues(atividadesEntregues, alunoNotas));
-		//TODO testar esse método e também as funções que envolvem obter as notas e média de um aluno, como a página minhas notas do aluno
 		return "professor-alunos";
 	}
 	

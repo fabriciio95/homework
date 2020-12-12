@@ -10,6 +10,7 @@ import com.homework.domain.recado.Recado;
 
 public class ControllerHelper {
 
+
 	public static List<Recado> getRecadosAndPutOnModel(Curso curso, Model model, boolean isWithLimit) {
 		List<Recado> recados;
 		if (isWithLimit) {

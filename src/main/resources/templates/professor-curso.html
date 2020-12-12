@@ -20,7 +20,7 @@
 		<span id="opcaoTitulo">Atividades</span> <br/> <br/> <br/>	
 		
 		<div id="divCentralizado">
-			<input id="btnCentralizado" type="button" value="nova atividade" onclick="alterarDisplayDivNovaAtividade();"> <br/>
+			<input id="btnCentralizado" type="button" value="nova atividade" onclick="alterarDisplayDiv('divAlteraDisplay');"> <br/>
 		</div>
 		
 		<div th:if="${msgSucesso != null}" id="mensagemSucesso">
@@ -31,7 +31,7 @@
 			<br/> <br/> 
 		</div>
 		
-		<div id="divNovaAtividade" th:style="${hasError} ? 'display: block;' : 'display: none;'">
+		<div id="divAlteraDisplay" th:style="${hasError} ? 'display: block;' : 'display: none;'">
 			<form method="post" th:action="@{/professor/curso/atividades/nova}" th:object="${atividade}" enctype="multipart/form-data"> 
 				<fieldset>
 					<label class="labelInformativo" for="materia">Matéria: </label> <br/>

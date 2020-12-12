@@ -40,8 +40,8 @@
 				<td><span th:text="${matricula.id.aluno.nome}"></span></td>
 				<td><span th:text="${matricula.id.curso.nome}"></span></td>
 				<td><span th:text="${#temporals.format(matricula.id.curso.dataInicial, 'dd/MM/yyyy')}"></span></td>
-				<td><input type="button" value="Ver aluno" th:onclick="'location.href=\'' + @{coordenador/aluno} + '\';'"/></td>
-				<td><input type="button" value="Ver curso" th:onclick="'location.href=\'' + @{coordenador/curso} + '\';'"/></td>
+				<td><input type="button" value="Ver aluno" th:onclick="'location.href=\'' + @{/coordenador/aluno} + '?id=' + ${matricula.id.aluno.id} + '\';'"/></td>
+				<td><input type="button" value="Ver curso" th:onclick="'location.href=\'' + @{/coordenador/curso} + '?id=' + ${matricula.id.curso.id} + '\';'"/></td>
 				<td><input type="button" id="btnPermitir" value="Permitir" th:onclick="'location.href=\'' + @{/coordenador/permissoes/permitir} + '?curso=' + ${matricula.id.curso.id} + '&aluno=' + ${matricula.id.aluno.id} + '\';'"/></td>
 				<td><input type="button" id="btnRecusar"  value="Recusar" th:onclick="'location.href=\'' + @{/coordenador/permissoes/proibir} + '?curso=' + ${matricula.id.curso.id} + '&aluno=' + ${matricula.id.aluno.id} + '\';' "/></td>
 			</tr>

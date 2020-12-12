@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 
 import com.homework.domain.aluno.Aluno;
 import com.homework.domain.aluno.AlunoRepository;
+import com.homework.domain.aluno.application.service.CursoService;
 import com.homework.domain.atividade.Atividade;
 import com.homework.domain.atividade.Atividade.StatusAtividade;
 import com.homework.domain.atividade.AtividadeRepository;
@@ -70,6 +71,9 @@ public class InsertDataForTesting {
 	
 	@Autowired
 	private EntregaRepository entregaRepository;
+	
+	@Autowired
+	private CursoService cursoService;
 	
 	@EventListener
 	public void onApplicationEvent(ContextRefreshedEvent event) {
@@ -280,13 +284,18 @@ public class InsertDataForTesting {
 		curso7.setStatus(StatusCurso.CONCLUIDO);
 		curso7.setDescricao("Aprenda lógica de programação");
 		curso7.setCategoriaCurso(CategoriaCurso.INFORMATICA);
-		curso7.setVagas(0);
+		curso7.setVagas(1);
 		curso7.setProfessor(professores.get(1));
 		curso7.setCoordenador(coordenador);
 		curso7 = cursoRepository.save(curso7);
 		cursos.add(curso7);
 		
 		return cursos;
+	}
+	
+	private void atualizarQtdEVagasCursoESalvarNoBD(Curso curso) {
+		curso = cursoService.atualizarVagasEQtdAlunosDoCurso(curso, true);
+		cursoRepository.save(curso);
 	}
 	
 	private void salvarMatriculas(List<Curso> cursos, List<Aluno> alunos) {
@@ -297,6 +306,7 @@ public class InsertDataForTesting {
 		cursoAluno.setStatusMatricula(StatusMatricula.NAO_CONFIRMADA);
 		cursoAluno.setSituacaoAluno(SituacaoAluno.INDEFINIDO);
 		cursoAlunoRepository.saveAndFlush(cursoAluno);
+		atualizarQtdEVagasCursoESalvarNoBD(cursos.get(0));
 		
 		CursoAluno cursoAluno2 = new CursoAluno();
 		cursoAluno2.setId(new CursoAlunoPK(cursos.get(1), alunos.get(0)));
@@ -305,6 +315,7 @@ public class InsertDataForTesting {
 		cursoAluno2.setStatusMatricula(StatusMatricula.NAO_CONFIRMADA);
 		cursoAluno2.setSituacaoAluno(SituacaoAluno.INDEFINIDO);
 		cursoAlunoRepository.saveAndFlush(cursoAluno2);
+		atualizarQtdEVagasCursoESalvarNoBD(cursos.get(1));
 		
 		CursoAluno cursoAluno3 = new CursoAluno();
 		cursoAluno3.setId(new CursoAlunoPK(cursos.get(2), alunos.get(0)));
@@ -313,6 +324,7 @@ public class InsertDataForTesting {
 		cursoAluno3.setStatusMatricula(StatusMatricula.CONFIRMADA);
 		cursoAluno3.setSituacaoAluno(SituacaoAluno.INDEFINIDO);
 		cursoAlunoRepository.saveAndFlush(cursoAluno3);
+		atualizarQtdEVagasCursoESalvarNoBD(cursos.get(2));
 		
 		CursoAluno cursoAluno4 = new CursoAluno();
 		cursoAluno4.setId(new CursoAlunoPK(cursos.get(3), alunos.get(0)));
@@ -321,6 +333,7 @@ public class InsertDataForTesting {
 		cursoAluno4.setStatusMatricula(StatusMatricula.NAO_CONFIRMADA);
 		cursoAluno4.setSituacaoAluno(SituacaoAluno.INDEFINIDO);
 		cursoAlunoRepository.saveAndFlush(cursoAluno4);
+		atualizarQtdEVagasCursoESalvarNoBD(cursos.get(3));
 		
 		CursoAluno cursoAluno5 = new CursoAluno();
 		cursoAluno5.setId(new CursoAlunoPK(cursos.get(4), alunos.get(0)));
@@ -329,6 +342,7 @@ public class InsertDataForTesting {
 		cursoAluno5.setStatusMatricula(StatusMatricula.NEGADA);
 		cursoAluno5.setSituacaoAluno(SituacaoAluno.INDEFINIDO);
 		cursoAlunoRepository.saveAndFlush(cursoAluno5);
+		atualizarQtdEVagasCursoESalvarNoBD(cursos.get(4));
 		
 		CursoAluno cursoAluno6 = new CursoAluno();
 		cursoAluno6.setId(new CursoAlunoPK(cursos.get(2), alunos.get(1)));
@@ -337,6 +351,7 @@ public class InsertDataForTesting {
 		cursoAluno6.setStatusMatricula(StatusMatricula.CONFIRMADA);
 		cursoAluno6.setSituacaoAluno(SituacaoAluno.INDEFINIDO);
 		cursoAlunoRepository.saveAndFlush(cursoAluno6);
+		atualizarQtdEVagasCursoESalvarNoBD(cursos.get(2));
 		
 		CursoAluno cursoAluno7 = new CursoAluno();
 		cursoAluno7.setId(new CursoAlunoPK(cursos.get(6), alunos.get(0)));
@@ -345,6 +360,7 @@ public class InsertDataForTesting {
 		cursoAluno7.setStatusMatricula(StatusMatricula.CONFIRMADA);
 		cursoAluno7.setSituacaoAluno(SituacaoAluno.APROVADO);
 		cursoAlunoRepository.saveAndFlush(cursoAluno7);
+		atualizarQtdEVagasCursoESalvarNoBD(cursos.get(6));
 		
 	}
 	

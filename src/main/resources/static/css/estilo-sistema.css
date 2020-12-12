@@ -320,7 +320,7 @@ label#labelPesquisa
 	font-size: 19px;
 }
 
-input#dataInicio, input#dataFinal
+input#dataInicio, input#dataFinal, input#dataInicial, input#dataConclusao
 {
 	height: 30px;
 }

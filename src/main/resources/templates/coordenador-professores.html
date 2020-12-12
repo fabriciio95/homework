@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}" th:with="link=@{/coordenador/home}">
+	
+<body>
+	<div layout:fragment="content">
+		<input id="botaoOpcao" type="button" value="Home" th:onclick="'location.href=\'' + @{/coordenador/home} + '\';'" /> <br/>
+	
+		<div id="mensagemSucesso" th:if="${msgSucesso != null}">
+			<span th:text="${msgSucesso}"></span> 
+		</div> 
+			
+		<div id="mensagemErro" th:if="${msgErro != null}">
+			<span th:text="${msgErro}"></span> 
+		</div> 
+		
+		<div th:if="${msgSucesso != null || msgErro != null}">
+			<br/>
+		</div>
+		
+		<div id="divCentralizado">
+			<input type="button" id="btnCentralizado" value="novo professor" onclick="alterarDisplayDiv('divAlteraDisplay1');"> <br/>
+			<input type="button" id="btnCentralizado" value="gerar chave" onclick="alterarDisplayDiv('divAlteraDisplay2');"> <br/>
+		</div>
+			
+			<div id="divAlteraDisplay1" th:style="${hasError1} ? 'display: block;' : 'display: none;'">
+			<form method="post" th:action="@{/coordenador/professores/cadastrarProfessor}" th:object="${professor}">
+				<fieldset>
+					
+					<div id="mensagemErro" th:if="${#fields.hasErrors('nome')}" >
+						<span th:errors="*{nome}"></span> 
+						<br/> 
+					</div> 
+		
+					<label for="nome">Nome: </label><br/>
+					<input type="text" id="nome" th:field="*{nome}" placeholder=" Informe o nome do novo professor..." required="required" /> <br/> <br/>
+				
+					<div id="mensagemErro" th:if="${#fields.hasErrors('email')}">
+						<span th:errors="*{email}"></span>
+						<br/>  
+					</div> 
+					
+					<label for="email">E-mail: </label><br/>
+					<input type="email" id="email" th:field="*{email}" placeholder=" Informe o e-mail do novo professor..." required="required" /> <br/> <br/>
+					
+					<input type="hidden" name="senha" value="*" />
+					<input type="submit" value="Cadastrar" />
+				</fieldset>
+			   </form>
+			</div> <br/> <br/>
+			
+			<div id="mensagemErro" th:if="${msgErroChave != null}">
+			<span th:text="${msgErroChave}"></span> 
+		</div> 
+		
+		<div th:if="${msgErroChave != null}">
+			<br/>
+		</div>
+		
+			<div id="divAlteraDisplay2" th:style="${open} ? 'display: block;' : 'display: none;'">
+				<fieldset>
+					<form th:object="${professorChave}" method="post" th:action="@{/coordenador/professores/gerarChave}">
+						
+						<label for="email">E-mail: </label><br/>
+						<input type="text" id="email" th:field="*{email}" placeholder=" Informe o e-mail do professor..." class="long-field" required="required" /> <br/> <br/>
+						
+						<input id="botaoCadastrar" type="submit" value="gerar Chave" /> <br/> <br/>
+					
+						<label for="Chave">Chave: </label><br/>
+						<input type="text" id="chave" th:field="*{chave}" readonly="readonly" class="long-field" /> <br/> <br/>
+					</form>
+				</fieldset>
+			</div> <br/> <br/>
+					
+			<div id="divFiltro">
+			<span id="tituloFiltro">Buscar professor por:</span> <br/> <br/>
+			<form id="formPesquisa" th:object="${professorFilter}" method="post" th:action="@{/coordenador/professores/buscarProfessor}">
+				
+				<label for="idAluno" id="labelPesquisa">Id:</label> <br/>
+				<input  type="text" id="idAluno" th:field="*{id}" placeholder=" Id do professor a ser buscado..." />  <br/> <br/>
+				
+				<label for="nomeAluno" id="labelPesquisa">Nome:</label> 
+				<input type="text" id="nomeAluno" th:field="*{nome}" placeholder=" Nome do professor a ser buscado..." /> <br/> <br/>
+				
+				<label for="nomeCurso" id="labelPesquisa">Curso:</label> 
+				<input type="text" id="nomeCurso" th:field="*{nomeCurso}" placeholder=" Nome do curso dos professores..." /> <br/> <br/>
+				
+				<label id="labelPesquisa" for="filtroDeBusca">Todos: </label> 
+				<input  type="checkbox" th:field="*{todos}" id="filtroDeBusca" />  <br/> <br/>
+				
+				<input id="botaoPesquisa" type="submit" value="Buscar">
+			</form>
+		</div> <br/> <br/>
+		
+		<table  th:if="${professores != null && professores.size() > 0}">
+			<tr>
+				<th>ID</th>
+				<th>Professor</th>
+				<th>E-mail</th>
+				<th>Ver Professor</th>
+			</tr>
+			<tr th:each="professor : ${professores}">
+				<td><span th:text="${professor.id}"></span></td>
+				<td><span th:text="${professor.nome}"></span></td>
+				<td><span th:text="${professor.email}"></span></td>
+				<td><input type="button" value="Ver professor" th:onclick="'location.href=\'' + @{/coordenador/professor} + '?id=' + ${professor.id} + '\';'" /></td>
+			</tr>
+		</table>
+		
+		<div id="divComunicado" th:if="${professores != null && professores.size() == 0}">
+			<span>Nenhum professor encontrado</span>
+		</div> 
+		<br/> <br/>
+	
+	</div>
+</body>
+</html>

@@ -9,6 +9,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.homework.domain.aluno.Aluno;
+import com.homework.domain.curso.Curso;
+
 @Repository
 public interface EntregaRepository extends JpaRepository<Entrega, EntregaPK> {
 
@@ -31,5 +34,15 @@ public interface EntregaRepository extends JpaRepository<Entrega, EntregaPK> {
 	@Query("DELETE FROM Entrega e WHERE e.id.atividade.id = ?1")
 	void  excluirEntregasDaAtividade(Long idAtividade);
 	
+	List<Entrega> findById_Aluno(Aluno aluno);
 	
+	@Transactional
+	@Modifying
+	@Query("DELETE FROM Entrega e WHERE e.id.aluno = ?1")
+	void excluirTodasEntregaAluno(Aluno aluno);
+	
+	@Transactional
+	@Modifying
+	@Query("DELETE FROM Entrega e WHERE e.id.aluno = ?1 AND e.id.atividade.curso = ?2")
+	void excluirTodasEntregaAlunoPorCurso(Aluno aluno, Curso curso);
 }

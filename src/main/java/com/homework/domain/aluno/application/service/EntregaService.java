@@ -180,6 +180,10 @@ public class EntregaService {
 		return atividadesEntregues;
 	}
 	
+	public void excluirTodasEntregaAlunoPorCurso(Aluno aluno, Curso curso) {
+		entregaRepository.findEntregasAlunoPorCurso(curso.getId(), aluno.getId()).forEach(e -> entregaRepository.delete(e));
+	}
+	
 	private List<AtividadeEntregaDTO> filtrarPorSituacaoAlunoFilter(List<CursoAluno> matriculas, SituacaoAlunoFilter situacaoAlunoFilter){
 		List<AtividadeEntregaDTO> atividadesEntregues = new ArrayList<>();
 		if(situacaoAlunoFilter.equals(SituacaoAlunoFilter.TODAS)) {

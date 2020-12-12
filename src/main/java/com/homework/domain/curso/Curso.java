@@ -20,6 +20,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.homework.domain.coordenador.Coordenador;
 import com.homework.domain.professor.Professor;
 import com.homework.domain.recado.Recado;
@@ -37,7 +39,19 @@ public class Curso implements Serializable{
 
 	public enum CategoriaCurso
 	{
-		INFORMATICA, IDIOMAS, MATEMATICA, PORTUGUES, OUTROS, NENHUMA;
+		INFORMATICA("INFORMÁTICA"),
+		IDIOMAS("IDIOMAS"), 
+		MATEMATICA("MATEMÁTICA"), 
+		PORTUGUES("PORTUGUÊS"), 
+		OUTROS("OUTROS"),
+		NENHUMA("NENHUMA");
+		
+		@Getter
+		private String descricao;
+		
+		private CategoriaCurso(String descricao) {
+			this.descricao = descricao;
+		}
 	}
 	
 	@Id
@@ -54,17 +68,22 @@ public class Curso implements Serializable{
 	@NotNull
 	private StatusCurso status;
 	
-	@Min(value = 0)
+	@Min(value = 0, message = "É necessário uma quantidade de vagas maior do que zero")
 	@NotNull(message = "Vagas não pode ser vazio")
 	private Integer vagas;
+	
+	@Column(name = "alunos_matriculados")
+	private Integer qtdAlunosMatriculados = 0;
 	
 	@NotBlank(message = "Descrição não pode ser em branco")
 	private String descricao;
 	
 	@NotNull(message = "Data inicial não pode ser vazia")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate dataInicial;
 	
 	@NotNull(message = "Data de conclusão não pode ser vazia")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate dataConclusao;
 	
 	@Column(length = 60, nullable = false)
@@ -73,7 +92,6 @@ public class Curso implements Serializable{
 	private CategoriaCurso categoriaCurso;
 	
 	@ManyToOne
-	@NotNull(message = "Professor do curso não informado")
 	private Professor professor;
 	
 	@ManyToOne

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}" th:with="link=@{/coordenador/home}">
+	
+<body>
+	<div layout:fragment="content">
+		<input id="botaoOpcao" type="button" value="Home" th:onclick="'location.href=\'' + @{/coordenador/home} + '\';'" />
+	
+		<div id="divFiltro">
+			<span id="tituloFiltro">Buscar aluno por:</span> <br/> <br/>
+			<form id="formPesquisa" th:object="${alunoFilter}" method="post" th:action="@{/coordenador/alunos/buscarAluno}">
+				<label for="idAluno" id="labelPesquisa">Id:</label> <br/>
+				<input  type="text" th:field="*{idAluno}" id="idAluno" placeholder=" Id do aluno a ser buscado..." />  <br/> <br/>
+				
+				<label for="nomeAluno" id="labelPesquisa">Nome:</label> 
+				<input type="text" th:field="*{nomeAluno}" id="nomeAluno" placeholder=" Nome do aluno a ser buscado..." /> <br/> <br/>
+				
+				<label for="nomeCurso" id="labelPesquisa">Curso:</label> 
+				<input type="text" th:field="*{nomeCurso}" id="nomeCurso" placeholder=" Nome do curso dos alunos..." /> <br/> <br/>
+				
+				<label id="labelPesquisa" for="filtroDeBusca">Todos: </label> 
+				<input  type="checkbox" th:field="*{todos}" id="filtroDeBusca" />  <br/> <br/>
+				
+				<input id="botaoPesquisa" type="submit" value="Buscar">
+			</form>
+		</div> <br/> <br/>
+		
+		<h1 th:if="${alunos != null && alunos.size() > 0}">Alunos</h1>
+		
+		<table th:if="${alunos != null && alunos.size() > 0}">
+			<tr>
+				<th>ID</th>
+				<th>Nome</th>
+				<th>Email</th>
+				<th>Ver aluno</th>
+			</tr>
+			<tr th:each="aluno : ${alunos}">
+				<td><span th:text="${aluno.id}"></span></td>
+				<td><span th:text="${aluno.nome}"></span></td>
+				<td><span th:text="${aluno.email}"></span></td>
+				<td><input type="button" value="Ver aluno" th:onclick="'location.href=\'' + @{/coordenador/aluno} + '?id=' + ${aluno.id} + '\';'"/></td>
+			</tr>
+		</table>
+		
+		<div id="divComunicado" th:if="${alunos != null && alunos.size() == 0}">
+			<span>Nenhum aluno encontrado</span>
+		</div> 
+		<br/> <br/>
+		
+	</div>
+</body>
+</html>

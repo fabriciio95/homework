@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-	  xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}" th:with="link=@{/professor/home}">
+	  xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}" th:with="link=${isProfessor} ? @{/professor/home} : @{/coordenador/home}">
 	
 <body>
 	<div layout:fragment="content">
 
-		<input id="botaoOpcao" type="button" value="Home" th:onclick="'location.href=\'' + @{/professor/home} + '\';'" /> 
+		<input th:if="${isProfessor}" id="botaoOpcao" type="button" value="Home" th:onclick="'location.href=\'' +  @{/professor/home} + '\';'" /> 
+		<input th:if="${isCoordenador}" id="botaoOpcao" type="button" value="Home" th:onclick="'location.href=\'' +  @{/coordenador/home} + '\';'" />
 		
 		<h1>Atualizar</h1>
 		

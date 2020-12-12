@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}" th:with="link=@{/coordenador/home}">
+	
+<body>
+	<div layout:fragment="content">
+		<input id="botaoOpcao" type="button" value="Home" th:onclick="'location.href=\'' + @{/coordenador/home} + '\';'" />
+		<input id="botaoOpcao" type="button" value="Alunos" th:onclick="'location.href=\'' + @{/coordenador/alunos} + '\';'" /> <br/>
+		
+		<div id="divInformativo">
+			<input type="hidden" id="idCurso" readonly="readonly" th:value="${aluno.id}"> <br/> <br/>
+			
+			<label class="labelInformativo" for="idAluno">Id: </label> <br/>
+			<input class="inputInformativo" type="text" id="idAluno" readonly="readonly" th:value="${aluno.id}"> <br/> <br/>
+			
+			
+			<label class="labelInformativo" for="nomeAluno">Nome: </label> <br/>
+			<input class="inputInformativo" type="text" id="nomeAluno" readonly="readonly" th:value="${aluno.nome}"> <br/> <br/> 
+			
+			
+			<label class="labelInformativo" for="email">Email: </label> <br/>
+			<input class="inputInformativo" type="text" id="email" readonly="readonly" th:value="${aluno.email}"> <br/> <br/>
+			
+		</div> <br/> <br/>
+		
+		<div id="mensagemErro" th:if="${msgErroExcluir != null}">
+			<span th:text="${msgErro}"></span> 
+		</div> 
+		
+		<div th:if="${msgErroExcluir != null}">
+			<br/>
+		</div>
+		
+		<div id="divCentralizado">
+			<form th:action="@{/coordenador/aluno/excluir}">
+				<input type="hidden" name="id" th:value="${aluno.id}" />
+				<input type="submit" id="btnCentralizado" value="Excluir aluno" th:onclick="return confirm('Isso irá excluir todas entregas, arquivos ou qualquer outros dados vinculados a este aluno, você tem certeza que deseja fazer isso?');"/> <br/>
+			</form>
+		</div> <br/> <br/>
+		
+		 <div id="mensagemSucesso" th:if="${msgSucessoDesmatricular != null}">
+			<span th:text="${msgSucessoDesmatricular}"></span> 
+		</div> 
+		
+		<div id="mensagemErro" th:if="${msgErroDesmatricular != null}">
+			<span th:text="${msgErroDesmatricular}"></span> 
+		</div> 
+		
+		<div th:if="${msgErroExcluirDesmatricular != null || msgSucessoDesmatricular != null}">
+			<br/>
+		</div>
+		
+		<h1>Cursos matriculados em andamento</h1> 
+		
+		<div id="divComunicado" th:if="${atividadesEntregues.size() == 0}">
+			<span>Aluno não está matriculado em nenhum curso em andamento</span>
+		</div> 
+		
+		<table id="tb-alunos" th:if="${atividadesEntregues.size() > 0}">
+			<tr>
+				<th>Id</th>
+				<th>Aluno</th>
+				<th>Curso</th>
+				<th>Nota 1</th>
+				<th>Nota 2</th>
+				<th>Nota 3</th>
+				<th>Nota 4</th>
+				<th>Nota 5</th>
+				<th>Média</th>
+				<th>Situação</th>
+				<th>Desmatricular</th>
+			</tr>
+			<tr th:each="entrega : ${atividadesEntregues}">
+				<td><span th:text="${entrega.idAluno}"></span></td>
+				<td><span th:text="${entrega.nomeAluno}"></span></td>
+				<td><span th:text="${entrega.nomeCurso}"></span></td>
+				<td><span th:text="${entrega.notas.size() >= 1 ? entrega.notas.get(0) : '-'}"></span></td>
+				<td><span th:text="${entrega.notas.size() >= 2 ? entrega.notas.get(1) : '-'}"></span></td>
+				<td><span th:text="${entrega.notas.size() >= 3 ? entrega.notas.get(2) : '-'}"></span></td>
+				<td><span th:text="${entrega.notas.size() >= 4 ? entrega.notas.get(3) : '-'}"></span></td>
+				<td><span th:text="${entrega.notas.size() >= 5 ? entrega.notas.get(4) : '-'}"></span></td>
+				<td><span th:text="${entrega.media}"></span></td>
+				<td><span th:text="${entrega.situacaoAluno}"></span></td>
+
+				<td><input type="button" value="Desmatricular" th:onclick="'confirmarEDesmatricularAluno(\'/aluno\',' +  ${entrega.idAluno} + ',' + ${entrega.idCurso} + ',\'true\'' + ');'"/></td>
+			</tr>
+		</table> <br/> <br/>
+		
+		<div id="divFiltro">
+			<span id="tituloFiltro">Buscar curso concluído por:</span> <br/> <br/>
+			<form id="formPesquisa" method="post" th:object="${cursoFilter}" th:action="@{/coordenador/aluno/buscarCursoConcluido}">
+				<input type="hidden" name="idAluno" th:value="${aluno.id}" />
+				<label for="idCurso" id="labelPesquisa">Id:</label> <br/>
+				<input  type="text" id="idCurso" th:field="*{idCurso}" />  <br/> <br/>
+				<label for="nomeCurso" id="labelPesquisa">Curso:</label> <br/>
+				<input  type="text" id="nomeCurso" th:field="*{nome}"/>  <br/> <br/>
+				<label for="dataInicio" id="labelPesquisa">Data Inicio:</label> <br/>
+				<input  type="date" id="dataInicio" th:field="*{dataInicio}"/>  <br/> <br/>
+				<label for="dataFinal" id="labelPesquisa">Data Final:</label> 
+				<input type="date" id="dataFinal" th:field="*{dataFinal}"/> <br/> <br/>
+				<label id="labelPesquisa" for="filtroDeBusca">Todos: </label> 
+				<input type="checkbox" th:field="*{todos}"/><br/><br/>
+				<input id="botaoPesquisa" type="submit" value="Buscar">
+			</form>
+		</div> <br/> <br/>
+		
+		<h1 th:if="${cursos != null && cursos.size() > 0}">Cursos Concluídos</h1>
+		
+		<div id="mensagemErro" th:if="${msgErroCertificado != null}">
+			<span th:text="${msgErroCertificado}"></span> 
+		</div> 
+		
+		<div th:if="${msgErroExcluirCertificado != null}">
+			<br/>
+		</div>
+		
+		<table th:if="${cursos != null && cursos.size() > 0}">
+			<tr>
+				<th>Id</th>
+				<th>Aluno</th>
+				<th>Curso</th>
+				<th>Data Conclusão</th>
+				<th>Certificado</th>
+			</tr>
+			<tr th:each="curso : ${cursos}">
+				<td><span th:text="${curso.id.aluno.id}"></span></td>
+				<td><span th:text="${curso.id.aluno.nome}"></span></td>
+				<td><span th:text="${curso.id.curso.nome}"></span></td>
+				<td><span th:text="${#temporals.format(curso.id.curso.dataConclusao, 'dd/MM/yyyy')}"></span></td>
+				<td><input type="button" value="Baixar Certificado" th:onclick="'location.href=\'' + @{/coordenador/aluno/download-certificado} + '?curso=' + ${curso.id.curso.id} + '&aluno=' + ${curso.id.aluno.id} + '\';'" /></td>
+			</tr>
+		</table>
+		
+		<div id="divComunicado" th:if="${cursos != null && cursos.size() == 0}">
+			<span>Nenhum curso encontrado</span>
+		</div> 
+		<br/> <br/>
+	</div>
+</body>
+</html>

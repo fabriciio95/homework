@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}" th:with="link=@{/coordenador/home}">
+	
+<body>
+	<div layout:fragment="content">
+		<input id="botaoOpcao" type="button" value="Home" th:onclick="'location.href=\'' + @{/coordenador/home} + '\';'" />
+		<input type="button"  id="botaoOpcao" value="Cursos" th:onclick="'location.href=\'' + @{/coordenador/cursos} + '\';'" /> <br/>
+		<input id="botaoOpcao" type="button" value="Professor" th:onclick="'location.href=\'' + @{/coordenador/professor} + '?id=' + ${curso.professor.id} + '\';'" /> <br/>
+	
+		<div id="divInformativo">
+			<label  class="labelInformativo" for="idCurso">Id: </label> <br/>
+			<input class="inputInformativo" type="text" readonly="readonly" id="idCurso" th:value="${curso.id}">  <br/> <br/> 
+			
+			<label class="labelInformativo" for="materia">Matéria: </label> <br/>
+			<input class="inputInformativo" type="text" id="materia" readonly="readonly" th:value="${curso.nome}"> <br/> <br/> 
+			
+			<label class="labelInformativo" for="categoriaInformativo">Categoria: </label> <br/>
+			<input class="inputInformativo" type="text" id="categoriaInformativo" readonly="readonly" th:value="${curso.categoriaCurso.descricao}"> <br/> <br/> 
+			
+			<label  class="labelInformativo" for="nomeProfessor">Professor: </label> <br/>
+			<input class="inputInformativo" type="text" readonly="readonly" id="nomeProfessor" th:value="${curso.professor.nome}">  <br/> <br/> 
+			
+			<label  class="labelInformativo" for="qtdAlunos">Vagas Restantes: </label> <br/>
+			<input class="inputInformativo" type="text" readonly="readonly" id="qtdAlunos" th:value="${curso.vagas}"> <br/> <br/>
+			
+			<label  class="labelInformativo" for="qtdAlunos">Alunos Matriculados: </label> <br/>
+			<input class="inputInformativo" type="text" readonly="readonly" id="qtdAlunos" th:value="${curso.qtdAlunosMatriculados}">  <br/> <br/> 
+			
+			<label  class="labelInformativo" for="situacao">Situação: </label> <br/>
+			<input class="inputInformativo" type="text" readonly="readonly" id="situacao" th:value="${curso.status.descricao}">  <br/> <br/> 
+			
+			<label  class="labelInformativo" for="dataInicio">Data de início: </label> <br/>
+			<input class="inputInformativo" type="text" readonly="readonly" id="dataInicio" th:value="${#temporals.format(curso.dataInicial, 'dd/MM/yyyy')}">  <br/> <br/> 
+			
+			<label  class="labelInformativo" for="dataConclusao">Data de conclusão: </label> <br/>
+			<input class="inputInformativo" type="text" readonly="readonly" id="dataConclusao" th:value="${#temporals.format(curso.dataConclusao, 'dd/MM/yyyy')}">
+			
+		</div> <br/> <br/>
+		
+			<div th:if="${msgSucesso != null}" id="mensagemSucesso">
+				<span th:text="${msgSucesso}"></span> 
+			</div> 
+			
+			<div th:if="${msgErroEncerramento != null}" id="mensagemErro">
+				<span th:text="${msgErroEncerramento}"></span> 
+			</div> 
+			
+			<div th:if="${msgSucesso != null || msgErroEncerramento != null}">
+				<br/> <br/>
+			</div>
+			
+			<div id="divCentralizado">
+				<input type="button" id="btnCentralizado" value="Ver mural de recados" th:onclick="'location.href=\'' + @{/coordenador/curso/mural} + '?curso=' + ${curso.id} + '\';'"> <br/>
+				<input th:if="${curso.status.toString() != 'CONCLUIDO'}" type="button" id="btnCentralizado" value="Encerrar curso" th:onclick="confirmarEEncerrarCurso()" /> <br/>
+				<input id="idCurso" type="hidden" th:value="${curso.id}"/>
+				<input th:if="${curso.status.toString() != 'CONCLUIDO'}" type="button" id="btnCentralizado" value="Editar curso" onclick="alterarDisplayDiv('divAlteraDisplay');"> <br/> <br/>
+			</div>
+			
+			<div id="divAlteraDisplay" th:style="${hasError} ? 'display: block;' : 'display: none;'">
+			<form th:object="${cursoForm}" th:action="@{/coordenador/curso/atualizar}" method="post">
+				<fieldset>
+					
+					<div id="mensagemErro" th:if="${#fields.hasErrors('nome')}" >
+						<span th:errors="*{nome}"></span> 
+						<br/> 
+					</div> 
+					<label class="labelInformativo" for="materia">Matéria: </label> <br/>
+					<input class="inputInformativo" type="text" required="required" th:field="*{nome}" id="materia" /> <br/> <br/> 
+					
+					
+					<div id="mensagemErro" th:if="${#fields.hasErrors('categoriaCurso')}" >
+						<span th:errors="*{categoriaCurso}"></span> 
+						<br/> 
+					</div> 
+					<label class="labelInformativo" for="categoria">Categoria: </label> <br/>
+					<select id="categoria" class="select" th:field="*{categoriaCurso}">
+						<option th:each="categoria : ${categoriasCurso}" th:value="${categoria}" th:text="${categoria.descricao}"></option>
+					</select><br/> <br/> 
+					
+					
+					<div id="mensagemErro" th:if="${#fields.hasErrors('descricao')}" >
+						<span th:errors="*{descricao}"></span> 
+						<br/> 
+					</div> 
+					<label  class="labelInformativo" for="descricao">Descrição: </label> <br/>
+					<textarea class="textAreaInformativo" required="required" id="descricao" th:field="*{descricao}" rows="5" cols="50" ></textarea> <br/> <br/> 
+					
+					
+					<div id="mensagemErro" th:if="${#fields.hasErrors('dataInicial')}" >
+						<span th:errors="*{dataInicial}"></span> 
+						<br/> 
+					</div> 
+					<label  class="labelInformativo" for="dataInicial">Data Inicial: </label>  <br/>
+					<input class="inputInformativo" type="date" required="required" name="dataInicial" id="dataInicial" th:field="*{dataInicial}" th:value="${#temporals.format(curso.dataInicial, 'dd/MM/yyyy')}"/>  <br/> <br/> 
+					
+					
+					<div id="mensagemErro" th:if="${#fields.hasErrors('dataConclusao')}" >
+						<span th:errors="*{dataConclusao}"></span> 
+						<br/> 
+					</div> 
+					<label  class="labelInformativo" for="dataConclusao">Data Conclusão: </label>  <br/>
+					<input class="inputInformativo" type="date" required="required" name="dataConclusao" id="dataConclusao" th:field="*{dataConclusao}" th:value="${#temporals.format(curso.dataConclusao, 'dd/MM/yyyy')}"/>  <br/> <br/> 
+					
+					
+					<div id="mensagemErro" th:if="${#fields.hasErrors('vagas')}" >
+						<span th:errors="*{vagas}"></span> 
+						<br/> 
+					</div> 
+					<label  class="labelInformativo" for="nomeProfessor">Vagas: </label> <br/>
+					<input class="inputInformativo" type="text" required="required" th:field="*{vagas}" placeholder="Informe o número máximo de vagas para esse curso..." id="vagas"> <br/> <br/> 
+					
+					<div id="mensagemErro" th:if="${#fields.hasErrors('professor')}" >
+						<span th:errors="*{professor}"></span> 
+						<br/> 
+					</div> 
+					<label  class="labelInformativo" for="nomeProfessor">Id do Professor: </label> <br/>
+					<input class="inputInformativo" type="text" required="required" name="idProfessor" th:value="${curso.professor.id}" placeholder="Digite o id do novo professor desse curso..." id="idProfessor" /> <br/> <br/> 
+					
+					
+					<div id="mensagemErro" th:if="${#fields.hasErrors('status')}" >
+						<span th:errors="*{status}"></span> 
+						<br/> 
+					</div> 
+					<label class="labelInformativo" for="statusCurso">Status: </label> <br/>
+					<select id="statusCurso" class="select" th:field="*{status}">
+						<option th:each="status : ${statusCurso}" th:value="${status}" th:text="${status.descricao}"></option>
+					</select><br/> <br/> 
+			
+					<input type="hidden" th:field="*{id}" /> 
+					<input type="hidden" th:field="*{coordenador}" />
+					<input type="submit" value="Atualizar" />
+				</fieldset>
+			</form>	
+		</div> <br/> <br/>
+			 
+			 
+			<div id="divFiltro">
+			<span id="tituloFiltro">Buscar aluno por:</span> <br/> <br/>
+			<form id="formPesquisa" method="post" th:object="${entregaFilter}" th:action="@{/coordenador/curso/buscarAluno}">  
+				<input type="hidden" th:value="${curso.id}" name="idCurso" />
+				
+				<label for="idAluno" id="labelPesquisa">Id:</label> <br/>
+				<input  type="text" th:field="*{idAluno}" id="idAluno" placeholder=" Apenas números..." />  <br/> <br/>
+				
+				<label for="nomeAluno" id="labelPesquisa">Nome:</label> 
+				<input type="text" th:field="*{nomeAluno}" id="nomeAluno"/> <br/> <br/>
+				
+				<label id="labelPesquisa" for="situacao">Situação:</label>
+					<select id="situacao" th:field="*{situacaoAluno}" class="select">
+						<option  th:value="TODAS">Todas</option>
+						<option th:value="APROVADO">Aprovado</option>
+						<option th:value="REPROVADO">Reprovado</option>
+						<option th:value="INDEFINIDO">Indefinido</option>
+					</select> <br/> <br/>
+				
+				<label id="labelPesquisa" for="filtroDeBusca">Todos Alunos: </label> 
+				<input  type="checkbox" th:field="*{todos}" id="filtroDeBusca" />  <br/> <br/>
+				
+				<input id="botaoPesquisa" type="submit" value="Buscar">
+			</form>
+		</div> <br/> <br/>
+		
+		<div th:if="${msgSucessoDesmatricular != null}" id="mensagemSucesso">
+				<span th:text="${msgSucessoDesmatricular}"></span> 
+			</div> 
+			
+			<div th:if="${msgErroDesmatricular != null}" id="mensagemErro">
+				<span th:text="${msgErroDesmatricular}"></span> 
+			</div> 
+			
+			<div th:if="${msgSucessoDesmatricular != null || msgErroDesmatricular != null}">
+				<br/> <br/>
+			</div>
+			
+		
+		<h1 th:if="${matriculas != null && matriculas.size() > 0}">Minhas notas</h1>
+		
+		<table th:if="${matriculas != null && matriculas.size() > 0}">
+			<tr>
+				<th>ID</th>
+				<th>Aluno</th>
+				<th>Nota 1</th>
+				<th>Nota 2</th>
+				<th>Nota 3</th>
+				<th>Nota 4</th>
+				<th>Nota 5</th>
+				<th>Média</th>
+				<th>Situação</th>
+				<th th:if="${curso.status.toString() != 'CONCLUIDO'}">Desmatricular</th>
+			</tr>
+			<tr th:each="matricula : ${matriculas}">
+				<td><span th:text="${matricula.idAluno}"></span></td>
+				<td><span th:text="${matricula.nomeAluno}"></span></td>
+				<td><span th:text="${matricula.notas.size() >= 1 ? matricula.notas.get(0) : '-'}"></span></td>
+				<td><span th:text="${matricula.notas.size() >= 2 ? matricula.notas.get(1) : '-'}"></span></td>
+				<td><span th:text="${matricula.notas.size() >= 3 ? matricula.notas.get(2) : '-'}"></span></td>
+				<td><span th:text="${matricula.notas.size() >= 4 ? matricula.notas.get(3) : '-'}"></span></td>
+				<td><span th:text="${matricula.notas.size() >= 5 ? matricula.notas.get(4) : '-'}"></span></td>
+				<td><span th:text="${matricula.media}"></span></td>
+				<td><span th:text="${matricula.situacaoAluno}"></span></td>
+				<td th:if="${curso.status.toString() != 'CONCLUIDO'}"><input type="button" value="Desmatricular" th:onclick="'confirmarEDesmatricularAluno(\'/curso/buscarAluno\',' +  ${matricula.idAluno} + ',' + ${matricula.idCurso} + ',\'false\'' + ');'"/></td>
+			</tr>
+		</table>
+		
+		<div id="divComunicado" th:if="${matriculas != null && matriculas.size() == 0}">
+			<span>Nenhum aluno encontrado</span>
+		</div> 
+		<br/><br/>
+	</div>
+</body>
+</html>

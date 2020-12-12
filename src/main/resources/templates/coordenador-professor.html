@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}" th:with="link=@{/coordenador/home}">
+	
+<body>
+	<div layout:fragment="content">
+		<input id="botaoOpcao" type="button" value="Home" th:onclick="'location.href=\'' + @{/coordenador/home} + '\';'" />
+		<input id="botaoOpcao" type="button" value="Professores" th:onclick="'location.href=\'' + @{/coordenador/professores} + '\';'" /> <br/>
+		
+		<div id="divInformativo">
+			
+			<label class="labelInformativo" for="idProfessor">Id: </label> <br/>
+			<input class="inputInformativo" type="text" id="idProfessor" readonly="readonly" th:value="${professor.id}"> <br/> <br/>
+			
+			
+			<label class="labelInformativo" for="nomeProfessor">Nome: </label> <br/>
+			<input class="inputInformativo" type="text" id="nomeProfessor" readonly="readonly" th:value="${professor.nome}"> <br/> <br/> 
+			
+			
+			<label class="labelInformativo" for="email">Email: </label> <br/>
+			<input class="inputInformativo" type="text" id="email" readonly="readonly" th:value="${professor.email}"> <br/> <br/>
+			
+		</div> <br/> <br/>
+		
+		 <div id="mensagemErro" th:if="${msgErro != null}">
+			<span th:text="${msgErro}"></span> 
+		</div> 
+		
+		<div th:if="${msgErro != null}">
+			<br/>
+		</div>
+		
+		<div id="divCentralizado">
+			<input type="button" id="btnCentralizado" value="Excluir Professor" onclick="confirmarExclusaoProfessor();"> <br/> <br/>
+		</div>
+		
+	
+		<div id="divFiltro">
+			<span id="tituloFiltro">Buscar curso lecionado por:</span> <br/> <br/>
+			<form id="formPesquisa" method="post" th:action="@{/coordenador/professor/buscarCurso}" th:object="${cursoFilter}">
+				<input type="hidden" name="idProfessor" th:value="${professor.id}" />
+				<label for="idCurso" id="labelPesquisa">Id:</label> <br/>
+				<input  type="text" id="idCurso" th:field="*{idCurso}" placeholder=" Id do curso que deseja pesquisar..." />  <br/> <br/>
+				<label for="nomeCurso" id="labelPesquisa">Curso:</label> <br/>
+				<input  type="text" id="nomeCurso" th:field="*{nome}" placeholder=" Nome do curso que deseja pesquisar..." />  <br/> <br/>
+				<label for="dataInicio" id="labelPesquisa">Data Inicio:</label> <br/>
+				<input  type="date" id="dataInicio" th:field="*{dataInicio}"/>  <br/> <br/>
+				<label for="dataFinal" id="labelPesquisa">Data Final:</label> 
+				<input type="date" id="dataFinal"  th:field="*{dataFinal}"/> <br/> <br/>
+				<label id="labelPesquisa" for="situacao">Situação:</label>
+					<select id="situacao" th:field="*{situacaoCurso}" class="select">
+						<option th:value="CONCLUIDO">Concluído</option>
+						<option th:value="EM_ANDAMENTO">Em andamento</option>
+						<option th:value="NAO_INICIADO">Não iniciado</option>
+					</select> <br/> <br/>
+				
+				<label id="labelPesquisa" for="filtroDeBusca">Todos: </label> 
+				<input  type="checkbox" th:field="*{todos}" id="filtroDeBusca" />  <br/> <br/>
+				<input id="botaoPesquisa" type="submit" value="Buscar">
+			</form>
+		</div> <br/> <br/>
+		
+		<h1 th:if="${cursos != null && cursos.size() > 0}">Cursos</h1>
+		
+		<table  th:if="${cursos != null && cursos.size() > 0}">
+			<tr>
+				<th>Id</th>
+				<th>Professor</th>
+				<th>Curso</th>
+				<th>Data Inicio</th>
+				<th>Data Final</th>
+				<th>Situação</th>
+				<th>Ver curso</th>
+			</tr>
+			<tr th:each="curso : ${cursos}">
+				<td><span th:text="${curso.professor.id}"></span></td>
+				<td><span th:text="${curso.professor.nome}"></span></td>
+				<td><span th:text="${curso.nome}"></span></td>
+				<td><span th:text="${#temporals.format(curso.dataInicial,'dd/MM/yyyy')}"></span></td>
+				<td><span th:text="${#temporals.format(curso.dataConclusao,'dd/MM/yyyy')}"></span></td>
+				<td><span th:text="${curso.status.descricao}"></span></td>
+				<td><input type="button" value="Ver curso" th:onclick="'location.href=\'' + @{/coordenador/curso} + '?id=' + ${curso.id} + '\';'" /></td>
+			</tr>
+		</table>
+		
+		<div id="divComunicado" th:if="${cursos != null && cursos.size() == 0}">
+			<span>Nenhum curso encontrado</span>
+		</div> 
+		<br/> <br/>
+	
+	</div>
+</body>
+</html>

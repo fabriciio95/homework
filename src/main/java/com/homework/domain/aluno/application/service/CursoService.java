@@ -65,7 +65,7 @@ public class CursoService {
 		return cursos;
 	}
 	
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	public Boolean solicitarMatricula(Long idCurso) {
 		Curso curso = cursoRepository.findById(idCurso).orElseThrow(NoSuchElementException::new);
 		if(curso.getVagas() <= 0) {
@@ -79,7 +79,7 @@ public class CursoService {
 			cursoAluno.setId(cursoAlunoPK);
 			cursoAluno.setDataMatricula(LocalDate.now());
 			cursoAlunoRepository.save(cursoAluno);
-			curso.setVagas(curso.getVagas() - 1);
+			curso = atualizarVagasEQtdAlunosDoCurso(curso, true);
 			cursoRepository.save(curso);
 			return true;
 		} else {
@@ -98,10 +98,23 @@ public class CursoService {
 	
 	public void negarMatricula(Long idCurso) {
 		Curso curso = cursoRepository.findById(idCurso).orElseThrow(NoSuchElementException::new);
+		curso = atualizarVagasEQtdAlunosDoCurso(curso, false);
+		cursoRepository.save(curso);
 		Aluno aluno = SecurityUtils.getAlunoLogado();
 		CursoAluno cursoAluno = cursoAlunoRepository.findById(new CursoAlunoPK(curso, aluno)).orElseThrow(NoSuchElementException::new);
 		cursoAluno.setPermissaoVisualizada(true);
 		cursoAluno.setStatusMatricula(StatusMatricula.NEGADA);
 		cursoAlunoRepository.delete(cursoAluno);
+	}
+	
+	public Curso atualizarVagasEQtdAlunosDoCurso(Curso curso, boolean isMatricula) {
+		if(isMatricula) {
+			curso.setVagas(curso.getVagas() - 1);
+			curso.setQtdAlunosMatriculados(curso.getQtdAlunosMatriculados() + 1);
+		} else {
+			curso.setVagas(curso.getVagas() + 1);
+			curso.setQtdAlunosMatriculados(curso.getQtdAlunosMatriculados() - 1);
+		}
+		return curso;
 	}
 }

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}" th:with="link=@{/coordenador/home}">
+	
+<body>
+	<div layout:fragment="content">
+		<input id="botaoOpcao" type="button" value="Home" th:onclick="'location.href=\'' + @{/coordenador/home} + '\';'" /> <br/>
+		
+		<div id="mensagemErro" th:if="${msgErro != null}">
+			<span th:text="${msgErro}"></span> 
+		</div> 
+		
+		 <div id="mensagemSucesso" th:if="${msgSucesso != null}">
+			<span th:text="${msgSucesso}"></span> 
+		</div> 
+		
+		<div th:if="${msgErro != null|| msgSucesso != null}">
+			<br/>
+		</div>
+		
+		<h1>Comunicados Por E-mail</h1>
+		
+		<div>
+			<form th:object="${comunicado}" method="post" th:action="@{/coordenador/comunicados/enviar}">
+				<fieldset>
+				
+					<label id="labelPesquisa" for="opcao">Para:</label>
+					<select id="situacao" th:field="*{tipoEnvio}" class="select">
+						<option value="PROFESSOR">Professor</option>
+						<option value="ALUNO">Aluno</option>
+						<option value="CURSO_PROFESSOR_ALUNOS">Curso (Professor e Alunos)</option>
+						<option value="CURSO_ALUNOS">Curso (Alunos)</option>
+						<option value="CURSO_PROFESSOR">Curso (Professor)</option>
+					</select> <br/> <br/>
+					
+					<label class="labelInformativo" for="idTipoEnvio">Id: </label> <br/>
+					<input class="inputInformativo" type="text" th:field="*{idTipoEnvio}" required="required" id="idTipoEnvio" placeholder=" Id ou 0 para enviar para todos" /> <br/> <br/> 
+					
+					<label class="labelInformativo" for="assunto">Assunto: </label> <br/>
+					<input class="inputInformativo" type="text" th:field="*{assunto}" required="required" id="assunto" placeholder=" Digite o assunto do e-mail" /> <br/> <br/> 
+					
+					<label  class="labelInformativo" for="corpo">Corpo do E-mail: </label> <br/>
+					<textarea class="textAreaInformativo" th:field="*{corpoEmail}" required="required" id="corpo" rows="5" cols="50" placeholder="Digite aqui o comunicado..."></textarea> <br/> <br/> 
+			
+					<input type="hidden">
+					<input type="submit" value="Enviar comunicado">
+				</fieldset>
+			</form>	
+		</div> <br/> <br/>
+	</div>
+</body>
+</html>

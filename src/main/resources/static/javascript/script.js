@@ -14,11 +14,10 @@ function isSenhaIguais(){
 	}
 }
 
-function alterarDisplayDivNovaAtividade(){
+function alterarDisplayDiv(idDiv){
 
-	var divNovaAtividade = document.getElementById("divNovaAtividade");
+	var divNovaAtividade = document.getElementById(idDiv);
 	var msgSucesso = document.getElementById("mensagemSucesso");
-
 	
 	if(divNovaAtividade.style.display == "none"){
 		divNovaAtividade.style.display = "block";
@@ -51,5 +50,46 @@ function verificarAtualizacaoDeArquivoDeAtividade(){
 		if(result == false){
 			var fileUpload = document.getElementById("atividade").value = "";
 		}
+	}
+}
+
+
+function confirmarEEncerrarCurso() {
+	var decisao = confirm('Isso irá alterar o status do curso para concluído e essa ação não pode ser desfeita, você tem certeza que deseja fazer isso?');
+	if(decisao) {
+		var idCurso = document.getElementById("idCurso").value;
+		var url = window.location.href;
+		url = url.split('/curso');
+		url = url[0];
+		url = url + '/curso/encerrar?curso=' + idCurso;
+		window.location.href = url;
+	}
+}
+
+function confirmarEDesmatricularAluno(end, idAluno, idCurso, isPageAluno) {
+	var decisao = confirm('Tem certeza que deseja desmatricular este aluno?');
+	if(decisao) {
+		var url = window.location.href;
+		if(isPageAluno === 'true') {
+			url = url.split('/aluno');
+		} else {
+			url = url.split('/curso');
+		}
+		url = url[0];
+		url = url + end + '/desmatricular?aluno=' + idAluno + '&curso=' + idCurso;
+		window.location.href = url;
+	}
+}
+
+
+function confirmarExclusaoProfessor(){
+	var decisao = confirm('Tem certeza que deseja excluir este professor?');
+	if(decisao){
+		var idProfessor = document.getElementById('idProfessor').value;
+		var url = window.location.href;
+		url = url.split('/professor');
+		url = url[0];
+		url = url + '/professor/excluirProfessor?id=' + idProfessor;
+		window.location.href = url;
 	}
 }

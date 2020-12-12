@@ -75,7 +75,6 @@ public class AlunoController {
 	
 	@Autowired
 	private CursoAlunoRepository matriculaRepository;
-	
 
 	@GetMapping("/home")
 	public String home(Model model) {
@@ -326,8 +325,7 @@ public class AlunoController {
 		return null;
 	}
 	
-	
-	
+
 	private void putDependenciesOnPageAlunoCurso(Model model, Long idCurso) {
 		Curso curso = cursoRepository.findById(idCurso).orElse(null);
 		model.addAttribute("curso", curso);
