@@ -18,4 +18,6 @@ public class ProfessorFilter {
 	private String nomeCurso;
 	
 	private boolean todos;
+	
+	private String senha;
 }

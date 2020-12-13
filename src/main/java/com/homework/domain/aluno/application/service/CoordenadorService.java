@@ -378,10 +378,13 @@ public class CoordenadorService {
 		if(professor == null) {
 			throw new ValidationException("Não encontramos nenhum professor com esse e-mail");
 		}
-		String chave = String.format("%s-%02d%d%d", String.valueOf(professor.getNome().charAt(0)).toUpperCase(),
-				professor.getId() * 3, professor.getId() * 4, professor.getId() * 3 + professor.getId() * 4);
-		professorChave.setChave(chave);
+		professorChave.setChave(gerarChaveCadastroProfessor(professor));
 		return professorChave;
+	}
+	
+	public String gerarChaveCadastroProfessor(Professor professor) {
+		return String.format("%s-%02d%d%d", String.valueOf(professor.getNome().charAt(0)).toUpperCase(),
+				professor.getId() * 3, professor.getId() * 4, professor.getId() * 3 + professor.getId() * 4);
 	}
 
 	public List<Professor> filtrarProfessores(ProfessorFilter filter) {

@@ -33,6 +33,7 @@ import com.homework.domain.curso.CursoAlunoPK;
 import com.homework.domain.curso.CursoAlunoRepository;
 import com.homework.domain.curso.CursoRepository;
 import com.homework.domain.professor.Professor;
+import com.homework.domain.professor.ProfessorFilter;
 import com.homework.domain.professor.ProfessorRepository;
 
 @Service
@@ -64,6 +65,9 @@ public class ProfessorService {
 	
 	@Autowired
 	private ProfessorRepository professorRepository;
+	
+	@Autowired
+	private CoordenadorService coordenadorService;
 	
 	public void corrigirAtividade(Entrega entrega) throws ValidationException, ApplicationException {
 		if(entrega.getNota() < 0.0 || entrega.getNota() > 10.0) {
@@ -175,4 +179,26 @@ public class ProfessorService {
 			}
 			return true;
 		}
+	
+	public boolean validarCadastroProfessor(ProfessorFilter professorFilter) throws ValidationException {
+		Professor professor = professorRepository.findByEmail(professorFilter.getEmail());
+		if(professor == null) {
+			throw new ValidationException("Não encontramos nenhum professor com esse e-mail");
+		}
+		
+
+		String chaveCorreta = coordenadorService.gerarChaveCadastroProfessor(professor);
+		if(!chaveCorreta.equals(professorFilter.getChave())){
+			throw new ValidationException("Chave incorreta!");
+		}
+		
+		return true;
+	}
+	
+	public void cadastrarSenhaProfessor(ProfessorFilter professorFilter) {
+		Professor professor = professorRepository.findByEmail(professorFilter.getEmail());
+		professor.setSenha(professorFilter.getSenha());
+		professor.criptografarSenha();
+		professorRepository.save(professor);
+	}
 }

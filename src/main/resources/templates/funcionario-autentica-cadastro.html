@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}" th:with="esconderNome=true">
+	
+<body>
+	<div layout:fragment="content">
+		<h1>Autenticar Cadastro</h1>
+			
+		<div id="mensagemErro" th:if="${msgErro != null}">
+			<span th:text="${msgErro}"></span> 
+		</div> 
+		
+		<div th:if="${msgErro != null}">
+			<br/>
+		</div>
+	
+		<div>
+			<form method="post" th:action="@{/public/novo-professor/autenticar}" id="form-cadastro" th:object="${professor}">
+				<fieldset>
+					
+					<label for="email">E-mail: </label><br/>
+					<input type="email" id="email" placeholder=" Informe um e-mail..." required="required" th:field="*{email}" /> <br/> <br/>
+					
+					<label for="Chave">Chave: </label><br/>
+					<input type="text" id="chave" name="chave" th:field="*{chave}" placeholder=" Digite sua chave de cadastro..." required="required" /> <br/> <br/>
+					
+					<input type="submit" value="Verificar" />
+				</fieldset>
+			   </form>
+			</div> <br/> <br/>
+		</div>
+	</body>
+</html>

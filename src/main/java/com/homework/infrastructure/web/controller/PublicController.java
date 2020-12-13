@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.homework.domain.aluno.Aluno;
 import com.homework.domain.aluno.application.service.AlunoService;
+import com.homework.domain.aluno.application.service.ProfessorService;
 import com.homework.domain.aluno.application.service.ValidationException;
+import com.homework.domain.professor.ProfessorFilter;
 
 @Controller
 @RequestMapping("/public")
@@ -21,6 +23,9 @@ public class PublicController {
 	
 	@Autowired
 	private AlunoService alunoService;
+	
+	@Autowired
+	private ProfessorService professorService;
 
 	@GetMapping("/aluno/cadastro")
 	public String cadastroAluno(Model model) {
@@ -41,4 +46,31 @@ public class PublicController {
 		}
 		return "aluno-cadastro";
 	}
+	
+	@GetMapping("/novo-professor")
+	public String viewNovoProfessor(Model model) {
+		model.addAttribute("professor", new ProfessorFilter());
+		return "funcionario-autentica-cadastro";
+	}
+	
+	@PostMapping("/novo-professor/autenticar")
+	public String autenticarCadastroProfessor(@ModelAttribute("professor")  ProfessorFilter professor, Model model) {
+		try {
+			professorService.validarCadastroProfessor(professor);
+		} catch(ValidationException e) {
+			model.addAttribute("msgErro", e.getMessage());
+			return "funcionario-autentica-cadastro";
+		}
+		return "funcionario-cadastro-senha";
+	}
+	
+	@PostMapping("/novo-professor/autenticar/cadastrarSenha")
+	public String cadastrarSenhaProfessor(@ModelAttribute("professor")  ProfessorFilter professor, Model model) {
+		professorService.cadastrarSenhaProfessor(professor);
+		model.addAttribute("msgSucesso", "Cadastro realizado com sucesso!");
+		return "login";
+	}
+	
+	
+	
 }
