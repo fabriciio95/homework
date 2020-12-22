@@ -68,7 +68,7 @@ public class Curso implements Serializable{
 	@NotNull
 	private StatusCurso status;
 	
-	@Min(value = 0, message = "É necessário uma quantidade de vagas maior do que zero")
+	@Min(value = -1, message = "É necessário uma quantidade de vagas maior do que zero")
 	@NotNull(message = "Vagas não pode ser vazio")
 	private Integer vagas;
 	

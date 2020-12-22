@@ -83,6 +83,8 @@ public interface CursoRepository extends JpaRepository<Curso, Long> {
 	
 	@Query("SELECT c FROM Curso c WHERE c.status = ?1 ORDER BY c.dataConclusao DESC")
 	List<Curso> findByStatusOrdered(StatusCurso statusCurso);
-
+	
+	@Query("SELECT c FROM Curso c WHERE c.status = 'CONCLUIDO' OR c.status = 'EM_ANDAMENTO'")
+	List<Curso> findConcluidosEEmAndamento();
 	
 }

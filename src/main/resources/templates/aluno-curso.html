@@ -13,6 +13,10 @@
 			<label  class="labelInformativo" for="nomeProfessor">Professor: </label> <br/>
 			<input class="inputInformativo" type="text" readonly="readonly" id="nomeProfessor" th:value="${curso.professor.nome}"> <br/> <br/> 
 			
+			
+			<label  class="labelInformativo" for="dataDeInicio">Data Início: </label> <br/>
+			<input class="inputInformativo" type="text" readonly="readonly" id="dataDeInicio" th:value="${#temporals.format(curso.dataInicial, 'dd/MM/yyyy')}"> <br/> <br/> 
+			
 		</div> <br/> <br/>
 		
 		<h1>Mural de recados</h1>

@@ -52,6 +52,9 @@ public interface CursoAlunoRepository extends JpaRepository<CursoAluno, CursoAlu
 	@Query("SELECT DISTINCT(c.id.aluno) FROM CursoAluno c WHERE LOWER(c.id.curso.nome) LIKE LOWER(CONCAT('%', ?1, '%'))")
 	List<Aluno> findByNomeCurso(String nomeCurso);
 	
+	@Query("SELECT DISTINCT(c.id.aluno) FROM CursoAluno c WHERE c.id.curso.id = ?1")
+	List<Aluno> findByIdCurso(Long idCurso);
+	
 	@Query("SELECT DISTINCT(c.id.aluno) FROM CursoAluno c WHERE c.id.aluno.id = ?1 AND LOWER(c.id.curso.nome) LIKE LOWER(CONCAT('%', ?2, '%'))")
 	List<Aluno> findByIdAlunoENomeCurso(Long idAluno, String nomeCurso);
 	

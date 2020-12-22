@@ -25,7 +25,7 @@
 		
 		<span id="opcaoTitulo">Cursos em andamento</span> <br/> <br/>  <br/> <br/>
 		<div th:each="curso : ${cursosEmAndamento}">
-			<input type="button"  th:value="${curso.nome}" th:onclick="'location.href=\'' + @{/coordenador/curso} + '?id=' + ${curso.id} + '\';'" /> <br/>			
+			<input id="btnMaisLargo" type="button"  th:value="${curso.nome}" th:onclick="'location.href=\'' + @{/coordenador/curso} + '?id=' + ${curso.id} + '\';'" /> <br/>			
 		</div> <br/><br/>
 	</div>
 </body>
