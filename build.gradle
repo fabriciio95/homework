@@ -6,7 +6,7 @@ plugins {
 
 group = 'com.homework'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '8'
+sourceCompatibility = '12'
 
 configurations {
 	compileOnly {
