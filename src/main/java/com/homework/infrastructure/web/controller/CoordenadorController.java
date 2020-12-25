@@ -250,6 +250,8 @@ public class CoordenadorController {
 			@ModelAttribute("matriculas") List<AtividadeEntregaDTO> matriculas, Model model) {
 		boolean isIdProfessorValido = coordenadorService.isIdProfessorValido(curso, idProfessor);
 		if(!errors.hasErrors() && isIdProfessorValido) {
+			Curso cursoBD = cursoRepository.findById(curso.getId()).orElseThrow();
+			curso.setQtdAlunosMatriculados(cursoBD.getQtdAlunosMatriculados());
 			cursoRepository.save(curso);
 			model.addAttribute("msgSucesso", "Curso atualizado com sucesso");
 			putDependenciesCoordenadorCursoOnModel(curso.getId(), model, true, true);
