@@ -13,7 +13,7 @@ import javax.mail.internet.MimeMessage;
 
 public class EnviarEmail {
 
-	private final static String username = "mcursos12@gmail.com";
+	private final static String username = "homework.hmwk@gmail.com";
 	private final static String password = "mcdc1212";
 	
 	public static void enviarEmail(String listaDestinatarios, String assunto, String conteudo) throws Exception {
