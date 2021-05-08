@@ -27,10 +27,10 @@ Homework é um sistema para criação e entrega de trabalhos acadêmicos constru
 
 # Implantação em produção
 - Heroku: [Homework](http://dothehomework.herokuapp.com/)
-- Banco de dados: Postgresql
+- Banco de dados: PostgreSQL
 
 # Como executar o projeto
-Pré-requisitos: Java 11, Gradle 6.8.3, Postgree, PgAdmin
+Pré-requisitos: Java 11, Gradle 6.8.3, PostgreSQL, PgAdmin
 
 ```bash
 # Abra o PgAdmin e crie um banco de dados chamado homeworkdb com usuário postgres e senha admin
